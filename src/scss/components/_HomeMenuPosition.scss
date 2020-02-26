@@ -1,0 +1,12 @@
+.menu-position-box {
+  width: 80%;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #000000;
+  .menu-position-title {
+    padding-bottom: 0.5rem;
+    font-size: $largeFontSize;
+  }
+  .menu-position-content {
+    font-size: $mediumFontSize;
+  }
+}

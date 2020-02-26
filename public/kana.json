@@ -1,0 +1,281 @@
+{
+  "kana": [
+    {
+      "id": 1,
+      "hiragana": "あ",
+      "katakana": "ア",
+      "meaning": "a"
+    },
+    {
+      "id": 2,
+      "hiragana": "い",
+      "katakana": "イ",
+      "meaning": "i"
+    },
+    {
+      "id": 3,
+      "hiragana": "う",
+      "katakana": "ウ",
+      "meaning": "u"
+    },
+    {
+      "id": 4,
+      "hiragana": "え",
+      "katakana": "エ",
+      "meaning": "e"
+    },
+    {
+      "id": 5,
+      "hiragana": "お",
+      "katakana": "オ",
+      "meaning": "o"
+    },
+    {
+      "id": 6,
+      "hiragana": "か",
+      "katakana": "カ",
+      "meaning": "ka"
+    },
+    {
+      "id": 7,
+      "hiragana": "き",
+      "katakana": "キ",
+      "meaning": "ki"
+    },
+    {
+      "id": 8,
+      "hiragana": "く",
+      "katakana": "ク",
+      "meaning": "ku"
+    },
+    {
+      "id": 9,
+      "hiragana": "け",
+      "katakana": "ケ",
+      "meaning": "ke"
+    },
+    {
+      "id": 10,
+      "hiragana": "こ",
+      "katakana": "コ",
+      "meaning": "ko"
+    },
+    {
+      "id": 11,
+      "hiragana": "さ",
+      "katakana": "サ",
+      "meaning": "sa"
+    },
+    {
+      "id": 12,
+      "hiragana": "し",
+      "katakana": "シ",
+      "meaning": "shi"
+    },
+    {
+      "id": 13,
+      "hiragana": "す",
+      "katakana": "ス",
+      "meaning": "su"
+    },
+    {
+      "id": 14,
+      "hiragana": "せ",
+      "katakana": "セ",
+      "meaning": "se"
+    },
+
+    {
+      "id": 15,
+      "hiragana": "そ",
+      "katakana": "ソ",
+      "meaning": "so"
+    },
+    {
+      "id": 16,
+      "hiragana": "た",
+      "katakana": "タ",
+      "meaning": "ta"
+    },
+    {
+      "id": 17,
+      "hiragana": "ち",
+      "katakana": "チ",
+      "meaning": "chi"
+    },
+    {
+      "id": 18,
+      "hiragana": "つ",
+      "katakana": "ツ",
+      "meaning": "tsu"
+    },
+    {
+      "id": 19,
+      "hiragana": "て",
+      "katakana": "テ",
+      "meaning": "te"
+    },
+    {
+      "id": 20,
+      "hiragana": "と",
+      "katakana": "ト",
+      "meaning": "to"
+    },
+    {
+      "id": 21,
+      "hiragana": "な",
+      "katakana": "ナ",
+      "meaning": "na"
+    },
+    {
+      "id": 22,
+      "hiragana": "に",
+      "katakana": "ニ",
+      "meaning": "ni"
+    },
+    {
+      "id": 23,
+      "hiragana": "ぬ",
+      "katakana": "ヌ",
+      "meaning": "nu"
+    },
+    {
+      "id": 24,
+      "hiragana": "ね",
+      "katakana": "ネ",
+      "meaning": "ne"
+    },
+    {
+      "id": 25,
+      "hiragana": "の",
+      "katakana": "ノ",
+      "meaning": "no"
+    },
+    {
+      "id": 26,
+      "hiragana": "は",
+      "katakana": "ハ",
+      "meaning": "ha"
+    },
+    {
+      "id": 27,
+      "hiragana": "ひ",
+      "katakana": "ヒ",
+      "meaning": "hi"
+    },
+    {
+      "id": 28,
+      "hiragana": "ふ",
+      "katakana": "フ",
+      "meaning": "fu"
+    },
+    {
+      "id": 29,
+      "hiragana": "へ",
+      "katakana": "へ",
+      "meaning": "he"
+    },
+    {
+      "id": 30,
+      "hiragana": "ほ",
+      "katakana": "ホ",
+      "meaning": "ho"
+    },
+    {
+      "id": 31,
+      "hiragana": "ま",
+      "katakana": "マ",
+      "meaning": "ma"
+    },
+    {
+      "id": 32,
+      "hiragana": "み",
+      "katakana": "ミ",
+      "meaning": "mi"
+    },
+    {
+      "id": 33,
+      "hiragana": "む",
+      "katakana": "ム",
+      "meaning": "mu"
+    },
+    {
+      "id": 34,
+      "hiragana": "め",
+      "katakana": "メ",
+      "meaning": "me"
+    },
+    {
+      "id": 35,
+      "hiragana": "も",
+      "katakana": "モ",
+      "meaning": "mo"
+    },
+    {
+      "id": 36,
+      "hiragana": "や",
+      "katakana": "ヤ",
+      "meaning": "ya"
+    },
+    {
+      "id": 37,
+      "hiragana": "ゆ",
+      "katakana": "ユ",
+      "meaning": "yu"
+    },
+    {
+      "id": 38,
+      "hiragana": "よ",
+      "katakana": "ヨ",
+      "meaning": "yo"
+    },
+    {
+      "id": 39,
+      "hiragana": "ら",
+      "katakana": "ラ",
+      "meaning": "ra"
+    },
+    {
+      "id": 40,
+      "hiragana": "り",
+      "katakana": "リ",
+      "meaning": "ri"
+    },
+    {
+      "id": 41,
+      "hiragana": "る",
+      "katakana": "ル",
+      "meaning": "ru"
+    },
+    {
+      "id": 42,
+      "hiragana": "れ",
+      "katakana": "レ",
+      "meaning": "re"
+    },
+    {
+      "id": 43,
+      "hiragana": "ろ",
+      "katakana": "ロ",
+      "meaning": "ro"
+    },
+    {
+      "id": 44,
+      "hiragana": "わ",
+      "katakana": "ワ",
+      "meaning": "wa"
+    },
+    {
+      "id": 45,
+      "hiragana": "を",
+      "katakana": "ヲ",
+      "meaning": "wo"
+    },
+    {
+      "id": 46,
+      "hiragana": "ん",
+      "katakana": "ン",
+      "meaning": "n"
+    }
+  ]
+}
