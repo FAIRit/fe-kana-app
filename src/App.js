@@ -7,15 +7,13 @@ import Registration from "./Components/Registration";
 class App extends Component {
   render() {
     return (
-      <>
-        <HashRouter>
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route path="/home" component={Home} />
-            <Route path="/register" component={Registration} />
-          </Switch>
-        </HashRouter>
-      </>
+      <HashRouter>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route path="/home" component={Home} />
+          <Route path="/register" component={Registration} />
+        </Switch>
+      </HashRouter>
     );
   }
 }
