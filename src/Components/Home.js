@@ -11,7 +11,6 @@ class Home extends Component {
 
   //displaying choose syllabary component
   handleToggleClick = () => {
-    console.log("click!");
     this.setState({
       isShown: !this.state.isShown
     });
@@ -19,13 +18,10 @@ class Home extends Component {
 
   render() {
     const { isShown } = this.state;
-    const style = {
-      backgroundColor: "#c0ffee",
-      display: isShown ? "block" : "none"
-    };
+
     return (
       <section className="home">
-        <ChooseSyllabary style={style} />
+        {isShown && <ChooseSyllabary />}
         <UserNavBar />
         <main className="home-container">
           <Link to="/cheat-sheet">
