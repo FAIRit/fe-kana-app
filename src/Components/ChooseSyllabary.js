@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class ChooseSyllabary extends Component {
   render() {
     return (
-      <section className="syllabary">
+      <section className="syllabary" style={this.props.style}>
         <div className="syllabary-container">
           <h2 className="syllabary-header">Wybierz sylabariusz</h2>
           <div className="syllabary-inputs-box">
