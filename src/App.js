@@ -4,6 +4,7 @@ import Login from "./Components/Login";
 import Home from "./Components/Home";
 import Registration from "./Components/Registration";
 import CheatSheet from "./Components/CheatSheet";
+import FlashCards from "./Components/FlashCards";
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
           <Route path="/home" component={Home} />
           <Route path="/register" component={Registration} />
           <Route path="/cheat-sheet" component={CheatSheet} />
+          <Route path="/flash-cards" component={FlashCards} />
         </Switch>
       </HashRouter>
     );

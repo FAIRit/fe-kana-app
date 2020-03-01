@@ -5,7 +5,7 @@ import SingleSign from "./SingleSign";
 
 class CheatSheet extends Component {
   state = {
-    kanaTable: "",
+    kanaTable: [],
     isHiraganaShown: false,
     isKatakanaShown: false
   };
@@ -62,11 +62,21 @@ class CheatSheet extends Component {
           </div>
           {isHiraganaShown &&
             kanaTable.map(kana => (
-              <SingleSign kanaTable={kana} syllabary="hiragana" key={kana.id} />
+              <SingleSign
+                kanaTable={kana.hiragana}
+                kanaMeaning={kana.meaning}
+                syllabary="hiragana"
+                key={kana.id}
+              />
             ))}
           {isKatakanaShown &&
             kanaTable.map(kana => (
-              <SingleSign kanaTable={kana} syllabary="katakana" key={kana.id} />
+              <SingleSign
+                kanaTable={kana.katakana}
+                kanaMeaning={kana.meaning}
+                syllabary="katakana"
+                key={kana.id}
+              />
             ))}
           <Link to="/home">
             <button className="back-to-home-btn">Powrót</button>
