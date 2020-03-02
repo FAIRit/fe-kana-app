@@ -65,7 +65,6 @@ class CheatSheet extends Component {
               <SingleSign
                 kanaTable={kana.hiragana}
                 kanaMeaning={kana.meaning}
-                syllabary="hiragana"
                 key={kana.id}
               />
             ))}
@@ -74,7 +73,6 @@ class CheatSheet extends Component {
               <SingleSign
                 kanaTable={kana.katakana}
                 kanaMeaning={kana.meaning}
-                syllabary="katakana"
                 key={kana.id}
               />
             ))}
