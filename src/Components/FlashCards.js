@@ -5,9 +5,12 @@ import BtnsBox from "./BtnsBox";
 class FlashCards extends Component {
   state = {
     kanaTable: [],
-    arrayCounter: 0,
-    counter: 0
+    kanaCounter: 0,
+    counter: 1,
+    isMeaningShown: false
   };
+
+  // fetching kana data
   componentDidMount = () => {
     fetch("http://localhost:3000/kana.json", {
       headers: {
@@ -18,33 +21,73 @@ class FlashCards extends Component {
         return resp.json();
       })
       .then(data => {
-        let elements = data.kana;
-        elements.sort(() => {
-          return 0.5 - Math.random();
-        });
         this.setState({
-          kanaTable: elements
+          kanaTable: data.kana.sort(() => {
+            return 0.5 - Math.random();
+          })
         });
-
-        // console.log(this.state.kanaTable[this.state.arrayCounter]);
       });
   };
 
-  handleShowNextCharacter = () => {};
+  // showing characte's meaning
+  handleShowMeaning = () => {
+    this.setState({
+      isMeaningShown: !this.state.isMeaningShown
+    });
+  };
+
+  // moving to next flash card
+  handleShowNextCharacter = () => {
+    if (this.state.kanaCounter !== 45) {
+      this.setState({
+        kanaCounter: this.state.kanaCounter + 1,
+        counter: this.state.counter + 1
+      });
+    } else {
+      this.setState({
+        kanaCounter: this.state.kanaCounter,
+        counter: this.state.counter
+      });
+    }
+  };
+
+  // moving to previous flash card
+  handleShowPrevCharacter = () => {
+    if (this.state.kanaCounter !== 0) {
+      this.setState({
+        kanaCounter: this.state.kanaCounter - 1,
+        counter: this.state.counter - 1
+      });
+    } else {
+      this.setState({
+        kanaCounter: this.state.kanaCounter,
+        counter: this.state.counter
+      });
+    }
+  };
 
   render() {
-    // const { kanaTable } = this.state;
-    console.log(this.state.kanaTable);
+    const { kanaTable, kanaCounter, isMeaningShown } = this.state;
     return (
       <section className="flash-cards">
         <UserNavBar />
-        <div className="flash-cards-container">
-          <span className="flash-cards-id"></span>
-          <p className="flash-cards-character">
-            {/* {this.state.kanaTable[this.state.arrayCounter].hiragana} */}
-          </p>
+        <div className="flash-cards-container" onClick={this.handleShowMeaning}>
+          <span className="flash-cards-id">{this.state.counter}</span>
+          {!isMeaningShown ? (
+            <p className="flash-cards-character">
+              {kanaTable[this.state.kanaCounter] &&
+                kanaTable[kanaCounter].hiragana}
+            </p>
+          ) : (
+            <p className="flash-cards-meaning">
+              {kanaTable[kanaCounter] && kanaTable[kanaCounter].meaning}
+            </p>
+          )}
         </div>
-        <BtnsBox />
+        <BtnsBox
+          onPrev={this.handleShowPrevCharacter}
+          onNext={this.handleShowNextCharacter}
+        />
       </section>
     );
   }
