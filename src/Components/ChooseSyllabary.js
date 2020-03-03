@@ -23,13 +23,13 @@ class ChooseSyllabary extends Component {
       isChosen: true
     });
   };
-  componentWillUnmount = () => {
-    this.setState({
-      isHiraganaChosen: false,
-      isKatakanaChosen: false,
-      isChosen: false
-    });
-  };
+  // componentWillUnmount = () => {
+  //   this.setState({
+  //     isHiraganaChosen: false,
+  //     isKatakanaChosen: false,
+  //     isChosen: false
+  //   });
+  // };
 
   render() {
     return (
