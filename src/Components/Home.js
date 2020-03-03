@@ -27,17 +27,15 @@ class Home extends Component {
           <Link to="/cheat-sheet">
             <HomeMenuPosition title="Ściągawka" content="Tablica znaków" />
           </Link>
-
-          <HomeMenuPosition
-            title="Fiszki"
-            content="Ucz sie we własnym tempie"
-            event={this.handleToggleClick}
-          />
-          <HomeMenuPosition
-            title="Quiz"
-            content="Sprawdź się"
-            event={this.handleToggleClick}
-          />
+          <Link to="/flash-cards">
+            <HomeMenuPosition
+              title="Fiszki"
+              content="Ucz sie we własnym tempie"
+            />
+          </Link>
+          <Link to="/quiz">
+            <HomeMenuPosition title="Quiz" content="Sprawdź się" />
+          </Link>
         </main>
       </section>
     );

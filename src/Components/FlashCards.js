@@ -76,7 +76,7 @@ class FlashCards extends Component {
           {!isMeaningShown ? (
             <p className="flash-cards-character">
               {kanaTable[this.state.kanaCounter] &&
-                kanaTable[kanaCounter].hiragana}
+                kanaTable[kanaCounter].this.props.match.params.syllabary}
             </p>
           ) : (
             <p className="flash-cards-meaning">
