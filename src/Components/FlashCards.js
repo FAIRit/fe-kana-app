@@ -6,27 +6,16 @@ class FlashCards extends Component {
   state = {
     kanaTable: [],
     kanaCounter: 0,
-    counter: 1,
     isMeaningShown: false
   };
 
   // fetching kana data
   componentDidMount = () => {
-    fetch("http://localhost:3000/kana.json", {
-      headers: {
-        "content-type": "application/json"
-      }
-    })
-      .then(resp => {
-        return resp.json();
+    this.setState({
+      kanaTable: this.props.kanaTable.sort(() => {
+        return 0.5 - Math.random();
       })
-      .then(data => {
-        this.setState({
-          kanaTable: data.kana.sort(() => {
-            return 0.5 - Math.random();
-          })
-        });
-      });
+    });
   };
 
   // showing characte's meaning
@@ -38,15 +27,9 @@ class FlashCards extends Component {
 
   // moving to next flash card
   handleShowNextCharacter = () => {
-    if (this.state.kanaCounter !== 45) {
+    if (this.state.kanaCounter !== this.state.kanaTable.length - 1) {
       this.setState({
-        kanaCounter: this.state.kanaCounter + 1,
-        counter: this.state.counter + 1
-      });
-    } else {
-      this.setState({
-        kanaCounter: this.state.kanaCounter,
-        counter: this.state.counter
+        kanaCounter: this.state.kanaCounter + 1
       });
     }
   };
@@ -55,24 +38,18 @@ class FlashCards extends Component {
   handleShowPrevCharacter = () => {
     if (this.state.kanaCounter !== 0) {
       this.setState({
-        kanaCounter: this.state.kanaCounter - 1,
-        counter: this.state.counter - 1
-      });
-    } else {
-      this.setState({
-        kanaCounter: this.state.kanaCounter,
-        counter: this.state.counter
+        kanaCounter: this.state.kanaCounter - 1
       });
     }
   };
 
   render() {
-    const { kanaTable, kanaCounter, isMeaningShown } = this.state;
+    const { kanaCounter, isMeaningShown, kanaTable } = this.state;
     return (
       <section className="flash-cards">
         <UserNavBar />
         <div className="flash-cards-container" onClick={this.handleShowMeaning}>
-          <span className="flash-cards-id">{this.state.counter}</span>
+          <span className="flash-cards-id">{this.state.kanaCounter + 1}</span>
           {!isMeaningShown ? (
             <p className="flash-cards-character">
               {kanaTable[this.state.kanaCounter] &&

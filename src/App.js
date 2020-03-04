@@ -8,16 +8,47 @@ import FlashCards from "./Components/FlashCards";
 import ChooseSyllabary from "./Components/ChooseSyllabary";
 
 class App extends Component {
+  state = {
+    kanaTable: []
+  };
+
+  componentDidMount = () => {
+    fetch("http://localhost:3000/kana.json", {
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then(resp => {
+        return resp.json();
+      })
+      .then(data => {
+        this.setState({
+          kanaTable: data.kana
+        });
+      });
+  };
   render() {
+    const { kanaTable } = this.state;
     return (
       <HashRouter>
         <Switch>
           <Route exact path="/" component={Login} />
           <Route path="/home" component={Home} />
           <Route path="/register" component={Registration} />
-          <Route path="/cheat-sheet" component={CheatSheet} />
+          <Route
+            path="/cheat-sheet"
+            component={routeProps => (
+              <CheatSheet {...routeProps} kanaTable={kanaTable} />
+            )}
+          />
           <Route exact path="/flash-cards" component={ChooseSyllabary} />
-          <Route exact path="/flash-cards/:syllabary" component={FlashCards} />
+          <Route
+            exact
+            path="/flash-cards/:syllabary"
+            component={routeProps => (
+              <FlashCards {...routeProps} kanaTable={kanaTable} />
+            )}
+          />
         </Switch>
       </HashRouter>
     );
