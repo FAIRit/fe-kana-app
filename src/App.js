@@ -6,6 +6,7 @@ import Registration from "./Components/Registration";
 import CheatSheet from "./Components/CheatSheet";
 import FlashCards from "./Components/FlashCards";
 import ChooseSyllabary from "./Components/ChooseSyllabary";
+import Quiz from "./Components/Quiz";
 
 class App extends Component {
   state = {
@@ -47,6 +48,13 @@ class App extends Component {
             path="/flash-cards/:syllabary"
             component={routeProps => (
               <FlashCards {...routeProps} kanaTable={kanaTable} />
+            )}
+          />
+          <Route exact path="/quiz" component={ChooseSyllabary} />
+          <Route
+            path="/quiz/:syllabary"
+            component={routeProps => (
+              <Quiz {...routeProps} kanaTable={kanaTable} />
             )}
           />
         </Switch>
