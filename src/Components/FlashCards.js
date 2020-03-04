@@ -4,18 +4,11 @@ import BtnsBox from "./BtnsBox";
 
 class FlashCards extends Component {
   state = {
-    kanaTable: [],
+    kanaTable: this.props.kanaTable.sort(() => {
+      return 0.5 - Math.random();
+    }),
     kanaCounter: 0,
     isMeaningShown: false
-  };
-
-  // fetching kana data
-  componentDidMount = () => {
-    this.setState({
-      kanaTable: this.props.kanaTable.sort(() => {
-        return 0.5 - Math.random();
-      })
-    });
   };
 
   // showing characte's meaning
@@ -49,10 +42,10 @@ class FlashCards extends Component {
       <section className="flash-cards">
         <UserNavBar />
         <div className="flash-cards-container" onClick={this.handleShowMeaning}>
-          <span className="flash-cards-id">{this.state.kanaCounter + 1}</span>
+          <span className="flash-cards-id">{kanaCounter + 1}</span>
           {!isMeaningShown ? (
             <p className="flash-cards-character">
-              {kanaTable[this.state.kanaCounter] &&
+              {kanaTable[kanaCounter] &&
                 kanaTable[kanaCounter][this.props.match.params.syllabary]}
             </p>
           ) : (
