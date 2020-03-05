@@ -14,7 +14,7 @@ class Quiz extends Component {
     answer: ""
   };
 
-  handleGetAnswer = e => {
+  handleChangeInputValue = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -41,37 +41,59 @@ class Quiz extends Component {
   };
 
   handleCheckAnswer = e => {
-    e.target.previousElementSibling.value = "";
+    e.preventDefault();
     if (
       this.state.answer === this.state.kanaTable[this.state.kanaCounter].meaning
     ) {
       console.log("Poprawna odpowiedź!");
+      const data = {
+        syllabary: this.props.match.params.syllabary,
+        meaning: this.state.kanaTable[this.state.kanaCounter].meaning,
+        character: this.state.kanaTable[this.state.kanaCounter][
+          this.props.match.params.syllabary
+        ]
+      };
+      this.setState({
+        correctAnswers: [...this.state.correctAnswers, data]
+      });
     } else {
       console.log("Źle");
+
+      const data = {
+        syllabary: this.props.match.params.syllabary,
+        meaning: this.state.kanaTable[this.state.kanaCounter].meaning,
+        character: this.state.kanaTable[this.state.kanaCounter][
+          this.props.match.params.syllabary
+        ]
+      };
+      this.setState({
+        incorrectAnswers: [...this.state.incorrectAnswers, data]
+      });
     }
   };
 
   render() {
-    const { kanaTable, kanaCounter } = this.state;
+    const { kanaTable, kanaCounter, answer } = this.state;
     return (
       <section className="quiz">
         <UserNavBar />
         <main className="quiz-container">
           <ScoreBar counter={this.state} />
-          <div className="quiz-character">
-            {kanaTable[kanaCounter][this.props.match.params.syllabary]}
-          </div>
-          <label className="quiz-answer-label">
-            <input
-              type="text"
-              placeholder="Wpisz odpowiedź"
-              name="answer"
-              onChange={this.handleGetAnswer}
-            />
-            <button className="quiz-submit" onClick={this.handleCheckAnswer}>
-              Spradź
-            </button>
-          </label>
+          <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
+            <div className="quiz-character">
+              {kanaTable[kanaCounter][this.props.match.params.syllabary]}
+            </div>
+            <label className="quiz-answer-label">
+              <input
+                type="text"
+                placeholder="Wpisz odpowiedź"
+                value={answer}
+                name="answer"
+                onChange={this.handleChangeInputValue}
+              />
+            </label>
+            <button className="quiz-submit">Sprawdź</button>
+          </form>
         </main>
         <BtnsBox
           onPrev={this.handleShowPrevCharacter}
