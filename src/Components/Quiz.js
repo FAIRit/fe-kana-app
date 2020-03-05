@@ -40,40 +40,41 @@ class Quiz extends Component {
     }
   };
 
+  //checking answers
   handleCheckAnswer = e => {
+    const {
+      kanaTable,
+      kanaCounter,
+      correctAnswers,
+      incorrectAnswers,
+      answer
+    } = this.state;
+    const { syllabary } = this.props.match.params;
     e.preventDefault();
-    if (
-      this.state.answer === this.state.kanaTable[this.state.kanaCounter].meaning
-    ) {
-      console.log("Poprawna odpowiedź!");
+    if (answer === kanaTable[kanaCounter].meaning) {
       const data = {
-        syllabary: this.props.match.params.syllabary,
-        meaning: this.state.kanaTable[this.state.kanaCounter].meaning,
-        character: this.state.kanaTable[this.state.kanaCounter][
-          this.props.match.params.syllabary
-        ]
+        syllabary: syllabary,
+        meaning: kanaTable[kanaCounter].meaning,
+        character: kanaTable[kanaCounter][syllabary]
       };
       this.setState({
-        correctAnswers: [...this.state.correctAnswers, data]
+        correctAnswers: [...correctAnswers, data]
       });
     } else {
-      console.log("Źle");
-
       const data = {
-        syllabary: this.props.match.params.syllabary,
-        meaning: this.state.kanaTable[this.state.kanaCounter].meaning,
-        character: this.state.kanaTable[this.state.kanaCounter][
-          this.props.match.params.syllabary
-        ]
+        syllabary: syllabary,
+        meaning: kanaTable[kanaCounter].meaning,
+        character: kanaTable[kanaCounter][syllabary]
       };
       this.setState({
-        incorrectAnswers: [...this.state.incorrectAnswers, data]
+        incorrectAnswers: [...incorrectAnswers, data]
       });
     }
   };
 
   render() {
     const { kanaTable, kanaCounter, answer } = this.state;
+    const { syllabary } = this.props.match.params;
     return (
       <section className="quiz">
         <UserNavBar />
@@ -81,7 +82,7 @@ class Quiz extends Component {
           <ScoreBar counter={this.state} />
           <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
             <div className="quiz-character">
-              {kanaTable[kanaCounter][this.props.match.params.syllabary]}
+              {kanaTable[kanaCounter][syllabary]}
             </div>
             <label className="quiz-answer-label">
               <input
@@ -98,6 +99,7 @@ class Quiz extends Component {
         <BtnsBox
           onPrev={this.handleShowPrevCharacter}
           onNext={this.handleShowNextCharacter}
+          componentToUse="quiz"
         />
       </section>
     );

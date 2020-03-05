@@ -14,9 +14,12 @@ class BtnsBox extends Component {
   render() {
     return (
       <div className="btns-box">
-        <button className="btn-prev" onClick={this.handlePrev}>
-          Poprzedni
-        </button>
+        {!this.props.componentToUse && (
+          <button className="btn-prev" onClick={this.handlePrev}>
+            Poprzedni
+          </button>
+        )}
+
         <button className="btn-next" onClick={this.handleNext}>
           Nastepny
         </button>
