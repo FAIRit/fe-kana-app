@@ -9,14 +9,25 @@ class Login extends Component {
       <section className="login">
         <form className="login-form">
           <h1 className="login-form-logo">Kana App</h1>
-          {/* <FormInput type="text" title="Nazwa użytkownika" /> */}
           <TextField
-            id="user-name"
+            id="user-name-login"
             label="Nazwa użytkownika"
             variant="outlined"
+            type="text"
           />
-          <TextField id="user-email" label="Email" variant="outlined" />
-          <TextField id="user-password" label="Hasło" variant="outlined" />
+          <TextField
+            id="user-email-login"
+            label="Email"
+            variant="outlined"
+            type="email"
+          />
+          <TextField
+            id="user-password-login"
+            label="Hasło"
+            variant="outlined"
+            type="password"
+          />
+          {/* <FormInput type="text" title="Nazwa użytkownika" /> */}
           {/* <FormInput type="email" title="Adres email" /> */}
           {/* <FormInput type="password" title="Hasło" /> */}
           <div className="form-btns-container">
