@@ -7,6 +7,7 @@ import CheatSheet from "./Components/CheatSheet";
 import FlashCards from "./Components/FlashCards";
 import ChooseSyllabary from "./Components/ChooseSyllabary";
 import Quiz from "./Components/Quiz";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 class App extends Component {
   state = {
@@ -32,6 +33,7 @@ class App extends Component {
     const { kanaTable } = this.state;
     return (
       <HashRouter>
+        <CssBaseline />
         <Switch>
           <Route exact path="/" component={Login} />
           <Route path="/home" component={Home} />
