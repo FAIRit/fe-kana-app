@@ -3,11 +3,15 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-// import "./scss/main.scss";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 ReactDOM.render(
   <Router>
-    <App />
+    <CssBaseline />
+    <Container maxWidth="md">
+      <App />
+    </Container>
   </Router>,
   document.getElementById("root")
 );
