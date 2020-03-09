@@ -4,6 +4,7 @@ import ScoreBar from "./ScoreBar";
 import BtnsBox from "./BtnsBox";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
 class Quiz extends Component {
   state = {
@@ -116,7 +117,7 @@ class Quiz extends Component {
                       id="answer"
                     />
                   </label>
-                  <button className="quiz-submit">Sprawdź</button>
+                  <Button variant="contained">Sprawdź</Button>
                 </Grid>
               </form>
             </main>
