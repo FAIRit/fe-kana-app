@@ -5,26 +5,8 @@ import SingleSign from "./SingleSign";
 
 class CheatSheet extends Component {
   state = {
-    kanaTable: [],
     isHiraganaShown: false,
     isKatakanaShown: false
-  };
-
-  //fetching japanese characters
-  componentDidMount = () => {
-    fetch("http://localhost:3000/kana.json", {
-      headers: {
-        "content-type": "application/json"
-      }
-    })
-      .then(resp => {
-        return resp.json();
-      })
-      .then(data => {
-        this.setState({
-          kanaTable: data.kana
-        });
-      });
   };
 
   handleGetHiragana = () => {
@@ -41,7 +23,8 @@ class CheatSheet extends Component {
   };
 
   render() {
-    const { isHiraganaShown, isKatakanaShown, kanaTable } = this.state;
+    const { isHiraganaShown, isKatakanaShown } = this.state;
+    const { kanaTable } = this.props;
     return (
       <section className="cheat-sheet" onClick={this.handleFetchData}>
         <UserNavBar />

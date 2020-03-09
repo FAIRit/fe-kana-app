@@ -10,6 +10,7 @@ class ChooseSyllabary extends Component {
           <div className="syllabary-inputs-box">
             <Link to={this.props.match.url + "/hiragana"}>Hiragana</Link>
             <Link to={this.props.match.url + "/katakana"}>Katakana</Link>
+            <Link to="/home">Powrót</Link>
           </div>
         </div>
       </section>
