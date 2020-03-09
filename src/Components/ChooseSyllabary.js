@@ -17,8 +17,6 @@ class ChooseSyllabary extends Component {
             >
               Hiragana
             </Button>
-            {/* <Link to={this.props.match.url + "/hiragana"}>Hiragana</Link> */}
-            {/* <Link to={this.props.match.url + "/katakana"}>Katakana</Link> */}
             <Button
               variant="contained"
               component={RouterLink}

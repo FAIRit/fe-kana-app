@@ -16,23 +16,13 @@ class BtnsBox extends Component {
     return (
       <div className="btns-box">
         {!this.props.componentToUse && (
-          // <button className="btn-prev" onClick={this.handlePrev}>
-          //   Poprzedni
-          // </button>
           <Button variant="contained" onClick={this.handlePrev}>
             Poprzedni
           </Button>
         )}
-
-        {/* <button className="btn-next" onClick={this.handleNext}>
-          Nastepny
-        </button> */}
         <Button variant="contained" onClick={this.handleNext}>
           Następny
         </Button>
-        {/* <Link to="/home">
-          <button className="back-to-home-btn">Powrót</button>
-        </Link> */}
         <Button variant="contained" component={Link} to="/home">
           Powrót
         </Button>

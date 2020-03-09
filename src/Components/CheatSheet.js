@@ -31,22 +31,9 @@ class CheatSheet extends Component {
         <UserNavBar />
         <main className="cheat-sheet-container">
           <div className="cheat-sheet-btns">
-            {/* <button
-              className="cheat-sheet-hiragana-btn"
-              onClick={this.handleGetHiragana}
-            >
-              Hiragana
-            </button> */}
-
             <Button variant="contained" onClick={this.handleGetHiragana}>
               Hiragana
             </Button>
-            {/* <button
-              className="cheat-sheet-katakana-btn"
-              onClick={this.handleGetKatakana}
-            >
-              Katakana
-            </button> */}
             <Button variant="contained" onClick={this.handleGetKatakana}>
               Katakana
             </Button>
@@ -67,9 +54,6 @@ class CheatSheet extends Component {
                 key={kana.id}
               />
             ))}
-          {/* <Link to="/home">
-            <button className="back-to-home-btn">Powrót</button>
-          </Link> */}
           <Button variant="contained" component={Link} to="/home">
             Powrót
           </Button>
