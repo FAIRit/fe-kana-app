@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
 class Registration extends Component {
   render() {
@@ -61,13 +62,13 @@ class Registration extends Component {
                   justify="center"
                   alignItems="center"
                 >
-                  <Link to="/home">
-                    <button className="form-register-btn">Załóż konto</button>
-                  </Link>
+                  <Button variant="contained" component={Link} to="/home">
+                    Załóż konto
+                  </Button>
                   lub
-                  <Link to="/">
-                    <button className="form-login-btn">Zaloguj się</button>
-                  </Link>
+                  <Button variant="contained" component={Link} to="/">
+                    Zaloguj się
+                  </Button>
                 </Grid>
               </div>
             </Grid>

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
 
 class ChooseSyllabary extends Component {
   render() {
@@ -29,9 +31,23 @@ class ChooseSyllabary extends Component {
             >
               <h2 className="syllabary-header">Wybierz sylabariusz</h2>
               <div className="syllabary-inputs-box">
-                <Link to={this.props.match.url + "/hiragana"}>Hiragana</Link>
-                <Link to={this.props.match.url + "/katakana"}>Katakana</Link>
-                <Link to="/home">Powrót</Link>
+                <Button
+                  variant="contained"
+                  component={RouterLink}
+                  to={this.props.match.url + "/hiragana"}
+                >
+                  Hiragana
+                </Button>
+                <Button
+                  variant="contained"
+                  component={RouterLink}
+                  to={this.props.match.url + "/katakana"}
+                >
+                  Katakana
+                </Button>
+                <Link component={RouterLink} to="/home">
+                  Powrót
+                </Link>
               </div>
             </Grid>
           </div>

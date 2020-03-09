@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import { styled } from "@material-ui/core/styles";
 
 class Login extends Component {
@@ -57,13 +58,13 @@ class Login extends Component {
                   <span className="form-forgot-password">
                     Zapomniałeś hasła?
                   </span>
-                  <Link to="/home">
-                    <button className="form-login-btn">Zaloguj się</button>
-                  </Link>
+                  <Button variant="contained" component={Link} to="/home">
+                    Zaloguj się
+                  </Button>
                   lub
-                  <Link to="/register">
-                    <button className="form-register-btn">Załóż konto</button>
-                  </Link>
+                  <Button variant="contained" component={Link} to="/register">
+                    Załóż konto
+                  </Button>
                 </Grid>
               </div>
             </Grid>

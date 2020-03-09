@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import UserNavBar from "./UserNavBar";
 import SingleSign from "./SingleSign";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import { styled } from "@material-ui/core/styles";
 
 class CheatSheet extends Component {
@@ -40,24 +41,18 @@ class CheatSheet extends Component {
         <OuterGrid
           container
           direction="column"
-          justify="center"
+          justify="flex-start"
           alignItems="stretch"
         >
           <section className="cheat-sheet" onClick={this.handleFetchData}>
             <main className="cheat-sheet-container">
               <div className="cheat-sheet-btns">
-                <button
-                  className="cheat-sheet-hiragana-btn"
-                  onClick={this.handleGetHiragana}
-                >
+                <Button variant="contained" onClick={this.handleGetHiragana}>
                   Hiragana
-                </button>
-                <button
-                  className="cheat-sheet-katakana-btn"
-                  onClick={this.handleGetKatakana}
-                >
+                </Button>
+                <Button variant="contained" onClick={this.handleGetKatakana}>
                   Katakana
-                </button>
+                </Button>
               </div>
               {isHiraganaShown &&
                 kanaTable.map(kana => (
@@ -75,9 +70,9 @@ class CheatSheet extends Component {
                     key={kana.id}
                   />
                 ))}
-              <Link to="/home">
-                <button className="back-to-home-btn">Powrót</button>
-              </Link>
+              <Button variant="contained" component={Link} to="/home">
+                Powrót
+              </Button>
             </main>
           </section>
         </OuterGrid>
