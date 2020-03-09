@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 class BtnsBox extends Component {
   handleNext = e => {
@@ -15,17 +16,26 @@ class BtnsBox extends Component {
     return (
       <div className="btns-box">
         {!this.props.componentToUse && (
-          <button className="btn-prev" onClick={this.handlePrev}>
+          // <button className="btn-prev" onClick={this.handlePrev}>
+          //   Poprzedni
+          // </button>
+          <Button variant="contained" onClick={this.handlePrev}>
             Poprzedni
-          </button>
+          </Button>
         )}
 
-        <button className="btn-next" onClick={this.handleNext}>
+        {/* <button className="btn-next" onClick={this.handleNext}>
           Nastepny
-        </button>
-        <Link to="/home">
+        </button> */}
+        <Button variant="contained" onClick={this.handleNext}>
+          Następny
+        </Button>
+        {/* <Link to="/home">
           <button className="back-to-home-btn">Powrót</button>
-        </Link>
+        </Link> */}
+        <Button variant="contained" component={Link} to="/home">
+          Powrót
+        </Button>
       </div>
     );
   }
