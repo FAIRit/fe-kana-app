@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import FormInput from "./FormInput";
 import TextField from "@material-ui/core/TextField";
 
 class Login extends Component {
@@ -27,9 +26,6 @@ class Login extends Component {
             variant="outlined"
             type="password"
           />
-          {/* <FormInput type="text" title="Nazwa użytkownika" /> */}
-          {/* <FormInput type="email" title="Adres email" /> */}
-          {/* <FormInput type="password" title="Hasło" /> */}
           <div className="form-btns-container">
             <span className="form-forgot-password">Zapomniałeś hasła?</span>
             <Link to="/home">

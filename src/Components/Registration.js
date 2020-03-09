@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import FormInput from "./FormInput";
 import TextField from "@material-ui/core/TextField";
 
 class Registration extends Component {
@@ -33,10 +32,6 @@ class Registration extends Component {
             variant="outlined"
             type="password"
           />
-          {/* <FormInput type="text" title="Nazwa użytkownika" /> */}
-          {/* <FormInput type="email" title="Adres email" /> */}
-          {/* <FormInput type="password" title="Hasło" /> */}
-          {/* <FormInput type="password" title="Powtórz hasło" /> */}
           <div className="form-btns-container">
             <Link to="/home">
               <button className="form-register-btn">Załóż konto</button>
