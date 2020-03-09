@@ -5,13 +5,17 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import theme from "./Components/StyledCssBaseline";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 ReactDOM.render(
   <Router>
-    <CssBaseline />
-    <Container maxWidth="md">
-      <App />
-    </Container>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container maxWidth="md">
+        <App />
+      </Container>
+    </ThemeProvider>
   </Router>,
   document.getElementById("root")
 );
