@@ -84,13 +84,14 @@ class Quiz extends Component {
             <div className="quiz-character">
               {kanaTable[kanaCounter][syllabary]}
             </div>
-            <label className="quiz-answer-label">
+            <label className="quiz-answer-label" htmlFor="answer">
               <input
                 type="text"
                 placeholder="Wpisz odpowiedź"
                 value={answer}
                 name="answer"
                 onChange={this.handleChangeInputValue}
+                id="answer"
               />
             </label>
             <button className="quiz-submit">Sprawdź</button>
