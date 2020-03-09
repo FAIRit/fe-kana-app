@@ -9,6 +9,11 @@ const theme = createMuiTheme({
           height: "100vh"
         }
       }
+    },
+    MuiContainer: {
+      root: {
+        height: "100vh"
+      }
     }
   }
 });

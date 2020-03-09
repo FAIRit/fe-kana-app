@@ -3,6 +3,7 @@ import UserNavBar from "./UserNavBar";
 import ScoreBar from "./ScoreBar";
 import BtnsBox from "./BtnsBox";
 import Grid from "@material-ui/core/Grid";
+import { styled } from "@material-ui/core/styles";
 
 class Quiz extends Component {
   state = {
@@ -74,45 +75,59 @@ class Quiz extends Component {
   };
 
   render() {
+    const OuterGrid = styled(Grid)({
+      background: "rgb(255,255,255)",
+      height: "70%",
+      marginTop: "90px",
+      borderRadius: "35px",
+      boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+    });
     const { kanaTable, kanaCounter, answer } = this.state;
     const { syllabary } = this.props.match.params;
     return (
-      <section className="quiz">
+      <>
         <UserNavBar />
-        <Grid container direction="column" justify="center" alignItems="center">
-          <main className="quiz-container">
-            <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
-              <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-              >
-                <ScoreBar counter={this.state} />
-                <div className="quiz-character">
-                  {kanaTable[kanaCounter][syllabary]}
-                </div>
-                <label className="quiz-answer-label" htmlFor="answer">
-                  <input
-                    type="text"
-                    placeholder="Wpisz odpowiedź"
-                    value={answer}
-                    name="answer"
-                    onChange={this.handleChangeInputValue}
-                    id="answer"
-                  />
-                </label>
-                <button className="quiz-submit">Sprawdź</button>
-              </Grid>
-            </form>
-          </main>
-          <BtnsBox
-            onPrev={this.handleShowPrevCharacter}
-            onNext={this.handleShowNextCharacter}
-            componentToUse="quiz"
-          />
-        </Grid>
-      </section>
+        <OuterGrid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          <section className="quiz">
+            <main className="quiz-container">
+              <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
+                <Grid
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                >
+                  <ScoreBar counter={this.state} />
+                  <div className="quiz-character">
+                    {kanaTable[kanaCounter][syllabary]}
+                  </div>
+                  <label className="quiz-answer-label" htmlFor="answer">
+                    <input
+                      type="text"
+                      placeholder="Wpisz odpowiedź"
+                      value={answer}
+                      name="answer"
+                      onChange={this.handleChangeInputValue}
+                      id="answer"
+                    />
+                  </label>
+                  <button className="quiz-submit">Sprawdź</button>
+                </Grid>
+              </form>
+            </main>
+            <BtnsBox
+              onPrev={this.handleShowPrevCharacter}
+              onNext={this.handleShowNextCharacter}
+              componentToUse="quiz"
+            />
+          </section>
+        </OuterGrid>
+      </>
     );
   }
 }
