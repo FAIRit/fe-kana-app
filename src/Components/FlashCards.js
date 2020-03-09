@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UserNavBar from "./UserNavBar";
 import BtnsBox from "./BtnsBox";
+import Grid from "@material-ui/core/Grid";
 
 class FlashCards extends Component {
   state = {
@@ -41,23 +42,28 @@ class FlashCards extends Component {
     return (
       <section className="flash-cards">
         <UserNavBar />
-        <div className="flash-cards-container" onClick={this.handleShowMeaning}>
-          <span className="flash-cards-id">{kanaCounter + 1}</span>
-          {!isMeaningShown ? (
-            <p className="flash-cards-character">
-              {kanaTable[kanaCounter] &&
-                kanaTable[kanaCounter][this.props.match.params.syllabary]}
-            </p>
-          ) : (
-            <p className="flash-cards-meaning">
-              {kanaTable[kanaCounter] && kanaTable[kanaCounter].meaning}
-            </p>
-          )}
-        </div>
-        <BtnsBox
-          onPrev={this.handleShowPrevCharacter}
-          onNext={this.handleShowNextCharacter}
-        />
+        <Grid container direction="column" justify="center" alignItems="center">
+          <div
+            className="flash-cards-container"
+            onClick={this.handleShowMeaning}
+          >
+            <span className="flash-cards-id">{kanaCounter + 1}</span>
+            {!isMeaningShown ? (
+              <p className="flash-cards-character">
+                {kanaTable[kanaCounter] &&
+                  kanaTable[kanaCounter][this.props.match.params.syllabary]}
+              </p>
+            ) : (
+              <p className="flash-cards-meaning">
+                {kanaTable[kanaCounter] && kanaTable[kanaCounter].meaning}
+              </p>
+            )}
+          </div>
+          <BtnsBox
+            onPrev={this.handleShowPrevCharacter}
+            onNext={this.handleShowNextCharacter}
+          />
+        </Grid>
       </section>
     );
   }

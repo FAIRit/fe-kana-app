@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserNavBar from "./UserNavBar";
 import ScoreBar from "./ScoreBar";
 import BtnsBox from "./BtnsBox";
+import Grid from "@material-ui/core/Grid";
 
 class Quiz extends Component {
   state = {
@@ -78,30 +79,39 @@ class Quiz extends Component {
     return (
       <section className="quiz">
         <UserNavBar />
-        <main className="quiz-container">
-          <ScoreBar counter={this.state} />
-          <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
-            <div className="quiz-character">
-              {kanaTable[kanaCounter][syllabary]}
-            </div>
-            <label className="quiz-answer-label" htmlFor="answer">
-              <input
-                type="text"
-                placeholder="Wpisz odpowiedź"
-                value={answer}
-                name="answer"
-                onChange={this.handleChangeInputValue}
-                id="answer"
-              />
-            </label>
-            <button className="quiz-submit">Sprawdź</button>
-          </form>
-        </main>
-        <BtnsBox
-          onPrev={this.handleShowPrevCharacter}
-          onNext={this.handleShowNextCharacter}
-          componentToUse="quiz"
-        />
+        <Grid container direction="column" justify="center" alignItems="center">
+          <main className="quiz-container">
+            <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+              >
+                <ScoreBar counter={this.state} />
+                <div className="quiz-character">
+                  {kanaTable[kanaCounter][syllabary]}
+                </div>
+                <label className="quiz-answer-label" htmlFor="answer">
+                  <input
+                    type="text"
+                    placeholder="Wpisz odpowiedź"
+                    value={answer}
+                    name="answer"
+                    onChange={this.handleChangeInputValue}
+                    id="answer"
+                  />
+                </label>
+                <button className="quiz-submit">Sprawdź</button>
+              </Grid>
+            </form>
+          </main>
+          <BtnsBox
+            onPrev={this.handleShowPrevCharacter}
+            onNext={this.handleShowNextCharacter}
+            componentToUse="quiz"
+          />
+        </Grid>
       </section>
     );
   }
