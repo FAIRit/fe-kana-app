@@ -4,6 +4,7 @@ import UserNavBar from "./UserNavBar";
 import SingleSign from "./SingleSign";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 
 class CheatSheet extends Component {
@@ -33,7 +34,20 @@ class CheatSheet extends Component {
       height: "80%",
       marginTop: "50px",
       borderRadius: "35px",
+      padding: "30px 30px",
       boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+    });
+    const FlexBox = styled(Box)({
+      display: "flex",
+      flexDirection: "column",
+      flexWrap: "wrap",
+      fontSize: "1.9rem",
+      margin: "0 auto",
+      height: "87%"
+    });
+
+    const MainBox = styled(Box)({
+      height: "100%"
     });
     return (
       <>
@@ -43,17 +57,20 @@ class CheatSheet extends Component {
           direction="column"
           justify="flex-start"
           alignItems="stretch"
+          component="section"
+          onClick={this.handleFetchData}
+          className="cheat-sheet"
         >
-          <section className="cheat-sheet" onClick={this.handleFetchData}>
-            <main className="cheat-sheet-container">
-              <div className="cheat-sheet-btns">
-                <Button variant="contained" onClick={this.handleGetHiragana}>
-                  Hiragana
-                </Button>
-                <Button variant="contained" onClick={this.handleGetKatakana}>
-                  Katakana
-                </Button>
-              </div>
+          <div className="cheat-sheet-btns">
+            <Button variant="contained" onClick={this.handleGetHiragana}>
+              Hiragana
+            </Button>
+            <Button variant="contained" onClick={this.handleGetKatakana}>
+              Katakana
+            </Button>
+          </div>
+          <MainBox component="main">
+            <FlexBox>
               {isHiraganaShown &&
                 kanaTable.map(kana => (
                   <SingleSign
@@ -70,11 +87,11 @@ class CheatSheet extends Component {
                     key={kana.id}
                   />
                 ))}
-              <Button variant="contained" component={Link} to="/home">
-                Powrót
-              </Button>
-            </main>
-          </section>
+            </FlexBox>
+            <Button variant="contained" component={Link} to="/home">
+              Powrót
+            </Button>
+          </MainBox>
         </OuterGrid>
       </>
     );

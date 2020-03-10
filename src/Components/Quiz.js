@@ -5,6 +5,7 @@ import BtnsBox from "./BtnsBox";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Input from "@material-ui/core/Input";
 
 class Quiz extends Component {
   state = {
@@ -23,21 +24,14 @@ class Quiz extends Component {
     });
   };
 
-  // moving to next flash card
+  // moving to next quiz card
   handleShowNextCharacter = () => {
-    if (this.state.kanaCounter !== this.state.kanaTable.length - 1) {
+    if (
+      this.state.kanaCounter !== this.state.kanaTable.length - 1 &&
+      this.state.answer !== ""
+    ) {
       this.setState({
         kanaCounter: this.state.kanaCounter + 1,
-        answer: ""
-      });
-    }
-  };
-
-  // moving to previous flash card
-  handleShowPrevCharacter = () => {
-    if (this.state.kanaCounter !== 0) {
-      this.setState({
-        kanaCounter: this.state.kanaCounter - 1,
         answer: ""
       });
     }
@@ -63,6 +57,8 @@ class Quiz extends Component {
       this.setState({
         correctAnswers: [...correctAnswers, data]
       });
+    } else if (answer === "") {
+      e.target = "disabled";
     } else {
       const data = {
         syllabary: syllabary,
@@ -108,16 +104,18 @@ class Quiz extends Component {
                     {kanaTable[kanaCounter][syllabary]}
                   </div>
                   <label className="quiz-answer-label" htmlFor="answer">
-                    <input
+                    <Input
                       type="text"
                       placeholder="Wpisz odpowiedź"
                       value={answer}
                       name="answer"
                       onChange={this.handleChangeInputValue}
                       id="answer"
-                    />
+                    ></Input>
                   </label>
-                  <Button variant="contained">Sprawdź</Button>
+                  <Button variant="contained" type="submit">
+                    Sprawdź
+                  </Button>
                 </Grid>
               </form>
             </main>

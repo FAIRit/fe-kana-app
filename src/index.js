@@ -12,7 +12,7 @@ ReactDOM.render(
   <Router>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <App />
       </Container>
     </ThemeProvider>
