@@ -3,10 +3,19 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import theme from "./Components/StyledCssBaseline";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 ReactDOM.render(
   <Router>
-    <App />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container maxWidth="md">
+        <App />
+      </Container>
+    </ThemeProvider>
   </Router>,
   document.getElementById("root")
 );
