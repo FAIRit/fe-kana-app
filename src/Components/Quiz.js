@@ -7,6 +7,14 @@ import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 
+const OuterGrid = styled(Grid)({
+  background: "rgb(255,255,255)",
+  height: "70%",
+  marginTop: "90px",
+  borderRadius: "35px",
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+});
+
 class Quiz extends Component {
   state = {
     kanaTable: this.props.kanaTable.sort(() => {
@@ -72,13 +80,6 @@ class Quiz extends Component {
   };
 
   render() {
-    const OuterGrid = styled(Grid)({
-      background: "rgb(255,255,255)",
-      height: "70%",
-      marginTop: "90px",
-      borderRadius: "35px",
-      boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
-    });
     const { kanaTable, kanaCounter, answer } = this.state;
     const { syllabary } = this.props.match.params;
     return (

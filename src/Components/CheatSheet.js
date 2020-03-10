@@ -7,6 +7,27 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 
+const OuterGrid = styled(Grid)({
+  background: "rgb(255,255,255)",
+  height: "80%",
+  marginTop: "50px",
+  borderRadius: "35px",
+  padding: "30px 30px",
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+});
+const FlexBox = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  flexWrap: "wrap",
+  fontSize: "1.9rem",
+  margin: "0 auto",
+  height: "87%"
+});
+
+const MainBox = styled(Box)({
+  height: "100%"
+});
+
 class CheatSheet extends Component {
   state = {
     isHiraganaShown: false,
@@ -29,26 +50,7 @@ class CheatSheet extends Component {
   render() {
     const { isHiraganaShown, isKatakanaShown } = this.state;
     const { kanaTable } = this.props;
-    const OuterGrid = styled(Grid)({
-      background: "rgb(255,255,255)",
-      height: "80%",
-      marginTop: "50px",
-      borderRadius: "35px",
-      padding: "30px 30px",
-      boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
-    });
-    const FlexBox = styled(Box)({
-      display: "flex",
-      flexDirection: "column",
-      flexWrap: "wrap",
-      fontSize: "1.9rem",
-      margin: "0 auto",
-      height: "87%"
-    });
 
-    const MainBox = styled(Box)({
-      height: "100%"
-    });
     return (
       <>
         <UserNavBar />

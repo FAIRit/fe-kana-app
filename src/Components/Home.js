@@ -5,16 +5,17 @@ import UserNavBar from "./UserNavBar";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
 
+const OuterGrid = styled(Grid)({
+  background: "rgb(255,255,255)",
+  height: "70%",
+  marginTop: "90px",
+  borderRadius: "35px",
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
+  padding: "30px 30px"
+});
+
 class Home extends Component {
   render() {
-    const OuterGrid = styled(Grid)({
-      background: "rgb(255,255,255)",
-      height: "70%",
-      marginTop: "90px",
-      borderRadius: "35px",
-      boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
-      padding: "30px 30px"
-    });
     return (
       <>
         <UserNavBar />
