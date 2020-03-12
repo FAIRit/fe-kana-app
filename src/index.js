@@ -7,15 +7,21 @@ import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "./Components/StyledCssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
+import { Provider } from "react-redux";
+import configureStore from "./Redux/configureStore";
+
+const store = configureStore();
 
 ReactDOM.render(
   <Router>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Container maxWidth="md">
-        <App />
-      </Container>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Container maxWidth="md">
+          <App />
+        </Container>
+      </ThemeProvider>
+    </Provider>
   </Router>,
   document.getElementById("root")
 );
