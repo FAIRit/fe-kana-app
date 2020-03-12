@@ -1,6 +1,6 @@
 import fire from "../../Firebase/firebase";
 import "firebase/firestore";
-import firebase from "firebase/app";
+// import firebase from "firebase/app";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCES";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCES";
@@ -26,33 +26,33 @@ const logout = () => {
   };
 };
 
-export const registerUser = (email, password) => dispatch => {
+export const registerUser = (email, password, login) => dispatch => {
   fire
     .auth()
     .createUserWithEmailAndPassword(email, password)
-    .then(user => {
-      dispatch(register(user));
+    .then(() => {
+      dispatch(register(login));
     })
     .catch(error => {
       console.log(error);
-      const db = firebase.firestore();
-      db.collection("users")
-        .where("email", "==", "")
-        .get()
-        .then(response => {
-          response.forEach(resp => {
-            resp.ref.delete();
-          });
-        });
+      // const db = firebase.firestore();
+      // db.collection("users")
+      //   .where("email", "==", "")
+      //   .get()
+      //   .then(response => {
+      //     response.forEach(resp => {
+      //       resp.ref.delete();
+      //     });
+      //   });
     });
 };
 
-export const loginUser = (email, password) => dispatch => {
+export const loginUser = (email, password, login) => dispatch => {
   fire
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(user => {
-      dispatch(correctLogin(user));
+    .then(() => {
+      dispatch(correctLogin(login));
     })
     .catch(error => {
       console.log(error);
@@ -70,3 +70,5 @@ export const logoutUser = () => dispatch => {
       console.log(error);
     });
 };
+
+export * from "./auth";

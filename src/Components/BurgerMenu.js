@@ -1,7 +1,26 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import "firebase/firestore";
+import Button from "@material-ui/core/Button";
+import { logoutUser } from "../Redux/actions/auth";
+import { connect } from "react-redux";
 
 class BurgerMenu extends Component {
+  state = {
+    user: this.props.user
+  };
+
+  handleLogoutUser = e => {
+    e.preventDefault();
+    this.setState(
+      {
+        user: ""
+      },
+      () => {
+        this.props.logout();
+      }
+    );
+  };
   render() {
     return (
       <nav className="burger-menu">
@@ -16,12 +35,31 @@ class BurgerMenu extends Component {
             <Link to="/settings">Ustawienia konta</Link>
           </li>
         </ul>
-        <Link to="/">
-          <button className="logout-btn">Wyloguj się</button>
-        </Link>
+        <Button
+          variant="contained"
+          component={Link}
+          to="/"
+          onClick={this.handleLogoutUser}
+        >
+          Wyloguj się
+        </Button>
       </nav>
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => {
+      dispatch(logoutUser());
+    }
+  };
+};
 
-export default BurgerMenu;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerMenu);
