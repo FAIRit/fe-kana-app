@@ -7,6 +7,7 @@ import CheatSheet from "./Components/CheatSheet";
 import FlashCards from "./Components/FlashCards";
 import ChooseSyllabary from "./Components/ChooseSyllabary";
 import Quiz from "./Components/Quiz";
+import { connect } from "react-redux";
 
 class App extends Component {
   state = {
@@ -63,4 +64,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  console.log(state.auth.user);
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
+  };
+};
+
+export default connect(mapStateToProps)(App);

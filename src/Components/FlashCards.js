@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import UserNavBar from "./UserNavBar";
 import BtnsBox from "./BtnsBox";
 import Grid from "@material-ui/core/Grid";
@@ -48,49 +50,61 @@ class FlashCards extends Component {
 
   render() {
     const { kanaCounter, isMeaningShown, kanaTable } = this.state;
-
-    return (
-      <>
-        <UserNavBar />
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <section className="flash-cards">
-            <div
-              className="flash-cards-container"
-              onClick={this.handleShowMeaning}
-            >
-              <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
+    const { isAuthenticated } = this.props;
+    if (!isAuthenticated) {
+      return <Redirect to="/" />;
+    } else {
+      return (
+        <>
+          <UserNavBar />
+          <OuterGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <section className="flash-cards">
+              <div
+                className="flash-cards-container"
+                onClick={this.handleShowMeaning}
               >
-                <span className="flash-cards-id">{kanaCounter + 1}</span>
-                {!isMeaningShown ? (
-                  <p className="flash-cards-character">
-                    {kanaTable[kanaCounter] &&
-                      kanaTable[kanaCounter][this.props.match.params.syllabary]}
-                  </p>
-                ) : (
-                  <p className="flash-cards-meaning">
-                    {kanaTable[kanaCounter] && kanaTable[kanaCounter].meaning}
-                  </p>
-                )}
-              </Grid>
-            </div>
-            <BtnsBox
-              onPrev={this.handleShowPrevCharacter}
-              onNext={this.handleShowNextCharacter}
-            />
-          </section>
-        </OuterGrid>
-      </>
-    );
+                <Grid
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                >
+                  <span className="flash-cards-id">{kanaCounter + 1}</span>
+                  {!isMeaningShown ? (
+                    <p className="flash-cards-character">
+                      {kanaTable[kanaCounter] &&
+                        kanaTable[kanaCounter][
+                          this.props.match.params.syllabary
+                        ]}
+                    </p>
+                  ) : (
+                    <p className="flash-cards-meaning">
+                      {kanaTable[kanaCounter] && kanaTable[kanaCounter].meaning}
+                    </p>
+                  )}
+                </Grid>
+              </div>
+              <BtnsBox
+                onPrev={this.handleShowPrevCharacter}
+                onNext={this.handleShowNextCharacter}
+              />
+            </section>
+          </OuterGrid>
+        </>
+      );
+    }
   }
 }
 
-export default FlashCards;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
+};
+
+export default connect(mapStateToProps)(FlashCards);

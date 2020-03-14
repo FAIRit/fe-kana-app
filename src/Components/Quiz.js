@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import UserNavBar from "./UserNavBar";
 import ScoreBar from "./ScoreBar";
 import BtnsBox from "./BtnsBox";
@@ -6,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
+import { connect } from "react-redux";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
@@ -82,54 +84,66 @@ class Quiz extends Component {
   render() {
     const { kanaTable, kanaCounter, answer } = this.state;
     const { syllabary } = this.props.match.params;
-    return (
-      <>
-        <UserNavBar />
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <section className="quiz">
-            <main className="quiz-container">
-              <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
-                <Grid
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                >
-                  <ScoreBar counter={this.state} />
-                  <div className="quiz-character">
-                    {kanaTable[kanaCounter][syllabary]}
-                  </div>
-                  <label className="quiz-answer-label" htmlFor="answer">
-                    <Input
-                      type="text"
-                      placeholder="Wpisz odpowiedź"
-                      value={answer}
-                      name="answer"
-                      onChange={this.handleChangeInputValue}
-                      id="answer"
-                    ></Input>
-                  </label>
-                  <Button variant="contained" type="submit">
-                    Sprawdź
-                  </Button>
-                </Grid>
-              </form>
-            </main>
-            <BtnsBox
-              onPrev={this.handleShowPrevCharacter}
-              onNext={this.handleShowNextCharacter}
-              componentToUse="quiz"
-            />
-          </section>
-        </OuterGrid>
-      </>
-    );
+    const { isAuthenticated } = this.props;
+
+    if (!isAuthenticated) {
+      return <Redirect to="/" />;
+    } else {
+      return (
+        <>
+          <UserNavBar />
+          <OuterGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <section className="quiz">
+              <main className="quiz-container">
+                <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
+                  <Grid
+                    container
+                    direction="column"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <ScoreBar counter={this.state} />
+                    <div className="quiz-character">
+                      {kanaTable[kanaCounter][syllabary]}
+                    </div>
+                    <label className="quiz-answer-label" htmlFor="answer">
+                      <Input
+                        type="text"
+                        placeholder="Wpisz odpowiedź"
+                        value={answer}
+                        name="answer"
+                        onChange={this.handleChangeInputValue}
+                        id="answer"
+                      ></Input>
+                    </label>
+                    <Button variant="contained" type="submit">
+                      Sprawdź
+                    </Button>
+                  </Grid>
+                </form>
+              </main>
+              <BtnsBox
+                onPrev={this.handleShowPrevCharacter}
+                onNext={this.handleShowNextCharacter}
+                componentToUse="quiz"
+              />
+            </section>
+          </OuterGrid>
+        </>
+      );
+    }
   }
 }
 
-export default Quiz;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
+};
+
+export default connect(mapStateToProps)(Quiz);
