@@ -4,7 +4,6 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import "firebase/firestore";
 import { connect } from "react-redux";
 import { registerUser } from "../Redux/actions/auth";
 
@@ -34,17 +33,14 @@ class Registration extends Component {
     e.preventDefault();
     const { email, password, repeatPassword, login } = this.state;
     if (email.length !== 0 && password === repeatPassword && login.length > 2) {
-      this.setState(
-        {
-          email: "",
-          password: "",
-          repeatPassword: "",
-          login: ""
-        },
-        () => {
-          this.props.register(email, password, login);
-        }
-      );
+      this.setState({
+        email: "",
+        password: "",
+        repeatPassword: "",
+        login: ""
+      });
+
+      this.props.register(email, password, login);
     }
   };
   render() {

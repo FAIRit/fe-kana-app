@@ -31,16 +31,12 @@ class Login extends Component {
   handleSubmitLogin = e => {
     e.preventDefault();
     const { email, password, login } = this.state;
-    this.setState(
-      {
-        login: "",
-        email: "",
-        password: ""
-      },
-      () => {
-        this.props.login(email, password, login);
-      }
-    );
+    this.setState({
+      login: "",
+      email: "",
+      password: ""
+    });
+    this.props.login(email, password, login);
   };
 
   render() {

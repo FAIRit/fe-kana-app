@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import UserNavBar from "./UserNavBar";
 import SingleSign from "./SingleSign";
 import Grid from "@material-ui/core/Grid";
@@ -49,55 +50,64 @@ class CheatSheet extends Component {
 
   render() {
     const { isHiraganaShown, isKatakanaShown } = this.state;
-    const { kanaTable } = this.props;
-
-    return (
-      <>
-        <UserNavBar />
-        <OuterGrid
-          container
-          direction="column"
-          justify="flex-start"
-          alignItems="stretch"
-          component="section"
-          onClick={this.handleFetchData}
-          className="cheat-sheet"
-        >
-          <div className="cheat-sheet-btns">
-            <Button variant="contained" onClick={this.handleGetHiragana}>
-              Hiragana
-            </Button>
-            <Button variant="contained" onClick={this.handleGetKatakana}>
-              Katakana
-            </Button>
-          </div>
-          <MainBox component="main">
-            <FlexBox>
-              {isHiraganaShown &&
-                kanaTable.map(kana => (
-                  <SingleSign
-                    kanaTable={kana.hiragana}
-                    kanaMeaning={kana.meaning}
-                    key={kana.id}
-                  />
-                ))}
-              {isKatakanaShown &&
-                kanaTable.map(kana => (
-                  <SingleSign
-                    kanaTable={kana.katakana}
-                    kanaMeaning={kana.meaning}
-                    key={kana.id}
-                  />
-                ))}
-            </FlexBox>
-            <Button variant="contained" component={Link} to="/home">
-              Powrót
-            </Button>
-          </MainBox>
-        </OuterGrid>
-      </>
-    );
+    const { kanaTable, isAuthenticated } = this.props;
+    if (!isAuthenticated) {
+      return <Redirect to="/" />;
+    } else {
+      return (
+        <>
+          <UserNavBar />
+          <OuterGrid
+            container
+            direction="column"
+            justify="flex-start"
+            alignItems="stretch"
+            component="section"
+            onClick={this.handleFetchData}
+            className="cheat-sheet"
+          >
+            <div className="cheat-sheet-btns">
+              <Button variant="contained" onClick={this.handleGetHiragana}>
+                Hiragana
+              </Button>
+              <Button variant="contained" onClick={this.handleGetKatakana}>
+                Katakana
+              </Button>
+            </div>
+            <MainBox component="main">
+              <FlexBox>
+                {isHiraganaShown &&
+                  kanaTable.map(kana => (
+                    <SingleSign
+                      kanaTable={kana.hiragana}
+                      kanaMeaning={kana.meaning}
+                      key={kana.id}
+                    />
+                  ))}
+                {isKatakanaShown &&
+                  kanaTable.map(kana => (
+                    <SingleSign
+                      kanaTable={kana.katakana}
+                      kanaMeaning={kana.meaning}
+                      key={kana.id}
+                    />
+                  ))}
+              </FlexBox>
+              <Button variant="contained" component={Link} to="/home">
+                Powrót
+              </Button>
+            </MainBox>
+          </OuterGrid>
+        </>
+      );
+    }
   }
 }
 
-export default CheatSheet;
+const mapStatetoProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
+};
+
+export default connect(mapStatetoProps)(CheatSheet);

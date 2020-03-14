@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import HomeMenuPosition from "./HomeMenuPosition";
 import UserNavBar from "./UserNavBar";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
+import { connect } from "react-redux";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
@@ -16,35 +17,50 @@ const OuterGrid = styled(Grid)({
 
 class Home extends Component {
   render() {
-    return (
-      <>
-        <UserNavBar />
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="stretch"
-        >
-          <section className="home">
-            <main className="home-container">
-              <Link to="/cheat-sheet">
-                <HomeMenuPosition title="Ściągawka" content="Tablica znaków" />
-              </Link>
-              <Link to="/flash-cards">
-                <HomeMenuPosition
-                  title="Fiszki"
-                  content="Ucz sie we własnym tempie"
-                />
-              </Link>
-              <Link to="/quiz">
-                <HomeMenuPosition title="Quiz" content="Sprawdź się" />
-              </Link>
-            </main>
-          </section>
-        </OuterGrid>
-      </>
-    );
+    const { isAuthenticated } = this.props;
+
+    if (!isAuthenticated) {
+      return <Redirect to="/" />;
+    } else {
+      return (
+        <>
+          <UserNavBar />
+          <OuterGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="stretch"
+          >
+            <section className="home">
+              <main className="home-container">
+                <Link to="/cheat-sheet">
+                  <HomeMenuPosition
+                    title="Ściągawka"
+                    content="Tablica znaków"
+                  />
+                </Link>
+                <Link to="/flash-cards">
+                  <HomeMenuPosition
+                    title="Fiszki"
+                    content="Ucz sie we własnym tempie"
+                  />
+                </Link>
+                <Link to="/quiz">
+                  <HomeMenuPosition title="Quiz" content="Sprawdź się" />
+                </Link>
+              </main>
+            </section>
+          </OuterGrid>
+        </>
+      );
+    }
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
+};
+
+export default connect(mapStateToProps)(Home);
