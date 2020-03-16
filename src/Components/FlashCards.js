@@ -9,7 +9,7 @@ import { styled } from "@material-ui/core/styles";
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "70%",
-  marginTop: "90px",
+  marginTop: "15%",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
 });
