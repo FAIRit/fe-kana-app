@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import UserNavBar from "./UserNavBar";
 import ScoreBar from "./ScoreBar";
 import BtnsBox from "./BtnsBox";
+import QuizResult from "./QuizResult";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -23,9 +24,11 @@ class Quiz extends Component {
       return 0.5 - Math.random();
     }),
     kanaCounter: 0,
+    resultCounter: 1,
     correctAnswers: [],
     incorrectAnswers: [],
-    answer: ""
+    answer: "",
+    isEventBlocked: false
   };
 
   handleChangeInputValue = e => {
@@ -42,7 +45,20 @@ class Quiz extends Component {
     ) {
       this.setState({
         kanaCounter: this.state.kanaCounter + 1,
-        answer: ""
+        answer: "",
+        isEventBlocked: false
+      });
+    }
+  };
+
+  //prevent increasing result counter after event
+  handleIncrementResultCounter = () => {
+    this.setState({
+      resultCounter: this.state.resultCounter + 1
+    });
+    if (this.state.answer === "" && this.state.isEventBlocked === false) {
+      this.setState({
+        resultCounter: this.state.resultCounter
       });
     }
   };
@@ -54,40 +70,57 @@ class Quiz extends Component {
       kanaCounter,
       correctAnswers,
       incorrectAnswers,
-      answer
+      answer,
+      isEventBlocked
     } = this.state;
     const { syllabary } = this.props.match.params;
     e.preventDefault();
-    if (answer === kanaTable[kanaCounter].meaning) {
+    if (answer === kanaTable[kanaCounter].meaning && isEventBlocked === false) {
       const data = {
         syllabary: syllabary,
         meaning: kanaTable[kanaCounter].meaning,
         character: kanaTable[kanaCounter][syllabary]
       };
       this.setState({
-        correctAnswers: [...correctAnswers, data]
+        correctAnswers: [...correctAnswers, data],
+        isEventBlocked: true
       });
-    } else if (answer === "") {
+    } else if (answer === "" && isEventBlocked === false) {
       e.target = "disabled";
-    } else {
+      this.setState({
+        isEventBlocked: false
+      });
+    } else if (
+      answer !== kanaTable[kanaCounter].meaning &&
+      isEventBlocked === false
+    ) {
       const data = {
         syllabary: syllabary,
         meaning: kanaTable[kanaCounter].meaning,
         character: kanaTable[kanaCounter][syllabary]
       };
       this.setState({
-        incorrectAnswers: [...incorrectAnswers, data]
+        incorrectAnswers: [...incorrectAnswers, data],
+        isEventBlocked: true
       });
     }
   };
 
   render() {
-    const { kanaTable, kanaCounter, answer } = this.state;
+    const {
+      kanaTable,
+      kanaCounter,
+      answer,
+      resultCounter,
+      correctAnswers
+    } = this.state;
     const { syllabary } = this.props.match.params;
     const { isAuthenticated } = this.props;
 
     if (!isAuthenticated) {
       return <Redirect to="/" />;
+    } else if (resultCounter === 47) {
+      return <QuizResult correctAnswers={correctAnswers} />;
     } else {
       return (
         <>
@@ -130,6 +163,7 @@ class Quiz extends Component {
               <BtnsBox
                 onPrev={this.handleShowPrevCharacter}
                 onNext={this.handleShowNextCharacter}
+                onResult={this.handleIncrementResultCounter}
                 componentToUse="quiz"
               />
             </section>

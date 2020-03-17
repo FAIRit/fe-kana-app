@@ -6,6 +6,9 @@ class BtnsBox extends Component {
   handleNext = e => {
     e.preventDefault();
     this.props.onNext();
+    if (this.props.componentToUse === "quiz") {
+      this.props.onResult();
+    }
   };
   handlePrev = e => {
     e.preventDefault();
@@ -15,12 +18,11 @@ class BtnsBox extends Component {
   render() {
     return (
       <div className="btns-box">
-        {!this.props.componentToUse && (
+        {this.props.componentToUse === "flashCards" && (
           <Button variant="contained" onClick={this.handlePrev}>
             Poprzedni
           </Button>
         )}
-
         <Button variant="contained" onClick={this.handleNext}>
           Nastepny
         </Button>

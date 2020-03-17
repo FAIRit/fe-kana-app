@@ -92,6 +92,7 @@ class FlashCards extends Component {
               <BtnsBox
                 onPrev={this.handleShowPrevCharacter}
                 onNext={this.handleShowNextCharacter}
+                componentToUse="flashCards"
               />
             </section>
           </OuterGrid>
