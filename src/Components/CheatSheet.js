@@ -11,7 +11,7 @@ import { styled } from "@material-ui/core/styles";
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "80%",
-  marginTop: "50px",
+  marginTop: "12%",
   borderRadius: "35px",
   padding: "30px 30px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"

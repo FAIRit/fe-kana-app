@@ -6,7 +6,8 @@ const theme = createMuiTheme({
       "@global": {
         body: {
           backgroundColor: "rgba(24,173,54,0.28)",
-          height: "100vh"
+          height: "100vh",
+          overflow: "hidden"
         }
       }
     },

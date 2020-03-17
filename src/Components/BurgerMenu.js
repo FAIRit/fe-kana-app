@@ -3,6 +3,30 @@ import { Link, Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { logoutUser } from "../Redux/actions/auth";
 import { connect } from "react-redux";
+import { styled } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Avatar from "@material-ui/core/Avatar";
+import avatar from "../assets/avatar.png";
+
+const Nav = styled(Box)({
+  width: "250px",
+  padding: "15px 15px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center"
+});
+
+const StyledList = styled(List)({
+  width: "100%"
+});
+
+const StyledAvatar = styled(Avatar)({
+  width: "100%",
+  height: "100%",
+  marginBottom: "30px"
+});
 
 class BurgerMenu extends Component {
   state = {
@@ -22,22 +46,23 @@ class BurgerMenu extends Component {
       return <Redirect to="/" />;
     } else {
       return (
-        <nav className="burger-menu">
-          <ul className="burger-menu__list">
-            <li className="burger-menu__list-element">
+        <Nav component="nav" className="burger-menu">
+          <StyledAvatar src={avatar} />
+          <StyledList className="burger-menu__list">
+            <ListItem className="burger-menu__list-element">
               <Link to="/my-profile">Mój profil</Link>
-            </li>
-            <li className="burger-menu__list-element">
+            </ListItem>
+            <ListItem className="burger-menu__list-element">
               <Link to="/my-score">Moje wyniki</Link>
-            </li>
-            <li className="burger-menu__list-element">
+            </ListItem>
+            <ListItem className="burger-menu__list-element">
               <Link to="/settings">Ustawienia konta</Link>
-            </li>
-          </ul>
+            </ListItem>
+          </StyledList>
           <Button variant="contained" onClick={this.handleLogoutUser}>
             Wyloguj się
           </Button>
-        </nav>
+        </Nav>
       );
     }
   }
