@@ -24,7 +24,6 @@ class Quiz extends Component {
       return 0.5 - Math.random();
     }),
     kanaCounter: 0,
-    resultCounter: 1,
     correctAnswers: [],
     incorrectAnswers: [],
     answer: "",
@@ -48,17 +47,9 @@ class Quiz extends Component {
         answer: "",
         isEventBlocked: false
       });
-    }
-  };
-
-  //prevent increasing result counter after event
-  handleIncrementResultCounter = () => {
-    this.setState({
-      resultCounter: this.state.resultCounter + 1
-    });
-    if (this.state.answer === "" && this.state.isEventBlocked === false) {
+    } else if (this.state.kanaCounter === 46) {
       this.setState({
-        resultCounter: this.state.resultCounter
+        kanaCounter: this.state.kanaCounter
       });
     }
   };
@@ -85,11 +76,8 @@ class Quiz extends Component {
         correctAnswers: [...correctAnswers, data],
         isEventBlocked: true
       });
-    } else if (answer === "" && isEventBlocked === false) {
+    } else if (answer === "") {
       e.target = "disabled";
-      this.setState({
-        isEventBlocked: false
-      });
     } else if (
       answer !== kanaTable[kanaCounter].meaning &&
       isEventBlocked === false
@@ -111,7 +99,7 @@ class Quiz extends Component {
       kanaTable,
       kanaCounter,
       answer,
-      resultCounter,
+      incorrectAnswers,
       correctAnswers
     } = this.state;
     const { syllabary } = this.props.match.params;
@@ -119,7 +107,7 @@ class Quiz extends Component {
 
     if (!isAuthenticated) {
       return <Redirect to="/" />;
-    } else if (resultCounter === 47) {
+    } else if (incorrectAnswers.length + correctAnswers.length === 46) {
       return <QuizResult correctAnswers={correctAnswers} />;
     } else {
       return (
@@ -163,7 +151,6 @@ class Quiz extends Component {
               <BtnsBox
                 onPrev={this.handleShowPrevCharacter}
                 onNext={this.handleShowNextCharacter}
-                onResult={this.handleIncrementResultCounter}
                 componentToUse="quiz"
               />
             </section>

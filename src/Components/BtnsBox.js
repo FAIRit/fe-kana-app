@@ -6,9 +6,6 @@ class BtnsBox extends Component {
   handleNext = e => {
     e.preventDefault();
     this.props.onNext();
-    if (this.props.componentToUse === "quiz") {
-      this.props.onResult();
-    }
   };
   handlePrev = e => {
     e.preventDefault();
