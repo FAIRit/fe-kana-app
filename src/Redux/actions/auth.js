@@ -3,6 +3,8 @@ import { db, fire } from "../../Firebase/firebase";
 export const LOGIN_SUCCESS = "LOGIN_SUCCES";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCES";
 export const REGISTER = "REGISTER";
+export const IS_WRONG_HIRAGANA = "IS_WRONG_HIRAGANA";
+export const IS_WRONG_KATAKANA = "IS_WRONG_KATAKANA";
 
 const register = user => {
   return {
@@ -24,37 +26,43 @@ const logout = () => {
   };
 };
 
+const hiraganaWrongAnswers = isUserHasWrongHiraganaAnswers => {
+  return {
+    type: IS_WRONG_HIRAGANA,
+    isUserHasWrongHiraganaAnswers
+  };
+};
+
+const katakanaWrongAnswers = isUserHasWrongKatakanaAnswers => {
+  return {
+    type: IS_WRONG_KATAKANA,
+    isUserHasWrongKatakanaAnswers
+  };
+};
+
 export const registerUser = (email, password, login) => dispatch => {
-  const value = db
-    .ref("Users/")
+  db.ref("Users/")
     .once("value")
     .then(snapshot => {
-      return snapshot.val();
-    });
-  const userLogin = value.then(snaps => {
-    console.log(snaps[`${login}`].username);
-    return snaps[`${login}`].username;
-  });
-
-  console.log(login, "login");
-  console.log(userLogin, "userLogin");
-  if (login === userLogin) {
-    console.log("użytkownik istnieje w bazie");
-  } else {
-    db.ref("Users/" + login).set({
-      username: login,
-      email: email,
-      password: password
-    });
-  }
-  fire
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      dispatch(register(login));
-    })
-    .catch(error => {
-      console.log(error);
+      const isUserExists = snapshot.child(`${login}`).exists();
+      if (isUserExists) {
+        console.log("użytkownik istnieje w bazie");
+      } else {
+        fire
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then(() => {
+            dispatch(register(login));
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        db.ref("Users/" + login).set({
+          username: login,
+          email: email,
+          password: password
+        });
+      }
     });
 };
 
@@ -64,6 +72,23 @@ export const loginUser = (email, password, login) => dispatch => {
     .signInWithEmailAndPassword(email, password)
     .then(() => {
       dispatch(correctLogin(login));
+    })
+    .then(() => {
+      const hiraganaRef = db.ref("hiraganaIncorrectAnswers/");
+      const katakanaRef = db.ref("katakanaIncorrectAnswers/");
+      hiraganaRef.once("value").then(snapshot => {
+        const isUserHasWrongHiraganaAnswers = snapshot
+          .child(`${login}`)
+          .exists();
+        dispatch(hiraganaWrongAnswers(isUserHasWrongHiraganaAnswers));
+      });
+      katakanaRef.once("value").then(snapshot => {
+        const isUserHasWrongKatakanaAnswers = snapshot
+          .child(`${login}`)
+          .exists();
+
+        dispatch(katakanaWrongAnswers(isUserHasWrongKatakanaAnswers));
+      });
     })
     .catch(error => {
       console.log(error);

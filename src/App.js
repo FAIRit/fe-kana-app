@@ -65,10 +65,11 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.auth.user);
   return {
     isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user
+    user: state.auth.user,
+    isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
+    isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers
   };
 };
 

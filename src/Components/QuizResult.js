@@ -22,9 +22,13 @@ class QuizResult extends Component {
     isResultSubmitted: false,
     timePerQuiz: ""
   };
+
+  componentDidMount = () => {
+    this.handleChangeEndDate();
+  };
+
   handleChangeEndDate = () => {
     const endDate = Date.now() / 1000;
-
     //time in seconds
     const timeInSeconds = endDate - this.props.time;
     let seconds = timeInSeconds.toFixed(0);
@@ -33,14 +37,9 @@ class QuizResult extends Component {
     seconds = seconds % 60;
     let hours = Math.floor(minutes / 60);
     minutes = minutes % 60;
-
     this.setState({
       timePerQuiz: `${hours}:${minutes}:${seconds}`
     });
-  };
-
-  componentDidMount = () => {
-    this.handleChangeEndDate();
   };
 
   handleSaveScore = e => {
@@ -57,18 +56,15 @@ class QuizResult extends Component {
       const incorrectHiraganaScore = db
         .ref("hiraganaIncorrectAnswers/" + this.props.user)
         .push();
-
       incorrectHiraganaScore.set({
         answers: this.state.incorrectAnswers,
         timePerQuiz: this.state.timePerQuiz
       });
-
       this.setState({
         correctAnswers: [],
         incorrectAnswers: [],
         isResultSubmitted: true
       });
-      console.log("hiragana");
     } else if (this.props.chosenSyllabary === "katakana") {
       const correctKatakanaScore = db
         .ref("katakanaCorrectAnswers/" + this.props.user)
@@ -80,20 +76,15 @@ class QuizResult extends Component {
       const incorrectKatakanaScore = db
         .ref("katakanaIncorrectAnswers/" + this.props.user)
         .push();
-
       incorrectKatakanaScore.set({
         answers: this.state.incorrectAnswers,
         timePerQuiz: this.state.timePerQuiz
       });
-
       this.setState({
         correctAnswers: [],
         incorrectAnswers: [],
         isResultSubmitted: true
       });
-      console.log("katakana");
-    } else {
-      console.log("chyba pykło");
     }
   };
 
