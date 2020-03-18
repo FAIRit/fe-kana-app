@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import { db } from "../Firebase/firebase";
+import { connect } from "react-redux";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
@@ -14,7 +16,89 @@ const OuterGrid = styled(Grid)({
 });
 
 class QuizResult extends Component {
+  state = {
+    correctAnswers: this.props.correctAnswers,
+    incorrectAnswers: this.props.incorrectAnswers,
+    isResultSubmitted: false,
+    timePerQuiz: ""
+  };
+  handleChangeEndDate = () => {
+    const endDate = Date.now() / 1000;
+
+    //time in seconds
+    const timeInSeconds = endDate - this.props.time;
+    let seconds = timeInSeconds.toFixed(0);
+    //minutes
+    let minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    let hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
+
+    this.setState({
+      timePerQuiz: `${hours}:${minutes}:${seconds}`
+    });
+  };
+
+  componentDidMount = () => {
+    this.handleChangeEndDate();
+  };
+
+  handleSaveScore = e => {
+    e.preventDefault();
+
+    if (this.props.chosenSyllabary === "hiragana") {
+      const correctHiraganaScore = db
+        .ref("hiraganaCorrectAnswers/" + this.props.user)
+        .push();
+      correctHiraganaScore.set({
+        answers: this.state.correctAnswers,
+        timePerQuiz: this.state.timePerQuiz
+      });
+      const incorrectHiraganaScore = db
+        .ref("hiraganaIncorrectAnswers/" + this.props.user)
+        .push();
+
+      incorrectHiraganaScore.set({
+        answers: this.state.incorrectAnswers,
+        timePerQuiz: this.state.timePerQuiz
+      });
+
+      this.setState({
+        correctAnswers: [],
+        incorrectAnswers: [],
+        isResultSubmitted: true
+      });
+      console.log("hiragana");
+    } else if (this.props.chosenSyllabary === "katakana") {
+      const correctKatakanaScore = db
+        .ref("katakanaCorrectAnswers/" + this.props.user)
+        .push();
+      correctKatakanaScore.set({
+        answers: this.state.correctAnswers,
+        timePerQuiz: this.state.timePerQuiz
+      });
+      const incorrectKatakanaScore = db
+        .ref("katakanaIncorrectAnswers/" + this.props.user)
+        .push();
+
+      incorrectKatakanaScore.set({
+        answers: this.state.incorrectAnswers,
+        timePerQuiz: this.state.timePerQuiz
+      });
+
+      this.setState({
+        correctAnswers: [],
+        incorrectAnswers: [],
+        isResultSubmitted: true
+      });
+      console.log("katakana");
+    } else {
+      console.log("chyba pykło");
+    }
+  };
+
   render() {
+    const { correctAnswers, isResultSubmitted } = this.state;
     return (
       <>
         <UserNavBar />
@@ -25,18 +109,24 @@ class QuizResult extends Component {
           alignItems="center"
         >
           <section className="result">
-            <main className="result-container">
+            <form className="result-container" onSubmit={this.handleSaveScore}>
               <h2 className="result-container__title">
                 Udało Ci się ukończyć quiz!
               </h2>
               <h3 className="result-container__subtitle">Twoj wynik to:</h3>
               <p className="result-container__score">
-                {this.props.correctAnswers.length} / 46
+                {correctAnswers.length} / 46
               </p>
-              <Button variant="contained" component={Link} to="/home">
-                Powrót
-              </Button>
-            </main>
+              {!isResultSubmitted ? (
+                <Button variant="contained" type="submit">
+                  Zapisz swój wynik!
+                </Button>
+              ) : (
+                <Button variant="contained" component={Link} to="/home">
+                  Powrót do ekranu głównego
+                </Button>
+              )}
+            </form>
           </section>
         </OuterGrid>
       </>
@@ -44,4 +134,10 @@ class QuizResult extends Component {
   }
 }
 
-export default QuizResult;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user
+  };
+};
+
+export default connect(mapStateToProps)(QuizResult);

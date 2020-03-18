@@ -27,7 +27,8 @@ class Quiz extends Component {
     correctAnswers: [],
     incorrectAnswers: [],
     answer: "",
-    isEventBlocked: false
+    isEventBlocked: false,
+    startDate: Date.now() / 1000
   };
 
   handleChangeInputValue = e => {
@@ -47,7 +48,7 @@ class Quiz extends Component {
         answer: "",
         isEventBlocked: false
       });
-    } else if (this.state.kanaCounter === 46) {
+    } else {
       this.setState({
         kanaCounter: this.state.kanaCounter
       });
@@ -108,7 +109,14 @@ class Quiz extends Component {
     if (!isAuthenticated) {
       return <Redirect to="/" />;
     } else if (incorrectAnswers.length + correctAnswers.length === 46) {
-      return <QuizResult correctAnswers={correctAnswers} />;
+      return (
+        <QuizResult
+          correctAnswers={correctAnswers}
+          incorrectAnswers={incorrectAnswers}
+          chosenSyllabary={this.props.match.params.syllabary}
+          time={this.state.startDate}
+        />
+      );
     } else {
       return (
         <>
