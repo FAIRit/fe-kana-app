@@ -6,7 +6,6 @@ import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import UserNavBar from "./UserNavBar";
-// import ChooseCollection from "./ChooseCollection";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
@@ -17,11 +16,7 @@ const OuterGrid = styled(Grid)({
 });
 
 class ChooseSyllabary extends Component {
-  state = {
-    url: this.props.match.url
-  };
   render() {
-    const { url } = this.state;
     const { isAuthenticated } = this.props;
     if (!isAuthenticated) {
       return <Redirect to="/" />;
@@ -49,8 +44,9 @@ class ChooseSyllabary extends Component {
                       <Button
                         variant="contained"
                         component={RouterLink}
-                        to={url + "/hiragana/choose-collection"}
-                        urlpath={url}
+                        to={
+                          this.props.match.url + "/hiragana/choose-collection"
+                        }
                       >
                         Hiragana
                       </Button>
@@ -58,7 +54,7 @@ class ChooseSyllabary extends Component {
                       <Button
                         variant="contained"
                         component={RouterLink}
-                        to={url + "/hiragana"}
+                        to={this.props.match.url + "/hiragana"}
                       >
                         Hiragana
                       </Button>
@@ -67,8 +63,9 @@ class ChooseSyllabary extends Component {
                       <Button
                         variant="contained"
                         component={RouterLink}
-                        to={url + "/katakana/choose-collection"}
-                        urlpath={url}
+                        to={
+                          this.props.match.url + "/katakana/choose-collection"
+                        }
                       >
                         Katakana
                       </Button>
@@ -76,7 +73,7 @@ class ChooseSyllabary extends Component {
                       <Button
                         variant="contained"
                         component={RouterLink}
-                        to={url + "/katakana"}
+                        to={this.props.match.url + "/katakana"}
                       >
                         Katakana
                       </Button>

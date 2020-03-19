@@ -11,7 +11,7 @@ export default (
     isAuthenticated: false,
     isUserHasWrongHiraganaAnswers: false,
     isUserHasWrongKatakanaAnswers: false,
-    user: ""
+    user: null
   },
   action
 ) => {

@@ -171,9 +171,9 @@ class Quiz extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated,
-    isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
-    isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers
+    isAuthenticated: state.auth.isAuthenticated
+    // isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
+    // isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers
   };
 };
 
