@@ -6,6 +6,7 @@ import Registration from "./Components/Registration";
 import CheatSheet from "./Components/CheatSheet";
 import FlashCards from "./Components/FlashCards";
 import ChooseSyllabary from "./Components/ChooseSyllabary";
+import ChooseCollection from "./Components/ChooseCollection";
 import Quiz from "./Components/Quiz";
 import { connect } from "react-redux";
 
@@ -52,6 +53,11 @@ class App extends Component {
             )}
           />
           <Route exact path="/quiz" component={ChooseSyllabary} />
+          <Route
+            exact
+            path="/quiz/:syllabary/choose-collection"
+            component={ChooseCollection}
+          />
           <Route
             path="/quiz/:syllabary"
             component={routeProps => (

@@ -6,6 +6,7 @@ import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import UserNavBar from "./UserNavBar";
+// import ChooseCollection from "./ChooseCollection";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
@@ -16,7 +17,11 @@ const OuterGrid = styled(Grid)({
 });
 
 class ChooseSyllabary extends Component {
+  state = {
+    url: this.props.match.url
+  };
   render() {
+    const { url } = this.state;
     const { isAuthenticated } = this.props;
     if (!isAuthenticated) {
       return <Redirect to="/" />;
@@ -40,20 +45,43 @@ class ChooseSyllabary extends Component {
                 >
                   <h2 className="syllabary-header">Wybierz sylabariusz</h2>
                   <div className="syllabary-inputs-box">
-                    <Button
-                      variant="contained"
-                      component={RouterLink}
-                      to={this.props.match.url + "/hiragana"}
-                    >
-                      Hiragana
-                    </Button>
-                    <Button
-                      variant="contained"
-                      component={RouterLink}
-                      to={this.props.match.url + "/katakana"}
-                    >
-                      Katakana
-                    </Button>
+                    {this.props.isUserHasWrongHiraganaAnswers ? (
+                      <Button
+                        variant="contained"
+                        component={RouterLink}
+                        to={url + "/hiragana/choose-collection"}
+                        urlpath={url}
+                      >
+                        Hiragana
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        component={RouterLink}
+                        to={url + "/hiragana"}
+                      >
+                        Hiragana
+                      </Button>
+                    )}
+                    {this.props.isUserHasWrongKatakanaAnswers ? (
+                      <Button
+                        variant="contained"
+                        component={RouterLink}
+                        to={url + "/katakana/choose-collection"}
+                        urlpath={url}
+                      >
+                        Katakana
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        component={RouterLink}
+                        to={url + "/katakana"}
+                      >
+                        Katakana
+                      </Button>
+                    )}
+
                     <Link component={RouterLink} to="/home">
                       Powrót
                     </Link>
@@ -70,7 +98,9 @@ class ChooseSyllabary extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
+    isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers
   };
 };
 
