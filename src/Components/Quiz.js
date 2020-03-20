@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import UserNavBar from "./UserNavBar";
 import ScoreBar from "./ScoreBar";
 import BtnsBox from "./BtnsBox";
+import QuizResult from "./QuizResult";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -19,13 +20,17 @@ const OuterGrid = styled(Grid)({
 
 class Quiz extends Component {
   state = {
-    kanaTable: this.props.kanaTable.sort(() => {
-      return 0.5 - Math.random();
-    }),
+    kanaTable: this.props.isUserChooseIncorrectAnswers
+      ? this.props.syllabaryFromDatabase
+      : this.props.kanaTable.sort(() => {
+          return 0.5 - Math.random();
+        }),
     kanaCounter: 0,
     correctAnswers: [],
     incorrectAnswers: [],
-    answer: ""
+    answer: "",
+    isEventBlocked: false,
+    startDate: Date.now() / 1000
   };
 
   handleChangeInputValue = e => {
@@ -42,7 +47,12 @@ class Quiz extends Component {
     ) {
       this.setState({
         kanaCounter: this.state.kanaCounter + 1,
-        answer: ""
+        answer: "",
+        isEventBlocked: false
+      });
+    } else {
+      this.setState({
+        kanaCounter: this.state.kanaCounter
       });
     }
   };
@@ -54,40 +64,78 @@ class Quiz extends Component {
       kanaCounter,
       correctAnswers,
       incorrectAnswers,
-      answer
+      answer,
+      isEventBlocked
     } = this.state;
     const { syllabary } = this.props.match.params;
     e.preventDefault();
-    if (answer === kanaTable[kanaCounter].meaning) {
+    if (answer === kanaTable[kanaCounter].meaning && isEventBlocked === false) {
       const data = {
         syllabary: syllabary,
         meaning: kanaTable[kanaCounter].meaning,
         character: kanaTable[kanaCounter][syllabary]
       };
       this.setState({
-        correctAnswers: [...correctAnswers, data]
+        correctAnswers: [...correctAnswers, data],
+        isEventBlocked: true
       });
     } else if (answer === "") {
       e.target = "disabled";
-    } else {
+    } else if (
+      answer !== kanaTable[kanaCounter].meaning &&
+      isEventBlocked === false
+    ) {
       const data = {
-        syllabary: syllabary,
+        id: kanaTable[kanaCounter].id,
         meaning: kanaTable[kanaCounter].meaning,
-        character: kanaTable[kanaCounter][syllabary]
+        [this.props.match.params.syllabary]: kanaTable[kanaCounter][syllabary]
       };
       this.setState({
-        incorrectAnswers: [...incorrectAnswers, data]
+        incorrectAnswers: [...incorrectAnswers, data],
+        isEventBlocked: true
+      });
+    }
+  };
+
+  componentDidMount = () => {
+    if (this.props.isUserChooseIncorrectAnswers) {
+      this.setState({
+        kanaTable: this.props.syllabaryFromDatabase
+      });
+    } else {
+      this.setState({
+        kanaTable: this.props.kanaTable.sort(() => {
+          return 0.5 - Math.random();
+        })
       });
     }
   };
 
   render() {
-    const { kanaTable, kanaCounter, answer } = this.state;
+    const {
+      kanaTable,
+      kanaCounter,
+      answer,
+      incorrectAnswers,
+      correctAnswers
+    } = this.state;
     const { syllabary } = this.props.match.params;
     const { isAuthenticated } = this.props;
 
     if (!isAuthenticated) {
       return <Redirect to="/" />;
+    } else if (
+      incorrectAnswers.length + correctAnswers.length ===
+      kanaTable.length
+    ) {
+      return (
+        <QuizResult
+          correctAnswers={correctAnswers}
+          incorrectAnswers={incorrectAnswers}
+          chosenSyllabary={this.props.match.params.syllabary}
+          time={this.state.startDate}
+        />
+      );
     } else {
       return (
         <>
@@ -142,7 +190,9 @@ class Quiz extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
+    syllabaryFromDatabase: state.auth.syllabaryFromDatabase
   };
 };
 

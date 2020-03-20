@@ -6,6 +6,7 @@ import Registration from "./Components/Registration";
 import CheatSheet from "./Components/CheatSheet";
 import FlashCards from "./Components/FlashCards";
 import ChooseSyllabary from "./Components/ChooseSyllabary";
+import ChooseCollection from "./Components/ChooseCollection";
 import Quiz from "./Components/Quiz";
 import { connect } from "react-redux";
 
@@ -46,12 +47,22 @@ class App extends Component {
           <Route exact path="/flash-cards" component={ChooseSyllabary} />
           <Route
             exact
+            path="/flash-cards/:syllabary/choose-collection"
+            component={ChooseCollection}
+          />
+          <Route
+            exact
             path="/flash-cards/:syllabary"
             component={routeProps => (
               <FlashCards {...routeProps} kanaTable={kanaTable} />
             )}
           />
           <Route exact path="/quiz" component={ChooseSyllabary} />
+          <Route
+            exact
+            path="/quiz/:syllabary/choose-collection"
+            component={ChooseCollection}
+          />
           <Route
             path="/quiz/:syllabary"
             component={routeProps => (
@@ -65,10 +76,12 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.auth.user);
   return {
     isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user
+    user: state.auth.user,
+    isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
+    isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers,
+    isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers
   };
 };
 

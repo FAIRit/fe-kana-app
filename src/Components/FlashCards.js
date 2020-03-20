@@ -16,9 +16,7 @@ const OuterGrid = styled(Grid)({
 
 class FlashCards extends Component {
   state = {
-    kanaTable: this.props.kanaTable.sort(() => {
-      return 0.5 - Math.random();
-    }),
+    kanaTable: [],
     kanaCounter: 0,
     isMeaningShown: false
   };
@@ -44,6 +42,20 @@ class FlashCards extends Component {
     if (this.state.kanaCounter !== 0) {
       this.setState({
         kanaCounter: this.state.kanaCounter - 1
+      });
+    }
+  };
+
+  componentDidMount = () => {
+    if (this.props.isUserChooseIncorrectAnswers) {
+      this.setState({
+        kanaTable: this.props.syllabaryFromDatabase
+      });
+    } else {
+      this.setState({
+        kanaTable: this.props.kanaTable.sort(() => {
+          return 0.5 - Math.random();
+        })
       });
     }
   };
@@ -92,6 +104,7 @@ class FlashCards extends Component {
               <BtnsBox
                 onPrev={this.handleShowPrevCharacter}
                 onNext={this.handleShowNextCharacter}
+                componentToUse="flashCards"
               />
             </section>
           </OuterGrid>
@@ -103,7 +116,9 @@ class FlashCards extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
+    syllabaryFromDatabase: state.auth.syllabaryFromDatabase
   };
 };
 

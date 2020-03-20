@@ -40,20 +40,45 @@ class ChooseSyllabary extends Component {
                 >
                   <h2 className="syllabary-header">Wybierz sylabariusz</h2>
                   <div className="syllabary-inputs-box">
-                    <Button
-                      variant="contained"
-                      component={RouterLink}
-                      to={this.props.match.url + "/hiragana"}
-                    >
-                      Hiragana
-                    </Button>
-                    <Button
-                      variant="contained"
-                      component={RouterLink}
-                      to={this.props.match.url + "/katakana"}
-                    >
-                      Katakana
-                    </Button>
+                    {this.props.isUserHasWrongHiraganaAnswers ? (
+                      <Button
+                        variant="contained"
+                        component={RouterLink}
+                        to={
+                          this.props.match.url + "/hiragana/choose-collection"
+                        }
+                      >
+                        Hiragana
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        component={RouterLink}
+                        to={this.props.match.url + "/hiragana"}
+                      >
+                        Hiragana
+                      </Button>
+                    )}
+                    {this.props.isUserHasWrongKatakanaAnswers ? (
+                      <Button
+                        variant="contained"
+                        component={RouterLink}
+                        to={
+                          this.props.match.url + "/katakana/choose-collection"
+                        }
+                      >
+                        Katakana
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        component={RouterLink}
+                        to={this.props.match.url + "/katakana"}
+                      >
+                        Katakana
+                      </Button>
+                    )}
+
                     <Link component={RouterLink} to="/home">
                       Powrót
                     </Link>
@@ -70,7 +95,9 @@ class ChooseSyllabary extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
+    isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers
   };
 };
 

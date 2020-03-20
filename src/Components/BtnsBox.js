@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import { connect } from "react-redux";
+import { restartUserChoice } from "../Redux/actions/auth";
 
 class BtnsBox extends Component {
   handleNext = e => {
@@ -12,19 +14,27 @@ class BtnsBox extends Component {
     this.props.onPrev();
   };
 
+  handleRestartUsersChoice = () => {
+    this.props.changeToFalse();
+  };
+
   render() {
     return (
       <div className="btns-box">
-        {!this.props.componentToUse && (
+        {this.props.componentToUse === "flashCards" && (
           <Button variant="contained" onClick={this.handlePrev}>
             Poprzedni
           </Button>
         )}
-
         <Button variant="contained" onClick={this.handleNext}>
           Nastepny
         </Button>
-        <Button variant="contained" component={Link} to="/home">
+        <Button
+          variant="contained"
+          component={Link}
+          to="/home"
+          onClick={this.handleRestartUsersChoice}
+        >
           Powrót
         </Button>
       </div>
@@ -32,4 +42,12 @@ class BtnsBox extends Component {
   }
 }
 
-export default BtnsBox;
+const mapDispatchToProps = dispatch => {
+  return {
+    changeToFalse: () => {
+      dispatch(restartUserChoice());
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(BtnsBox);
