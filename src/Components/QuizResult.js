@@ -89,7 +89,9 @@ class QuizResult extends Component {
   };
 
   render() {
-    const { correctAnswers, isResultSubmitted } = this.state;
+    const { correctAnswers, incorrectAnswers, isResultSubmitted } = this.state;
+
+    let sum = correctAnswers.length + incorrectAnswers.length;
     return (
       <>
         <UserNavBar />
@@ -106,7 +108,7 @@ class QuizResult extends Component {
               </h2>
               <h3 className="result-container__subtitle">Twoj wynik to:</h3>
               <p className="result-container__score">
-                {correctAnswers.length} / 46
+                {correctAnswers.length}/{sum}
               </p>
               {!isResultSubmitted ? (
                 <Button variant="contained" type="submit">

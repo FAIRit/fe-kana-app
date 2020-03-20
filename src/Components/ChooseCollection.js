@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { connect } from "react-redux";
+import { chooseWrongAnswers, getSyllabary } from "../Redux/actions/auth";
 import UserNavBar from "./UserNavBar";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
@@ -17,16 +18,41 @@ const OuterGrid = styled(Grid)({
 });
 class ChooseCollection extends Component {
   state = {
-    url: "",
-    fetchedSyllabary: []
+    url: ""
   };
-  //   handleFetchAnswers = data => {
-  //     const val = db.ref(
-  //       "hiraganaIncorrectAnswers/" + this.props.user + data.key + "/answers"
-  //     );
-  //     console.log(val);
-  //   };
 
+  //fetching data from database
+  handleFetchAnswers = data => {
+    if (this.props.match.params.syllabary === "hiragana") {
+      db.ref(
+        "hiraganaIncorrectAnswers/" +
+          this.props.user +
+          "/" +
+          data.key +
+          "/answers"
+      )
+        .orderByValue()
+        .limitToLast(46)
+        .on("value", snapshot => {
+          this.props.getSyllabaryFromDatabase(snapshot.val());
+        });
+    } else {
+      db.ref(
+        "katakanaIncorrectAnswers/" +
+          this.props.user +
+          "/" +
+          data.key +
+          "/answers"
+      )
+        .orderByValue()
+        .limitToLast(46)
+        .on("value", snapshot => {
+          this.props.getSyllabaryFromDatabase(snapshot.val());
+        });
+    }
+  };
+
+  //getting proper url patch and data key
   handleGetUrlPath = () => {
     const actualUrl = this.props.match.url;
     if (actualUrl.includes("quiz")) {
@@ -38,17 +64,33 @@ class ChooseCollection extends Component {
         url: "/flash-cards/"
       });
     }
-
     const chosenSyllabary = this.props.match.params.syllabary;
-    // if (chosenSyllabary === "hiragana") {
-    //   db.ref("hiraganaIncorrectAnswers/" + this.props.user)
-    //     .limitToLast(1)
-    //     .once("child_added")
-    //     .then(snapshot => {
-    //       this.handleFetchAnswers(snapshot);
-    //     });
-    // }
+    if (chosenSyllabary === "hiragana") {
+      db.ref("hiraganaIncorrectAnswers/" + this.props.user)
+        .orderByKey()
+        .limitToLast(1)
+        .once("child_added")
+        .then(snapshot => {
+          console.log(snapshot);
+          this.handleFetchAnswers(snapshot);
+        });
+    } else if (chosenSyllabary === "katakana") {
+      db.ref("katakanaIncorrectAnswers/" + this.props.user)
+        .limitToLast(1)
+        .once("child_added")
+        .then(snapshot => {
+          console.log(snapshot);
+          this.handleFetchAnswers(snapshot);
+        });
+    }
   };
+
+  //check if user choose answers from database
+  handleChooseCollection = e => {
+    e.preventDefault();
+    this.props.isUserChooseIncorrect();
+  };
+
   componentDidMount = () => {
     this.handleGetUrlPath();
   };
@@ -74,20 +116,31 @@ class ChooseCollection extends Component {
               >
                 <h2 className="syllabary-header">Wybierz kolekcję</h2>
                 <div className="syllabary-inputs-box">
-                  <Button
-                    variant="contained"
-                    component={RouterLink}
-                    to={url + this.props.match.params.syllabary}
-                  >
-                    Pobierz niepoprawne odpowiedzi z ostatniej sesji
-                  </Button>
-                  <Button
-                    variant="contained"
-                    component={RouterLink}
-                    to={url + this.props.match.params.syllabary}
-                  >
-                    Nowy quiz
-                  </Button>
+                  {this.props.isUserChooseIncorrectAnswers ? (
+                    <Button
+                      variant="contained"
+                      component={RouterLink}
+                      to={url + this.props.match.params.syllabary}
+                    >
+                      Zaczynamy!
+                    </Button>
+                  ) : (
+                    <>
+                      <Button
+                        variant="contained"
+                        onClick={this.handleChooseCollection}
+                      >
+                        Pobierz niepoprawne odpowiedzi z ostatniej sesji
+                      </Button>
+                      <Button
+                        variant="contained"
+                        component={RouterLink}
+                        to={url + this.props.match.params.syllabary}
+                      >
+                        Nowa sesja
+                      </Button>
+                    </>
+                  )}
                   <Link component={RouterLink} to="/home">
                     Powrót
                   </Link>
@@ -103,8 +156,21 @@ class ChooseCollection extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
+    syllabaryFromDatabase: state.auth.syllabaryFromDatabase
   };
 };
 
-export default connect(mapStateToProps)(ChooseCollection);
+const mapDispatchToProps = dispatch => {
+  return {
+    isUserChooseIncorrect: () => {
+      dispatch(chooseWrongAnswers());
+    },
+    getSyllabaryFromDatabase: syllabary => {
+      dispatch(getSyllabary(syllabary));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChooseCollection);

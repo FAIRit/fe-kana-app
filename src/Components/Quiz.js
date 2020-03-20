@@ -20,9 +20,11 @@ const OuterGrid = styled(Grid)({
 
 class Quiz extends Component {
   state = {
-    kanaTable: this.props.kanaTable.sort(() => {
-      return 0.5 - Math.random();
-    }),
+    kanaTable: this.props.isUserChooseIncorrectAnswers
+      ? this.props.syllabaryFromDatabase
+      : this.props.kanaTable.sort(() => {
+          return 0.5 - Math.random();
+        }),
     kanaCounter: 0,
     correctAnswers: [],
     incorrectAnswers: [],
@@ -84,13 +86,27 @@ class Quiz extends Component {
       isEventBlocked === false
     ) {
       const data = {
-        syllabary: syllabary,
+        id: kanaTable[kanaCounter].id,
         meaning: kanaTable[kanaCounter].meaning,
-        character: kanaTable[kanaCounter][syllabary]
+        [this.props.match.params.syllabary]: kanaTable[kanaCounter][syllabary]
       };
       this.setState({
         incorrectAnswers: [...incorrectAnswers, data],
         isEventBlocked: true
+      });
+    }
+  };
+
+  componentDidMount = () => {
+    if (this.props.isUserChooseIncorrectAnswers) {
+      this.setState({
+        kanaTable: this.props.syllabaryFromDatabase
+      });
+    } else {
+      this.setState({
+        kanaTable: this.props.kanaTable.sort(() => {
+          return 0.5 - Math.random();
+        })
       });
     }
   };
@@ -108,7 +124,10 @@ class Quiz extends Component {
 
     if (!isAuthenticated) {
       return <Redirect to="/" />;
-    } else if (incorrectAnswers.length + correctAnswers.length === 46) {
+    } else if (
+      incorrectAnswers.length + correctAnswers.length ===
+      kanaTable.length
+    ) {
       return (
         <QuizResult
           correctAnswers={correctAnswers}
@@ -171,9 +190,9 @@ class Quiz extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
-    // isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
-    // isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers
+    isAuthenticated: state.auth.isAuthenticated,
+    isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
+    syllabaryFromDatabase: state.auth.syllabaryFromDatabase
   };
 };
 

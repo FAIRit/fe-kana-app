@@ -5,6 +5,9 @@ export const LOGOUT_SUCCESS = "LOGOUT_SUCCES";
 export const REGISTER = "REGISTER";
 export const IS_WRONG_HIRAGANA = "IS_WRONG_HIRAGANA";
 export const IS_WRONG_KATAKANA = "IS_WRONG_KATAKANA";
+export const CHOOSE_WRONG_ANSWERS = "CHOOSE_WRONG_ANSWERS";
+export const GET_SYLLABARY = "GET_SYLLABARY";
+export const RESTART_CHOICE = "RESTART_CHOICE";
 
 const register = user => {
   return {
@@ -37,6 +40,25 @@ const katakanaWrongAnswers = isUserHasWrongKatakanaAnswers => {
   return {
     type: IS_WRONG_KATAKANA,
     isUserHasWrongKatakanaAnswers
+  };
+};
+
+export const chooseWrongAnswers = () => {
+  return {
+    type: CHOOSE_WRONG_ANSWERS
+  };
+};
+
+export const getSyllabary = syllabaryFromDatabase => {
+  return {
+    type: GET_SYLLABARY,
+    syllabaryFromDatabase
+  };
+};
+
+export const restartUserChoice = () => {
+  return {
+    type: RESTART_CHOICE
   };
 };
 
