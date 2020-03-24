@@ -6,7 +6,8 @@ import {
   IS_WRONG_KATAKANA,
   CHOOSE_WRONG_ANSWERS,
   GET_SYLLABARY,
-  RESTART_CHOICE
+  RESTART_CHOICE,
+  UPLOAD_IMAGE
 } from "../actions/auth";
 
 export default (
@@ -15,6 +16,7 @@ export default (
     isUserHasWrongHiraganaAnswers: false,
     isUserHasWrongKatakanaAnswers: false,
     user: null,
+    image: null,
     isUserChooseIncorrectAnswers: false,
     syllabaryFromDatabase: []
   },
@@ -69,6 +71,13 @@ export default (
         syllabaryFromDatabase: [],
         isUserChooseIncorrectAnswers: false
       };
+
+    case UPLOAD_IMAGE:
+      return {
+        ...state,
+        image: action.image
+      };
+
     default:
       return state;
   }

@@ -8,7 +8,6 @@ import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
-import avatar from "../assets/avatar.png";
 
 const Nav = styled(Box)({
   width: "250px",
@@ -47,7 +46,7 @@ class BurgerMenu extends Component {
     } else {
       return (
         <Nav component="nav" className="burger-menu">
-          <StyledAvatar src={avatar} />
+          <StyledAvatar />
           <StyledList className="burger-menu__list">
             <ListItem className="burger-menu__list-element">
               <Link to="/my-profile">Mój profil</Link>

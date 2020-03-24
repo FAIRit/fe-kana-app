@@ -8,6 +8,7 @@ export const IS_WRONG_KATAKANA = "IS_WRONG_KATAKANA";
 export const CHOOSE_WRONG_ANSWERS = "CHOOSE_WRONG_ANSWERS";
 export const GET_SYLLABARY = "GET_SYLLABARY";
 export const RESTART_CHOICE = "RESTART_CHOICE";
+export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 
 const register = user => {
   return {
@@ -59,6 +60,13 @@ export const getSyllabary = syllabaryFromDatabase => {
 export const restartUserChoice = () => {
   return {
     type: RESTART_CHOICE
+  };
+};
+
+export const uploadProfileImage = image => {
+  return {
+    type: UPLOAD_IMAGE,
+    image
   };
 };
 

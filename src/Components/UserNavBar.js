@@ -4,7 +4,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Box from "@material-ui/core/Box";
-import avatar from "../assets/avatar.png";
 import { connect } from "react-redux";
 import { styled } from "@material-ui/core/styles";
 
@@ -39,10 +38,10 @@ class UserNavBar extends Component {
 
   render() {
     const { left } = this.state;
-    const { user } = this.props;
+    const { user, image } = this.props;
     return (
       <StyledAppBar className="user-nav-bar">
-        <StyledAvatar onClick={this.handleToggleDrawer(true)} src={avatar} />
+        <StyledAvatar onClick={this.handleToggleDrawer(true)} src={image} />
         <StyledSpan component="span" className="user-name">
           Witaj {user} !
         </StyledSpan>
@@ -58,7 +57,8 @@ class UserNavBar extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    image: state.auth.image
   };
 };
 

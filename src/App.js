@@ -7,6 +7,7 @@ import CheatSheet from "./Components/CheatSheet";
 import FlashCards from "./Components/FlashCards";
 import ChooseSyllabary from "./Components/ChooseSyllabary";
 import ChooseCollection from "./Components/ChooseCollection";
+import MyProfile from "./Components/MyProfile";
 import Quiz from "./Components/Quiz";
 import { connect } from "react-redux";
 
@@ -69,6 +70,7 @@ class App extends Component {
               <Quiz {...routeProps} kanaTable={kanaTable} />
             )}
           />
+          <Route path="/my-profile" component={MyProfile} />
         </Switch>
       </HashRouter>
     );
@@ -81,7 +83,8 @@ const mapStateToProps = state => {
     user: state.auth.user,
     isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
     isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers,
-    isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers
+    isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
+    image: state.auth.image
   };
 };
 

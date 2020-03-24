@@ -6,7 +6,6 @@ import UserNavBar from "./UserNavBar";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
 import { db } from "../Firebase/firebase";
 
 const OuterGrid = styled(Grid)({
@@ -71,7 +70,6 @@ class ChooseCollection extends Component {
         .limitToLast(1)
         .once("child_added")
         .then(snapshot => {
-          console.log(snapshot);
           this.handleFetchAnswers(snapshot);
         });
     } else if (chosenSyllabary === "katakana") {
@@ -79,7 +77,6 @@ class ChooseCollection extends Component {
         .limitToLast(1)
         .once("child_added")
         .then(snapshot => {
-          console.log(snapshot);
           this.handleFetchAnswers(snapshot);
         });
     }
@@ -141,9 +138,9 @@ class ChooseCollection extends Component {
                       </Button>
                     </>
                   )}
-                  <Link component={RouterLink} to="/home">
+                  <Button variant="contained" component={RouterLink} to="/home">
                     Powrót
-                  </Link>
+                  </Button>
                 </div>
               </Grid>
             </div>

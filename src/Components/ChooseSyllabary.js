@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
 import UserNavBar from "./UserNavBar";
 
 const OuterGrid = styled(Grid)({
@@ -79,9 +78,13 @@ class ChooseSyllabary extends Component {
                       </Button>
                     )}
 
-                    <Link component={RouterLink} to="/home">
+                    <Button
+                      variant="contained"
+                      component={RouterLink}
+                      to="/home"
+                    >
                       Powrót
-                    </Link>
+                    </Button>
                   </div>
                 </Grid>
               </div>
