@@ -10,23 +10,13 @@ import ChooseCollection from "./Components/ChooseCollection";
 import MyProfile from "./Components/MyProfile";
 import Quiz from "./Components/Quiz";
 import { connect } from "react-redux";
-import { restGetKana } from "./services/kana";
+import KanaContext from "./contexts/KanaContext";
 
 class App extends Component {
-  state = {
-    kanaTable: []
-  };
+  static contextType = KanaContext;
 
-  componentDidMount = () => {
-    restGetKana().then(kanaTable => {
-      this.setState({
-        kanaTable
-      });
-    });
-  };
-  
   render() {
-    const { kanaTable } = this.state;
+    const { kanaTable } = this.context;
     return (
       <Switch>
         <Route exact path="/" component={Login} />

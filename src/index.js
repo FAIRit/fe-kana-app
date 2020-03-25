@@ -9,6 +9,7 @@ import theme from "./Components/StyledCssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
 import configureStore from "./Redux/configureStore";
+import { KanaProvider } from "./contexts/KanaContext";
 
 const store = configureStore();
 
@@ -18,7 +19,9 @@ ReactDOM.render(
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth="md">
-          <App />
+          <KanaProvider>
+            <App />
+          </KanaProvider>
         </Container>
       </ThemeProvider>
     </Provider>
