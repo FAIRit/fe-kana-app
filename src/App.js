@@ -9,7 +9,6 @@ import ChooseSyllabary from "./Components/ChooseSyllabary";
 import ChooseCollection from "./Components/ChooseCollection";
 import MyProfile from "./Components/MyProfile";
 import Quiz from "./Components/Quiz";
-import { connect } from "react-redux";
 
 class App extends Component {
   render() {
@@ -39,15 +38,4 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user,
-    isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
-    isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers,
-    isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
-    imageUrl: state.auth.imageUrl
-  };
-};
-
-export default connect(mapStateToProps)(App);
+export default App;
