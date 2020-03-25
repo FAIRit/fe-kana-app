@@ -10,6 +10,7 @@ import ChooseCollection from "./Components/ChooseCollection";
 import MyProfile from "./Components/MyProfile";
 import Quiz from "./Components/Quiz";
 import { connect } from "react-redux";
+import { restGetKana } from "./services/kana";
 
 class App extends Component {
   state = {
@@ -17,20 +18,13 @@ class App extends Component {
   };
 
   componentDidMount = () => {
-    fetch("http://localhost:3000/kana.json", {
-      headers: {
-        "content-type": "application/json"
-      }
-    })
-      .then(resp => {
-        return resp.json();
-      })
-      .then(data => {
-        this.setState({
-          kanaTable: data.kana
-        });
+    restGetKana().then(kanaTable => {
+      this.setState({
+        kanaTable
       });
+    });
   };
+  
   render() {
     const { kanaTable } = this.state;
     return (
