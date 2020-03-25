@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { keepDataInLocalStorage } from "../Redux/actions/auth";
 import { storage } from "../Firebase/firebase";
 
+import firebase from "firebase";
+
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "80%",
@@ -23,45 +25,99 @@ const StyledInput = styled(Input)({
   display: "none"
 });
 
+const getExtension = name => {
+  const lastDot = name.lastIndexOf(".");
+  return name.substring(lastDot + 1);
+};
+
 class MyProfile extends Component {
   state = {
-    imageUrl: this.props.imageUrl ? this.props.imageUrl : "",
-    imageName: this.props.imageName ? this.props.imageName : ""
+    image: null,
+    user: null,
+    imageUrl: null
   };
 
-  handleSelectImage = e => {
-    let images = e.target.files[0];
+  handleSelectImage = event => {
+    const image = event.target.files[0];
+    const uid = this.state.user.uid;
+
+    if (!image) {
+      return;
+    }
+
+    const ext = getExtension(image.name);
+
     this.setState({
-      imageName: e.target.files[0].name
+      image
     });
-    //set image to storage
-    let storageRef = storage.ref();
-    let imageRef = storageRef.child(`images/${this.props.user}/${images.name}`);
-    imageRef.put(images).then(snapshot => {
-      console.log("yay", snapshot);
-    });
-    //download via url
-    storageRef
-      .child(`images/${this.props.user}/${images.name}`)
-      .getDownloadURL()
-      .then(url => {
-        this.setState({
-          imageUrl: url
-        });
-        this.props.uploadImageUrl(url, this.state.imageName);
+
+    const storageRef = storage.ref();
+    const imageRef = storageRef.child(`avatars/${uid}.${ext}`);
+
+    const uploadTask = imageRef.put(image);
+    console.log("uploading file...");
+    uploadTask.then(snapshot => {
+      console.log("...file uploaded.", snapshot.ref);
+      snapshot.ref.getDownloadURL().then(url => {
+        firebase
+          .database()
+          .ref("users")
+          .child(uid)
+          .child("avatarUrl")
+          .set(url)
+          .then(() => {
+            console.log("user profile updated");
+          });
       });
+    });
   };
 
-  // componentDidMount = () => {
-  //   const imageUrl = localStorage.getItem("avatarImage");
-  //   this.setState({
-  //     imageUrl: imageUrl
-  //   });
-  // };
+  unsubscribeFromAuth = null;
+  unsubscribeFromUserProfile = null;
+
+  componentDidMount() {
+    this.unsubscribeFromAuth = firebase.auth().onAuthStateChanged(user => {
+      console.log(user);
+      if (user) {
+        const { uid, email } = user;
+        console.log(uid, email)
+
+        this.unsubscribeFromUserProfile = firebase
+          .database()
+          .ref("users")
+          .child(uid)
+          .on("value", snapshot => {
+            this.setState({
+              user: snapshot.val()
+            });
+          });
+
+        // TODO remove this call once the signup process is fixed
+        firebase
+          .database()
+          .ref("users")
+          .child(uid)
+          .update({ uid, email });
+      } else {
+        if (this.unsubscribeFromUserProfile) {
+          this.unsubscribeFromUserProfile();
+        }
+        this.setState({
+          user: null
+        });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.unsubscribeFromAuth) {
+      this.unsubscribeFromAuth();
+    }
+  }
 
   render() {
     const { isAuthenticated } = this.props;
-    const { imageUrl } = this.state;
+    const { user } = this.state;
     if (!isAuthenticated) {
       return <Redirect to="/" />;
     } else {
@@ -75,7 +131,7 @@ class MyProfile extends Component {
           <section className="my-profile">
             <main className="my-profile__container">
               <div className="my-profile__avatar-box">
-                <Avatar src={imageUrl} />
+                <Avatar src={user?.avatarUrl} />
                 <StyledInput
                   type="file"
                   accept="image/*"
