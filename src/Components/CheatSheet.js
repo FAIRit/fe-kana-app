@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
+import KanaContext from "../contexts/KanaContext";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
@@ -30,6 +31,8 @@ const MainBox = styled(Box)({
 });
 
 class CheatSheet extends Component {
+  static contextType = KanaContext;
+
   state = {
     isHiraganaShown: false,
     isKatakanaShown: false
@@ -50,7 +53,9 @@ class CheatSheet extends Component {
 
   render() {
     const { isHiraganaShown, isKatakanaShown } = this.state;
-    const { kanaTable, isAuthenticated } = this.props;
+    const { isAuthenticated } = this.props;
+    const { kanaTable } = this.context;
+
     if (!isAuthenticated) {
       return <Redirect to="/" />;
     } else {

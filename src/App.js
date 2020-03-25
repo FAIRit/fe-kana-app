@@ -22,12 +22,7 @@ class App extends Component {
         <Route exact path="/" component={Login} />
         <Route path="/home" component={Home} />
         <Route path="/register" component={Registration} />
-        <Route
-          path="/cheat-sheet"
-          component={routeProps => (
-            <CheatSheet {...routeProps} kanaTable={kanaTable} />
-          )}
-        />
+        <Route path="/cheat-sheet" component={CheatSheet} />
         <Route exact path="/flash-cards" component={ChooseSyllabary} />
         <Route
           exact
