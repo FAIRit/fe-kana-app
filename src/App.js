@@ -29,13 +29,7 @@ class App extends Component {
           path="/flash-cards/:syllabary/choose-collection"
           component={ChooseCollection}
         />
-        <Route
-          exact
-          path="/flash-cards/:syllabary"
-          component={routeProps => (
-            <FlashCards {...routeProps} kanaTable={kanaTable} />
-          )}
-        />
+        <Route exact path="/flash-cards/:syllabary" component={FlashCards} />
         <Route exact path="/quiz" component={ChooseSyllabary} />
         <Route
           exact

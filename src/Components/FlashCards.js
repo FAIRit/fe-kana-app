@@ -5,6 +5,7 @@ import UserNavBar from "./UserNavBar";
 import BtnsBox from "./BtnsBox";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
+import KanaContext from "../contexts/KanaContext";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
@@ -15,6 +16,8 @@ const OuterGrid = styled(Grid)({
 });
 
 class FlashCards extends Component {
+  static contextType = KanaContext;
+
   state = {
     kanaTable: [],
     kanaCounter: 0,
@@ -53,7 +56,7 @@ class FlashCards extends Component {
       });
     } else {
       this.setState({
-        kanaTable: this.props.kanaTable.sort(() => {
+        kanaTable: this.context.kanaTable.sort(() => {
           return 0.5 - Math.random();
         })
       });
