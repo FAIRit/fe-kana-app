@@ -9,6 +9,7 @@ import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import { connect } from "react-redux";
+import KanaContext from "../contexts/KanaContext";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
@@ -19,10 +20,12 @@ const OuterGrid = styled(Grid)({
 });
 
 class Quiz extends Component {
+  static contextType = KanaContext;
+
   state = {
     kanaTable: this.props.isUserChooseIncorrectAnswers
       ? this.props.syllabaryFromDatabase
-      : this.props.kanaTable.sort(() => {
+      : this.context.kanaTable.sort(() => {
           return 0.5 - Math.random();
         }),
     kanaCounter: 0,
@@ -104,7 +107,7 @@ class Quiz extends Component {
       });
     } else {
       this.setState({
-        kanaTable: this.props.kanaTable.sort(() => {
+        kanaTable: this.context.kanaTable.sort(() => {
           return 0.5 - Math.random();
         })
       });

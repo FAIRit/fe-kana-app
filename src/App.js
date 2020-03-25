@@ -10,13 +10,9 @@ import ChooseCollection from "./Components/ChooseCollection";
 import MyProfile from "./Components/MyProfile";
 import Quiz from "./Components/Quiz";
 import { connect } from "react-redux";
-import KanaContext from "./contexts/KanaContext";
 
 class App extends Component {
-  static contextType = KanaContext;
-
   render() {
-    const { kanaTable } = this.context;
     return (
       <Switch>
         <Route exact path="/" component={Login} />
@@ -36,12 +32,7 @@ class App extends Component {
           path="/quiz/:syllabary/choose-collection"
           component={ChooseCollection}
         />
-        <Route
-          path="/quiz/:syllabary"
-          component={routeProps => (
-            <Quiz {...routeProps} kanaTable={kanaTable} />
-          )}
-        />
+        <Route path="/quiz/:syllabary" component={Quiz} />
         <Route path="/my-profile" component={MyProfile} />
       </Switch>
     );
