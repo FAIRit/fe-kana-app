@@ -16,7 +16,8 @@ export default (
     isUserHasWrongHiraganaAnswers: false,
     isUserHasWrongKatakanaAnswers: false,
     user: null,
-    image: null,
+    imageUrl: null,
+    imageName: null,
     isUserChooseIncorrectAnswers: false,
     syllabaryFromDatabase: []
   },
@@ -35,7 +36,8 @@ export default (
         isAuthenticated: false,
         isUserHasWrongHiraganaAnswers: false,
         isUserHasWrongKatakanaAnswers: false,
-        user: ""
+        user: "",
+        image: null
       };
     case REGISTER:
       return {
@@ -75,7 +77,8 @@ export default (
     case UPLOAD_IMAGE:
       return {
         ...state,
-        image: action.image
+        imageUrl: action.imageUrl,
+        imageName: action.imageName
       };
 
     default:

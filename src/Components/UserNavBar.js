@@ -38,10 +38,10 @@ class UserNavBar extends Component {
 
   render() {
     const { left } = this.state;
-    const { user, image } = this.props;
+    const { user, imageUrl } = this.props;
     return (
       <StyledAppBar className="user-nav-bar">
-        <StyledAvatar onClick={this.handleToggleDrawer(true)} src={image} />
+        <StyledAvatar onClick={this.handleToggleDrawer(true)} src={imageUrl} />
         <StyledSpan component="span" className="user-name">
           Witaj {user} !
         </StyledSpan>
@@ -58,7 +58,7 @@ class UserNavBar extends Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    image: state.auth.image
+    imageUrl: state.auth.imageUrl
   };
 };
 

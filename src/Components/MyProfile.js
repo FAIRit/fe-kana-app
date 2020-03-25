@@ -7,7 +7,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import { Link } from "react-router-dom";
-import { uploadProfileImage } from "../Redux/actions/auth";
+import { keepDataInLocalStorage } from "../Redux/actions/auth";
+import { storage } from "../Firebase/firebase";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
@@ -24,26 +25,43 @@ const StyledInput = styled(Input)({
 
 class MyProfile extends Component {
   state = {
-    image: null,
-    imagePreviewUrl: ""
+    imageUrl: this.props.imageUrl ? this.props.imageUrl : "",
+    imageName: this.props.imageName ? this.props.imageName : ""
   };
 
   handleSelectImage = e => {
-    let reader = new FileReader();
     let images = e.target.files[0];
-    reader.onloadend = () => {
-      this.setState({
-        image: images,
-        imagePreviewUrl: reader.result
+    this.setState({
+      imageName: e.target.files[0].name
+    });
+    //set image to storage
+    let storageRef = storage.ref();
+    let imageRef = storageRef.child(`images/${this.props.user}/${images.name}`);
+    imageRef.put(images).then(snapshot => {
+      console.log("yay", snapshot);
+    });
+    //download via url
+    storageRef
+      .child(`images/${this.props.user}/${images.name}`)
+      .getDownloadURL()
+      .then(url => {
+        this.setState({
+          imageUrl: url
+        });
+        this.props.uploadImageUrl(url, this.state.imageName);
       });
-    };
-    reader.readAsDataURL(images);
-    this.props.uploadFile(this.state.imagePreviewUrl);
   };
+
+  // componentDidMount = () => {
+  //   const imageUrl = localStorage.getItem("avatarImage");
+  //   this.setState({
+  //     imageUrl: imageUrl
+  //   });
+  // };
 
   render() {
     const { isAuthenticated } = this.props;
-    const { imagePreviewUrl } = this.state;
+    const { imageUrl } = this.state;
     if (!isAuthenticated) {
       return <Redirect to="/" />;
     } else {
@@ -57,7 +75,7 @@ class MyProfile extends Component {
           <section className="my-profile">
             <main className="my-profile__container">
               <div className="my-profile__avatar-box">
-                <Avatar src={imagePreviewUrl} />
+                <Avatar src={imageUrl} />
                 <StyledInput
                   type="file"
                   accept="image/*"
@@ -85,14 +103,16 @@ class MyProfile extends Component {
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
-    image: state.auth.image
+    imageUrl: state.auth.imageUrl,
+    imageName: state.auth.imageName,
+    user: state.auth.user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    uploadFile: image => {
-      dispatch(uploadProfileImage(image));
+    uploadImageUrl: (imageUrl, imageName) => {
+      dispatch(keepDataInLocalStorage(imageUrl, imageName));
     }
   };
 };

@@ -84,7 +84,7 @@ const mapStateToProps = state => {
     isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
     isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers,
     isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
-    image: state.auth.image
+    imageUrl: state.auth.imageUrl
   };
 };
 

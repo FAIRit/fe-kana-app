@@ -63,11 +63,18 @@ export const restartUserChoice = () => {
   };
 };
 
-export const uploadProfileImage = image => {
+export const uploadProfileImage = (imageUrl, imageName) => {
   return {
     type: UPLOAD_IMAGE,
-    image
+    imageUrl,
+    imageName
   };
+};
+
+export const keepDataInLocalStorage = (imageUrl, imageName) => dispatch => {
+  localStorage.setItem("avatarImage", imageUrl);
+  localStorage.setItem("avatarName", imageName);
+  dispatch(uploadProfileImage(imageUrl, imageName));
 };
 
 export const registerUser = (email, password, login) => dispatch => {
