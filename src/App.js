@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
 import Registration from "./Components/Registration";
@@ -34,45 +34,43 @@ class App extends Component {
   render() {
     const { kanaTable } = this.state;
     return (
-      <HashRouter>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route path="/home" component={Home} />
-          <Route path="/register" component={Registration} />
-          <Route
-            path="/cheat-sheet"
-            component={routeProps => (
-              <CheatSheet {...routeProps} kanaTable={kanaTable} />
-            )}
-          />
-          <Route exact path="/flash-cards" component={ChooseSyllabary} />
-          <Route
-            exact
-            path="/flash-cards/:syllabary/choose-collection"
-            component={ChooseCollection}
-          />
-          <Route
-            exact
-            path="/flash-cards/:syllabary"
-            component={routeProps => (
-              <FlashCards {...routeProps} kanaTable={kanaTable} />
-            )}
-          />
-          <Route exact path="/quiz" component={ChooseSyllabary} />
-          <Route
-            exact
-            path="/quiz/:syllabary/choose-collection"
-            component={ChooseCollection}
-          />
-          <Route
-            path="/quiz/:syllabary"
-            component={routeProps => (
-              <Quiz {...routeProps} kanaTable={kanaTable} />
-            )}
-          />
-          <Route path="/my-profile" component={MyProfile} />
-        </Switch>
-      </HashRouter>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route path="/home" component={Home} />
+        <Route path="/register" component={Registration} />
+        <Route
+          path="/cheat-sheet"
+          component={routeProps => (
+            <CheatSheet {...routeProps} kanaTable={kanaTable} />
+          )}
+        />
+        <Route exact path="/flash-cards" component={ChooseSyllabary} />
+        <Route
+          exact
+          path="/flash-cards/:syllabary/choose-collection"
+          component={ChooseCollection}
+        />
+        <Route
+          exact
+          path="/flash-cards/:syllabary"
+          component={routeProps => (
+            <FlashCards {...routeProps} kanaTable={kanaTable} />
+          )}
+        />
+        <Route exact path="/quiz" component={ChooseSyllabary} />
+        <Route
+          exact
+          path="/quiz/:syllabary/choose-collection"
+          component={ChooseCollection}
+        />
+        <Route
+          path="/quiz/:syllabary"
+          component={routeProps => (
+            <Quiz {...routeProps} kanaTable={kanaTable} />
+          )}
+        />
+        <Route path="/my-profile" component={MyProfile} />
+      </Switch>
     );
   }
 }
