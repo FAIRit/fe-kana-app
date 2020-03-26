@@ -1,50 +1,31 @@
 import {
-  LOGIN_SUCCESS,
-  LOGOUT_SUCCESS,
-  REGISTER,
   IS_WRONG_HIRAGANA,
   IS_WRONG_KATAKANA,
   CHOOSE_WRONG_ANSWERS,
   GET_SYLLABARY,
   RESTART_CHOICE,
-  UPLOAD_IMAGE
+  SET_USER
 } from "../actions/auth";
 
+const initialState = {
+  isUserHasWrongHiraganaAnswers: false,
+  isUserHasWrongKatakanaAnswers: false,
+  isUserChooseIncorrectAnswers: false,
+  syllabaryFromDatabase: [],
+  user: null
+}
+
 export default (
-  state = {
-    isAuthenticated: false,
-    isUserHasWrongHiraganaAnswers: false,
-    isUserHasWrongKatakanaAnswers: false,
-    user: null,
-    imageUrl: null,
-    imageName: null,
-    isUserChooseIncorrectAnswers: false,
-    syllabaryFromDatabase: []
-  },
+  state = initialState,
   action
 ) => {
   switch (action.type) {
-    case LOGIN_SUCCESS:
+    case SET_USER:
       return {
         ...state,
-        isAuthenticated: true,
-        user: action.user
-      };
-    case LOGOUT_SUCCESS:
-      return {
-        ...state,
-        isAuthenticated: false,
-        isUserHasWrongHiraganaAnswers: false,
-        isUserHasWrongKatakanaAnswers: false,
-        user: "",
-        image: null
-      };
-    case REGISTER:
-      return {
-        ...state,
-        isAuthenticated: true,
-        user: action.user
-      };
+        user: action.user,
+        isAuthenticated: action.user !== null
+      }
     case IS_WRONG_HIRAGANA:
       return {
         ...state,
@@ -73,14 +54,6 @@ export default (
         syllabaryFromDatabase: [],
         isUserChooseIncorrectAnswers: false
       };
-
-    case UPLOAD_IMAGE:
-      return {
-        ...state,
-        imageUrl: action.imageUrl,
-        imageName: action.imageName
-      };
-
     default:
       return state;
   }

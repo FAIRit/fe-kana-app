@@ -43,7 +43,7 @@ class UserNavBar extends Component {
       <StyledAppBar className="user-nav-bar">
         <StyledAvatar onClick={this.handleToggleDrawer(true)} src={imageUrl} />
         <StyledSpan component="span" className="user-name">
-          Witaj {user} !
+          Witaj {user.username} !
         </StyledSpan>
         <Drawer open={left} onClose={this.handleToggleDrawer(false)}>
           <div role="presentation" onClick={this.handleToggleDrawer(false)}>

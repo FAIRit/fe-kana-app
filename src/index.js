@@ -10,8 +10,11 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
 import configureStore from "./Redux/configureStore";
 import { KanaProvider } from "./contexts/KanaContext";
+import { subscribeToAuthChange } from "./Redux/actions/auth";
 
 const store = configureStore();
+
+store.dispatch(subscribeToAuthChange());
 
 ReactDOM.render(
   <Router>
