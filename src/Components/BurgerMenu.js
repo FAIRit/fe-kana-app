@@ -40,30 +40,25 @@ class BurgerMenu extends Component {
     this.props.logout();
   };
   render() {
-    const { isAuthenticated } = this.props;
-    if (!isAuthenticated) {
-      return <Redirect to="/" />;
-    } else {
-      return (
-        <Nav component="nav" className="burger-menu">
-          <StyledAvatar />
-          <StyledList className="burger-menu__list">
-            <ListItem className="burger-menu__list-element">
-              <Link to="/my-profile">Mój profil</Link>
-            </ListItem>
-            <ListItem className="burger-menu__list-element">
-              <Link to="/my-score">Moje wyniki</Link>
-            </ListItem>
-            <ListItem className="burger-menu__list-element">
-              <Link to="/settings">Ustawienia konta</Link>
-            </ListItem>
-          </StyledList>
-          <Button variant="contained" onClick={this.handleLogoutUser}>
-            Wyloguj się
-          </Button>
-        </Nav>
-      );
-    }
+    return (
+      <Nav component="nav" className="burger-menu">
+        <StyledAvatar />
+        <StyledList className="burger-menu__list">
+          <ListItem className="burger-menu__list-element">
+            <Link to="/my-profile">Mój profil</Link>
+          </ListItem>
+          <ListItem className="burger-menu__list-element">
+            <Link to="/my-score">Moje wyniki</Link>
+          </ListItem>
+          <ListItem className="burger-menu__list-element">
+            <Link to="/settings">Ustawienia konta</Link>
+          </ListItem>
+        </StyledList>
+        <Button variant="contained" onClick={this.handleLogoutUser}>
+          Wyloguj się
+        </Button>
+      </Nav>
+    );
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -76,7 +71,6 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user
   };
 };

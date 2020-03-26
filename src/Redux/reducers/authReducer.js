@@ -24,6 +24,7 @@ export default (
       return {
         ...state,
         user: action.user,
+        // TODO get rid of it once we fix all component connections
         isAuthenticated: action.user !== null
       }
     case IS_WRONG_HIRAGANA:

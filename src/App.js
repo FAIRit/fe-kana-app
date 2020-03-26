@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
 import Registration from "./Components/Registration";
@@ -10,29 +11,37 @@ import ChooseCollection from "./Components/ChooseCollection";
 import MyProfile from "./Components/MyProfile";
 import Quiz from "./Components/Quiz";
 
+const AuthGuard = ({ children }) => {
+  const user = useSelector(state => state.auth.user);
+  return user === null ? <Redirect to="/" /> : children;
+};
+
 class App extends Component {
   render() {
     return (
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route path="/home" component={Home} />
         <Route path="/register" component={Registration} />
-        <Route path="/cheat-sheet" component={CheatSheet} />
-        <Route exact path="/flash-cards" component={ChooseSyllabary} />
-        <Route
-          exact
-          path="/flash-cards/:syllabary/choose-collection"
-          component={ChooseCollection}
-        />
-        <Route exact path="/flash-cards/:syllabary" component={FlashCards} />
-        <Route exact path="/quiz" component={ChooseSyllabary} />
-        <Route
-          exact
-          path="/quiz/:syllabary/choose-collection"
-          component={ChooseCollection}
-        />
-        <Route path="/quiz/:syllabary" component={Quiz} />
-        <Route path="/my-profile" component={MyProfile} />
+
+        <AuthGuard>
+          <Route path="/home" component={Home} />
+          <Route path="/cheat-sheet" component={CheatSheet} />
+          <Route exact path="/flash-cards" component={ChooseSyllabary} />
+          <Route
+            exact
+            path="/flash-cards/:syllabary/choose-collection"
+            component={ChooseCollection}
+          />
+          <Route exact path="/flash-cards/:syllabary" component={FlashCards} />
+          <Route exact path="/quiz" component={ChooseSyllabary} />
+          <Route
+            exact
+            path="/quiz/:syllabary/choose-collection"
+            component={ChooseCollection}
+          />
+          <Route path="/quiz/:syllabary" component={Quiz} />
+          <Route path="/my-profile" component={MyProfile} />
+        </AuthGuard>
       </Switch>
     );
   }

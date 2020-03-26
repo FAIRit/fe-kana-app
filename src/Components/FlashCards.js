@@ -66,60 +66,54 @@ class FlashCards extends Component {
   render() {
     const { kanaCounter, isMeaningShown, kanaTable } = this.state;
     const { isAuthenticated } = this.props;
-    if (!isAuthenticated) {
-      return <Redirect to="/" />;
-    } else {
-      return (
-        <>
-          <UserNavBar />
-          <OuterGrid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <section className="flash-cards">
-              <div
-                className="flash-cards-container"
-                onClick={this.handleShowMeaning}
+
+    return (
+      <>
+        <UserNavBar />
+        <OuterGrid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          <section className="flash-cards">
+            <div
+              className="flash-cards-container"
+              onClick={this.handleShowMeaning}
+            >
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
               >
-                <Grid
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                >
-                  <span className="flash-cards-id">{kanaCounter + 1}</span>
-                  {!isMeaningShown ? (
-                    <p className="flash-cards-character">
-                      {kanaTable[kanaCounter] &&
-                        kanaTable[kanaCounter][
-                          this.props.match.params.syllabary
-                        ]}
-                    </p>
-                  ) : (
-                    <p className="flash-cards-meaning">
-                      {kanaTable[kanaCounter] && kanaTable[kanaCounter].meaning}
-                    </p>
-                  )}
-                </Grid>
-              </div>
-              <BtnsBox
-                onPrev={this.handleShowPrevCharacter}
-                onNext={this.handleShowNextCharacter}
-                componentToUse="flashCards"
-              />
-            </section>
-          </OuterGrid>
-        </>
-      );
-    }
+                <span className="flash-cards-id">{kanaCounter + 1}</span>
+                {!isMeaningShown ? (
+                  <p className="flash-cards-character">
+                    {kanaTable[kanaCounter] &&
+                      kanaTable[kanaCounter][this.props.match.params.syllabary]}
+                  </p>
+                ) : (
+                  <p className="flash-cards-meaning">
+                    {kanaTable[kanaCounter] && kanaTable[kanaCounter].meaning}
+                  </p>
+                )}
+              </Grid>
+            </div>
+            <BtnsBox
+              onPrev={this.handleShowPrevCharacter}
+              onNext={this.handleShowNextCharacter}
+              componentToUse="flashCards"
+            />
+          </section>
+        </OuterGrid>
+      </>
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated,
     isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
     syllabaryFromDatabase: state.auth.syllabaryFromDatabase
   };

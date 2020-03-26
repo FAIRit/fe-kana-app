@@ -53,66 +53,59 @@ class CheatSheet extends Component {
 
   render() {
     const { isHiraganaShown, isKatakanaShown } = this.state;
-    const { isAuthenticated } = this.props;
     const { kanaTable } = this.context;
 
-    if (!isAuthenticated) {
-      return <Redirect to="/" />;
-    } else {
-      return (
-        <>
-          <UserNavBar />
-          <OuterGrid
-            container
-            direction="column"
-            justify="flex-start"
-            alignItems="stretch"
-            component="section"
-            onClick={this.handleFetchData}
-            className="cheat-sheet"
-          >
-            <div className="cheat-sheet-btns">
-              <Button variant="contained" onClick={this.handleGetHiragana}>
-                Hiragana
-              </Button>
-              <Button variant="contained" onClick={this.handleGetKatakana}>
-                Katakana
-              </Button>
-            </div>
-            <MainBox component="main">
-              <FlexBox>
-                {isHiraganaShown &&
-                  kanaTable.map(kana => (
-                    <SingleSign
-                      kanaTable={kana.hiragana}
-                      kanaMeaning={kana.meaning}
-                      key={kana.id}
-                    />
-                  ))}
-                {isKatakanaShown &&
-                  kanaTable.map(kana => (
-                    <SingleSign
-                      kanaTable={kana.katakana}
-                      kanaMeaning={kana.meaning}
-                      key={kana.id}
-                    />
-                  ))}
-              </FlexBox>
-              <Button variant="contained" component={Link} to="/home">
-                Powrót
-              </Button>
-            </MainBox>
-          </OuterGrid>
-        </>
-      );
-    }
+    return (
+      <>
+        <UserNavBar />
+        <OuterGrid
+          container
+          direction="column"
+          justify="flex-start"
+          alignItems="stretch"
+          component="section"
+          onClick={this.handleFetchData}
+          className="cheat-sheet"
+        >
+          <div className="cheat-sheet-btns">
+            <Button variant="contained" onClick={this.handleGetHiragana}>
+              Hiragana
+            </Button>
+            <Button variant="contained" onClick={this.handleGetKatakana}>
+              Katakana
+            </Button>
+          </div>
+          <MainBox component="main">
+            <FlexBox>
+              {isHiraganaShown &&
+                kanaTable.map(kana => (
+                  <SingleSign
+                    kanaTable={kana.hiragana}
+                    kanaMeaning={kana.meaning}
+                    key={kana.id}
+                  />
+                ))}
+              {isKatakanaShown &&
+                kanaTable.map(kana => (
+                  <SingleSign
+                    kanaTable={kana.katakana}
+                    kanaMeaning={kana.meaning}
+                    key={kana.id}
+                  />
+                ))}
+            </FlexBox>
+            <Button variant="contained" component={Link} to="/home">
+              Powrót
+            </Button>
+          </MainBox>
+        </OuterGrid>
+      </>
+    );
   }
 }
 
 const mapStatetoProps = state => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated
-  };
+  return {};
 };
 
 export default connect(mapStatetoProps)(CheatSheet);

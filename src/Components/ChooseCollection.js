@@ -153,7 +153,7 @@ class ChooseCollection extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user,
+    user: state.auth.user.uid,
     isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
     syllabaryFromDatabase: state.auth.syllabaryFromDatabase
   };

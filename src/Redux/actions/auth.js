@@ -11,11 +11,26 @@ export const RESTART_CHOICE = "RESTART_CHOICE";
 export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 export const SET_USER = "SET_USER";
 
+const hiraganaWrongAnswers = isUserHasWrongHiraganaAnswers => {
+  return {
+    type: IS_WRONG_HIRAGANA,
+    isUserHasWrongHiraganaAnswers
+  };
+};
+
+const katakanaWrongAnswers = isUserHasWrongKatakanaAnswers => {
+  return {
+    type: IS_WRONG_KATAKANA,
+    isUserHasWrongKatakanaAnswers
+  };
+};
+
 export const chooseWrongAnswers = () => {
   return {
     type: CHOOSE_WRONG_ANSWERS
   };
 };
+
 
 export const getSyllabary = syllabaryFromDatabase => {
   return {
@@ -67,7 +82,8 @@ export const subscribeToAuthChange = () => dispatch => {
       // hiragana
       {
         const handleHiragana = snapshot => {
-          const answers = snapshot.val();
+          const answers = snapshot.exists();
+          dispatch(hiraganaWrongAnswers(answers))
           console.log("hiragana", answers);
         };
 
@@ -86,7 +102,8 @@ export const subscribeToAuthChange = () => dispatch => {
       // katakana
       {
         const handleKatakana = snapshot => {
-          const answers = snapshot.val();
+          const answers = snapshot.exists();
+          dispatch(katakanaWrongAnswers(answers))
           console.log("katakana", answers);
         };
 

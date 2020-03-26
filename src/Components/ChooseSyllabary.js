@@ -16,89 +16,75 @@ const OuterGrid = styled(Grid)({
 
 class ChooseSyllabary extends Component {
   render() {
-    const { isAuthenticated } = this.props;
-    if (!isAuthenticated) {
-      return <Redirect to="/" />;
-    } else {
-      return (
-        <>
-          <UserNavBar />
-          <OuterGrid
-            container
-            direction="column"
-            justify="center"
-            alignItems="stretch"
-          >
-            <section className="syllabary">
-              <div className="syllabary-container">
-                <Grid
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                >
-                  <h2 className="syllabary-header">Wybierz sylabariusz</h2>
-                  <div className="syllabary-inputs-box">
-                    {this.props.isUserHasWrongHiraganaAnswers ? (
-                      <Button
-                        variant="contained"
-                        component={RouterLink}
-                        to={
-                          this.props.match.url + "/hiragana/choose-collection"
-                        }
-                      >
-                        Hiragana
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        component={RouterLink}
-                        to={this.props.match.url + "/hiragana"}
-                      >
-                        Hiragana
-                      </Button>
-                    )}
-                    {this.props.isUserHasWrongKatakanaAnswers ? (
-                      <Button
-                        variant="contained"
-                        component={RouterLink}
-                        to={
-                          this.props.match.url + "/katakana/choose-collection"
-                        }
-                      >
-                        Katakana
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        component={RouterLink}
-                        to={this.props.match.url + "/katakana"}
-                      >
-                        Katakana
-                      </Button>
-                    )}
-
+    return (
+      <>
+        <UserNavBar />
+        <OuterGrid
+          container
+          direction="column"
+          justify="center"
+          alignItems="stretch"
+        >
+          <section className="syllabary">
+            <div className="syllabary-container">
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+              >
+                <h2 className="syllabary-header">Wybierz sylabariusz</h2>
+                <div className="syllabary-inputs-box">
+                  {this.props.isUserHasWrongHiraganaAnswers ? (
                     <Button
                       variant="contained"
                       component={RouterLink}
-                      to="/home"
+                      to={this.props.match.url + "/hiragana/choose-collection"}
                     >
-                      Powrót
+                      Hiragana
                     </Button>
-                  </div>
-                </Grid>
-              </div>
-            </section>
-          </OuterGrid>
-        </>
-      );
-    }
+                  ) : (
+                    <Button
+                      variant="contained"
+                      component={RouterLink}
+                      to={this.props.match.url + "/hiragana"}
+                    >
+                      Hiragana
+                    </Button>
+                  )}
+                  {this.props.isUserHasWrongKatakanaAnswers ? (
+                    <Button
+                      variant="contained"
+                      component={RouterLink}
+                      to={this.props.match.url + "/katakana/choose-collection"}
+                    >
+                      Katakana
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      component={RouterLink}
+                      to={this.props.match.url + "/katakana"}
+                    >
+                      Katakana
+                    </Button>
+                  )}
+
+                  <Button variant="contained" component={RouterLink} to="/home">
+                    Powrót
+                  </Button>
+                </div>
+              </Grid>
+            </div>
+          </section>
+        </OuterGrid>
+      </>
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated,
     isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
     isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers
   };

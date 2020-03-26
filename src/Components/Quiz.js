@@ -23,6 +23,7 @@ class Quiz extends Component {
   static contextType = KanaContext;
 
   state = {
+    wantToQuit: false,
     kanaTable: this.props.isUserChooseIncorrectAnswers
       ? this.props.syllabaryFromDatabase
       : this.context.kanaTable.sort(() => {
@@ -123,13 +124,10 @@ class Quiz extends Component {
       correctAnswers
     } = this.state;
     const { syllabary } = this.props.match.params;
-    const { isAuthenticated } = this.props;
 
-    if (!isAuthenticated) {
-      return <Redirect to="/" />;
-    } else if (
+    if (
       incorrectAnswers.length + correctAnswers.length ===
-      kanaTable.length
+      kanaTable.length || this.state.wantToQuit
     ) {
       return (
         <QuizResult
@@ -175,6 +173,9 @@ class Quiz extends Component {
                     <Button variant="contained" type="submit">
                       Sprawdź
                     </Button>
+                    <Button variant="contained" onClick={() => this.setState({ wantToQuit: true })}>
+                      Mam dość
+                    </Button>
                   </Grid>
                 </form>
               </main>
@@ -193,7 +194,6 @@ class Quiz extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated,
     isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
     syllabaryFromDatabase: state.auth.syllabaryFromDatabase
   };
