@@ -107,7 +107,7 @@ class Quiz extends Component {
       });
     } else {
       this.setState({
-        kanaTable: this.context.kanaTable.sort(() => {
+        kanaTable: this.context.kanaTable.slice().sort(() => {
           return 0.5 - Math.random();
         })
       });
