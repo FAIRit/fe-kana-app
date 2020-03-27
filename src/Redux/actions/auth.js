@@ -49,7 +49,7 @@ export const registerUser = (email, password, username) => () => {
   fire
     .auth()
     .createUserWithEmailAndPassword(email, password)
-    .then(user => {
+    .then(({ user }) => {
       db.ref("users")
         .child(user.uid)
         .set({
