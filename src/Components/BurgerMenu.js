@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { logoutUser } from "../Redux/actions/auth";
 import { connect } from "react-redux";
@@ -10,21 +10,38 @@ import ListItem from "@material-ui/core/ListItem";
 import Avatar from "@material-ui/core/Avatar";
 
 const Nav = styled(Box)({
-  width: "250px",
+  width: "300px",
   padding: "15px 15px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center"
 });
-
+const StyledBox = styled(Box)({
+  width: "100%",
+  height: "260px",
+  marginBottom: "30px"
+});
 const StyledList = styled(List)({
   width: "100%"
 });
 
 const StyledAvatar = styled(Avatar)({
   width: "100%",
-  height: "100%",
-  marginBottom: "30px"
+  height: "100%"
+});
+const StyledListItem = styled(ListItem)({
+  borderBottom: "0.8px solid rgba(0, 0, 0, 0.3)",
+  padding: "15px 16px"
+});
+const StyledLink = styled(Box)({
+  textDecoration: "none",
+  fontSize: "1rem",
+  color: "rgba(0, 0, 0, 0.87)"
+});
+const StyledButton = styled(Button)({
+  marginTop: "1rem",
+  background: "#3f51b5",
+  color: "#fff"
 });
 
 class BurgerMenu extends Component {
@@ -40,23 +57,32 @@ class BurgerMenu extends Component {
     this.props.logout();
   };
   render() {
+    const { user } = this.state;
     return (
       <Nav component="nav" className="burger-menu">
-        <StyledAvatar />
+        <StyledBox className="avatar-container">
+          <StyledAvatar src={user.avatarUrl} />
+        </StyledBox>
         <StyledList className="burger-menu__list">
-          <ListItem className="burger-menu__list-element">
-            <Link to="/my-profile">Mój profil</Link>
-          </ListItem>
-          <ListItem className="burger-menu__list-element">
-            <Link to="/my-score">Moje wyniki</Link>
-          </ListItem>
-          <ListItem className="burger-menu__list-element">
-            <Link to="/settings">Ustawienia konta</Link>
-          </ListItem>
+          <StyledListItem className="burger-menu__list-element">
+            <StyledLink component={Link} to="/my-profile">
+              Mój profil
+            </StyledLink>
+          </StyledListItem>
+          <StyledListItem className="burger-menu__list-element">
+            <StyledLink component={Link} to="/my-score">
+              Moje wyniki
+            </StyledLink>
+          </StyledListItem>
+          <StyledListItem className="burger-menu__list-element">
+            <StyledLink component={Link} to="/settings">
+              Ustawienia konta
+            </StyledLink>
+          </StyledListItem>
         </StyledList>
-        <Button variant="contained" onClick={this.handleLogoutUser}>
+        <StyledButton variant="contained" onClick={this.handleLogoutUser}>
           Wyloguj się
-        </Button>
+        </StyledButton>
       </Nav>
     );
   }

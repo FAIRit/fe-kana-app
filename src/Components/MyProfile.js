@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 
 import firebase from "firebase";
 
 const OuterGrid = styled(Grid)({
+  width: "100%",
   background: "rgb(255,255,255)",
   height: "80%",
   marginTop: "8%",
@@ -17,9 +18,40 @@ const OuterGrid = styled(Grid)({
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
   padding: "30px 30px"
 });
+const StyledAvatar = styled(Avatar)({
+  width: "13rem",
+  height: "13rem",
+  margin: "15px 0"
+});
 
 const StyledInput = styled(Input)({
   display: "none"
+});
+
+const Div = styled(Box)({
+  textAlign: "center"
+});
+const SectionGrid = styled(Grid)({
+  height: "100%"
+});
+const DivBox = styled(Box)({
+  width: "50%"
+});
+const DivContainer = styled(Grid)({
+  width: "60%",
+  marginBottom: "15px"
+});
+const PBox = styled(Box)({
+  textAlign: "center",
+  fontWeight: "600"
+});
+const StyledButton = styled(Button)({
+  background: "#3f51b5",
+  color: "#fff"
+});
+const StyledLink = styled(Link)({
+  color: "#fff",
+  textDecoration: "none"
 });
 
 const getExtension = name => {
@@ -32,8 +64,7 @@ const noop = () => {};
 class MyProfile extends Component {
   state = {
     image: null,
-    user: null,
-    imageUrl: null
+    user: null
   };
 
   handleSelectImage = event => {
@@ -45,14 +76,12 @@ class MyProfile extends Component {
     }
 
     const ext = getExtension(image.name);
-
     this.setState({
       image
     });
 
     const storageRef = firebase.storage().ref();
     const imageRef = storageRef.child(`avatars/${uid}.${ext}`);
-
     const uploadTask = imageRef.put(image);
     console.log("uploading file...");
     uploadTask.then(snapshot => {
@@ -78,25 +107,17 @@ class MyProfile extends Component {
     const handleAuthChange = user => {
       console.log(user);
       if (user) {
-        const { uid, email } = user;
-        console.log(uid, email);
-
+        const { uid } = user;
         this.unsubscribeFromUserProfile = firebase
           .database()
           .ref("users")
           .child(uid)
           .on("value", snapshot => {
+            console.log(snapshot.val());
             this.setState({
               user: snapshot.val()
             });
           });
-
-        // TODO remove this call once the signup process is fixed
-        firebase
-          .database()
-          .ref("users")
-          .child(uid)
-          .update({ uid, email });
       } else {
         if (this.unsubscribeFromUserProfile) {
           this.unsubscribeFromUserProfile();
@@ -106,7 +127,6 @@ class MyProfile extends Component {
         });
       }
     };
-
     this.unsubscribeFromAuth = firebase
       .auth()
       .onAuthStateChanged(handleAuthChange);
@@ -126,31 +146,47 @@ class MyProfile extends Component {
         justify="center"
         alignItems="stretch"
       >
-        <section className="my-profile">
-          <main className="my-profile__container">
-            <div className="my-profile__avatar-box">
-              <Avatar src={user?.avatarUrl} />
-              <StyledInput
-                type="file"
-                accept="image/*"
-                id="upload-image"
-                multiple={false}
-                onChange={this.handleSelectImage}
-              />
-              <label htmlFor="upload-image">
-                <Button variant="contained" component="span">
-                  Zmień avatar
-                </Button>
-              </label>
-            </div>
-            <Button variant="contained" component={Link} to="/home">
+        <SectionGrid
+          container
+          direction="column"
+          justify="space-between"
+          alignItems="center"
+          className="my-profile"
+          wrap="nowrap"
+        >
+          <Div className="my-profile__avatar-box">
+            <StyledAvatar src={user?.avatarUrl} />
+            <StyledInput
+              type="file"
+              accept="image/*"
+              id="upload-image"
+              multiple={false}
+              onChange={this.handleSelectImage}
+            />
+            <label htmlFor="upload-image">
+              <StyledButton variant="contained">Zmień avatar</StyledButton>
+            </label>
+          </Div>
+          <h2 className="my-profile-header">Dane użytkownika</h2>
+          <DivContainer container direction="row" alignItems="center">
+            <DivBox className="my-profile__data">
+              <PBox component="p">Nazwa użytkownika</PBox>
+              <PBox component="p">Adres email</PBox>
+            </DivBox>
+            <DivBox className="my-profile__data">
+              <PBox component="p">{user?.username}</PBox>
+              <PBox component="p">{user?.email}</PBox>
+            </DivBox>
+          </DivContainer>
+          <StyledButton variant="contained">
+            <StyledLink to="/home" component={Link}>
               Powrót
-            </Button>
-          </main>
-        </section>
+            </StyledLink>
+          </StyledButton>
+        </SectionGrid>
       </OuterGrid>
     );
   }
 }
 
-export default MyProfile
+export default MyProfile;

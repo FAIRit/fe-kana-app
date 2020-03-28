@@ -31,7 +31,6 @@ export const chooseWrongAnswers = () => {
   };
 };
 
-
 export const getSyllabary = syllabaryFromDatabase => {
   return {
     type: GET_SYLLABARY,
@@ -83,7 +82,7 @@ export const subscribeToAuthChange = () => dispatch => {
       {
         const handleHiragana = snapshot => {
           const answers = snapshot.exists();
-          dispatch(hiraganaWrongAnswers(answers))
+          dispatch(hiraganaWrongAnswers(answers));
           console.log("hiragana", answers);
         };
 
@@ -103,7 +102,7 @@ export const subscribeToAuthChange = () => dispatch => {
       {
         const handleKatakana = snapshot => {
           const answers = snapshot.exists();
-          dispatch(katakanaWrongAnswers(answers))
+          dispatch(katakanaWrongAnswers(answers));
           console.log("katakana", answers);
         };
 
