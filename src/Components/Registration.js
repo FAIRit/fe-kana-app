@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
@@ -11,10 +12,38 @@ const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "80%",
   marginTop: "8%",
+  padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
 });
+const Section = styled(Box)({
+  height: "100%"
+});
+const Form = styled(Box)({
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center"
+});
+const H1 = styled(Box)({
+  marginTop: "0px",
+  fontSize: "2.5rem",
+  alignContent: "flex-start"
+});
+const StyledTextField = styled(TextField)({
+  marginBottom: "0.3rem"
+});
 
+const Span = styled(Box)({
+  fontSize: "0.93rem",
+  padding: "0.83rem"
+});
+const StyledButton = styled(Button)({
+  marginTop: "0.83rem",
+  background: "#3f51b5",
+  color: "#fff"
+});
 class Registration extends Component {
   state = {
     email: "",
@@ -56,74 +85,69 @@ class Registration extends Component {
           justify="center"
           alignItems="center"
         >
-          <section className="registration">
-            <form
+          <Section className="registration">
+            <Form
+              component="form"
               className="registration-form"
               onSubmit={this.handleSubmitRegistration}
             >
+              <H1 component="h1" className="registration-form-logo">
+                Kana App
+              </H1>
+              <StyledTextField
+                id="user-name-registration"
+                label="Nazwa użytkownika"
+                variant="outlined"
+                type="text"
+                name="login"
+                value={login}
+                onChange={this.handleChangeField}
+              />
+              <StyledTextField
+                id="user-email-registration"
+                label="Email"
+                variant="outlined"
+                type="email"
+                name="email"
+                value={email}
+                onChange={this.handleChangeField}
+              />
+              <StyledTextField
+                id="user-password-registration"
+                label="Hasło"
+                variant="outlined"
+                type="password"
+                name="password"
+                value={password}
+                onChange={this.handleChangeField}
+              />
+              <StyledTextField
+                id="user-password-repeat-registration"
+                label="Powtórz hasło"
+                variant="outlined"
+                type="password"
+                name="repeatPassword"
+                value={repeatPassword}
+                onChange={this.handleChangeField}
+              />
+
               <Grid
                 container
                 direction="column"
                 justify="center"
                 alignItems="center"
+                className="form-btns-container"
               >
-                <h1 className="registration-form-logo">Kana App</h1>
-                <TextField
-                  id="user-name-registration"
-                  label="Nazwa użytkownika"
-                  variant="outlined"
-                  type="text"
-                  name="login"
-                  value={login}
-                  onChange={this.handleChangeField}
-                />
-                <TextField
-                  id="user-email-registration"
-                  label="Email"
-                  variant="outlined"
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={this.handleChangeField}
-                />
-                <TextField
-                  id="user-password-registration"
-                  label="Hasło"
-                  variant="outlined"
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={this.handleChangeField}
-                />
-                <TextField
-                  id="user-password-repeat-registration"
-                  label="Powtórz hasło"
-                  variant="outlined"
-                  type="password"
-                  name="repeatPassword"
-                  value={repeatPassword}
-                  onChange={this.handleChangeField}
-                />
-
-                <div className="form-btns-container">
-                  <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <Button variant="contained" type="submit">
-                      Załóż konto
-                    </Button>
-                    lub
-                    <Button variant="contained" component={Link} to="/">
-                      Zaloguj się
-                    </Button>
-                  </Grid>
-                </div>
+                <StyledButton variant="contained" type="submit">
+                  Załóż konto
+                </StyledButton>
+                <Span component="span">lub</Span>
+                <Button variant="contained" component={Link} to="/">
+                  Zaloguj się
+                </Button>
               </Grid>
-            </form>
-          </section>
+            </Form>
+          </Section>
         </OuterGrid>
       );
     }

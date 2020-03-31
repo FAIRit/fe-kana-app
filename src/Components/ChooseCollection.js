@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { chooseWrongAnswers, getSyllabary } from "../Redux/actions/auth";
 import UserNavBar from "./UserNavBar";
 import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { db } from "../Firebase/firebase";
@@ -12,9 +14,30 @@ const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "70%",
   marginTop: "15%",
+  padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
 });
+
+const H2 = styled(Box)({
+  fontSize: "2rem"
+});
+const InnerGrid = styled(Grid)({
+  height: "100%"
+});
+const StyledButton = styled(Button)({
+  margin: "0 0.83rem 0.83rem 0.83rem",
+  color: "#fff",
+  background: "#3f51b5"
+});
+const StyledLink = styled(Link)({
+  color: "#fff",
+  textDecoration: "none"
+});
+const Div = styled(Box)({
+  textAlign: "center"
+});
+
 class ChooseCollection extends Component {
   state = {
     url: ""
@@ -103,48 +126,49 @@ class ChooseCollection extends Component {
           justify="center"
           alignItems="stretch"
         >
-          <section className="syllabary">
-            <div className="syllabary-container">
-              <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-              >
-                <h2 className="syllabary-header">Wybierz kolekcję</h2>
-                <div className="syllabary-inputs-box">
-                  {this.props.isUserChooseIncorrectAnswers ? (
-                    <Button
-                      variant="contained"
+          <InnerGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            className="collection-container"
+          >
+            <H2 component="h2" className="collection-header">
+              Wybierz kolekcję
+            </H2>
+            <Div className="collection-inputs-box">
+              {this.props.isUserChooseIncorrectAnswers ? (
+                <StyledButton variant="contained">
+                  <StyledLink
+                    component={RouterLink}
+                    to={url + this.props.match.params.syllabary}
+                  >
+                    Zaczynamy!
+                  </StyledLink>
+                </StyledButton>
+              ) : (
+                <>
+                  <StyledButton
+                    variant="contained"
+                    onClick={this.handleChooseCollection}
+                  >
+                    Błędne opdowiedzi
+                  </StyledButton>
+                  <StyledButton variant="contained">
+                    <StyledLink
                       component={RouterLink}
                       to={url + this.props.match.params.syllabary}
                     >
-                      Zaczynamy!
-                    </Button>
-                  ) : (
-                    <>
-                      <Button
-                        variant="contained"
-                        onClick={this.handleChooseCollection}
-                      >
-                        Pobierz niepoprawne odpowiedzi z ostatniej sesji
-                      </Button>
-                      <Button
-                        variant="contained"
-                        component={RouterLink}
-                        to={url + this.props.match.params.syllabary}
-                      >
-                        Nowa sesja
-                      </Button>
-                    </>
-                  )}
-                  <Button variant="contained" component={RouterLink} to="/home">
-                    Powrót
-                  </Button>
-                </div>
-              </Grid>
-            </div>
-          </section>
+                      Nowa kolekcja
+                    </StyledLink>
+                  </StyledButton>
+                </>
+              )}
+            </Div>
+            <Button variant="contained" component={RouterLink} to="/home">
+              Powrót
+            </Button>
+          </InnerGrid>
         </OuterGrid>
       </>
     );

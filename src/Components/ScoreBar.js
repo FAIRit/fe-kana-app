@@ -1,4 +1,17 @@
 import React, { Component } from "react";
+import { styled } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+
+const Span = styled(Box)({
+  display: "inline-block",
+  fontSize: "2rem",
+  width: "80px",
+  textAlign: "center"
+});
+const OuterGrid = styled(Grid)({
+  width: "100%"
+});
 
 class ScoreBar extends Component {
   render() {
@@ -8,15 +21,22 @@ class ScoreBar extends Component {
       kanaCounter
     } = this.props.counter;
     return (
-      <div className="score-bar">
-        <span className="score-bar__incorrect-answers">
+      <OuterGrid
+        container
+        direction="row"
+        justify="space-around"
+        className="score-bar"
+      >
+        <Span component="span" className="score-bar__incorrect-answers">
           {incorrectAnswers.length}
-        </span>
-        <span className="score-bar__character-number">{kanaCounter + 1}</span>
-        <span className="score-bar__correct-answers">
+        </Span>
+        <Span component="span" className="score-bar__character-number">
+          {kanaCounter + 1}
+        </Span>
+        <Span component="span" className="score-bar__correct-answers">
           {correctAnswers.length}
-        </span>
-      </div>
+        </Span>
+      </OuterGrid>
     );
   }
 }

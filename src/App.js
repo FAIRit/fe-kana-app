@@ -39,7 +39,7 @@ class App extends Component {
             path="/quiz/:syllabary/choose-collection"
             component={ChooseCollection}
           />
-          <Route path="/quiz/:syllabary" component={Quiz} />
+          <Route exact path="/quiz/:syllabary" component={Quiz} />
           <Route path="/my-profile" component={MyProfile} />
         </AuthGuard>
       </Switch>

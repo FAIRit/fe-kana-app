@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import UserNavBar from "./UserNavBar";
 import ScoreBar from "./ScoreBar";
 import BtnsBox from "./BtnsBox";
 import QuizResult from "./QuizResult";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
@@ -15,8 +15,19 @@ const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "70%",
   marginTop: "15%",
+  padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+});
+
+const Div = styled(Box)({
+  fontSize: "10rem",
+  margin: "0 0 "
+});
+const CheckButton = styled(Button)({
+  margin: "0.83rem 0",
+  background: "rgba(24,173,54,0.6)",
+  color: "#fff"
 });
 
 class Quiz extends Component {
@@ -126,8 +137,8 @@ class Quiz extends Component {
     const { syllabary } = this.props.match.params;
 
     if (
-      incorrectAnswers.length + correctAnswers.length ===
-      kanaTable.length || this.state.wantToQuit
+      incorrectAnswers.length + correctAnswers.length === kanaTable.length ||
+      this.state.wantToQuit
     ) {
       return (
         <QuizResult
@@ -147,44 +158,43 @@ class Quiz extends Component {
             justify="center"
             alignItems="center"
           >
-            <section className="quiz">
-              <main className="quiz-container">
-                <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
-                  <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <ScoreBar counter={this.state} />
-                    <div className="quiz-character">
-                      {kanaTable[kanaCounter][syllabary]}
-                    </div>
-                    <label className="quiz-answer-label" htmlFor="answer">
-                      <Input
-                        type="text"
-                        placeholder="Wpisz odpowiedź"
-                        value={answer}
-                        name="answer"
-                        onChange={this.handleChangeInputValue}
-                        id="answer"
-                      ></Input>
-                    </label>
-                    <Button variant="contained" type="submit">
-                      Sprawdź
-                    </Button>
-                    <Button variant="contained" onClick={() => this.setState({ wantToQuit: true })}>
-                      Mam dość
-                    </Button>
-                  </Grid>
-                </form>
-              </main>
+            <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+              >
+                <ScoreBar counter={this.state} />
+                <Div className="quiz-character">
+                  {kanaTable[kanaCounter][syllabary]}
+                </Div>
+                <label className="quiz-answer-label" htmlFor="answer">
+                  <Input
+                    type="text"
+                    placeholder="Wpisz odpowiedź"
+                    value={answer}
+                    name="answer"
+                    onChange={this.handleChangeInputValue}
+                    id="answer"
+                  ></Input>
+                </label>
+                <CheckButton variant="contained" type="submit">
+                  Sprawdź
+                </CheckButton>
+                <Button
+                  variant="contained"
+                  onClick={() => this.setState({ wantToQuit: true })}
+                >
+                  Mam dość
+                </Button>
+              </Grid>
               <BtnsBox
                 onPrev={this.handleShowPrevCharacter}
                 onNext={this.handleShowNextCharacter}
                 componentToUse="quiz"
               />
-            </section>
+            </form>
           </OuterGrid>
         </>
       );

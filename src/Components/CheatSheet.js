@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import UserNavBar from "./UserNavBar";
 import SingleSign from "./SingleSign";
@@ -25,9 +25,17 @@ const FlexBox = styled(Box)({
   margin: "0 auto",
   height: "87%"
 });
+const Div = styled(Box)({
+  marginBottom: "0.83rem"
+});
 
 const MainBox = styled(Box)({
-  height: "100%"
+  height: "97%"
+});
+const StyledButton = styled(Button)({
+  marginRight: "0.83rem",
+  background: "#3f51b5",
+  color: "#fff"
 });
 
 class CheatSheet extends Component {
@@ -67,14 +75,14 @@ class CheatSheet extends Component {
           onClick={this.handleFetchData}
           className="cheat-sheet"
         >
-          <div className="cheat-sheet-btns">
-            <Button variant="contained" onClick={this.handleGetHiragana}>
+          <Div className="cheat-sheet-btns">
+            <StyledButton variant="contained" onClick={this.handleGetHiragana}>
               Hiragana
-            </Button>
-            <Button variant="contained" onClick={this.handleGetKatakana}>
+            </StyledButton>
+            <StyledButton variant="contained" onClick={this.handleGetKatakana}>
               Katakana
-            </Button>
-          </div>
+            </StyledButton>
+          </Div>
           <MainBox component="main">
             <FlexBox>
               {isHiraganaShown &&
@@ -94,6 +102,7 @@ class CheatSheet extends Component {
                   />
                 ))}
             </FlexBox>
+
             <Button variant="contained" component={Link} to="/home">
               Powrót
             </Button>
