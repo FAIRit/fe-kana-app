@@ -6,12 +6,12 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 import { connect } from "react-redux";
+import Zoom from "@material-ui/core/Zoom";
 import Link from "@material-ui/core/Link";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "70%",
-  marginTop: "15%",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
   padding: "30px 30px",
@@ -31,31 +31,37 @@ const Section = styled(Box)({
 });
 
 class Home extends Component {
+  state = {
+    checked: true
+  };
+
   render() {
     return (
       <>
         <UserNavBar />
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="stretch"
-        >
-          <Section className="home">
-            <MuiLink component={RouterLink} to="/cheat-sheet">
-              <HomeMenuPosition title="Ściągawka" content="Tablica znaków" />
-            </MuiLink>
-            <MuiLink component={RouterLink} to="/flash-cards">
-              <HomeMenuPosition
-                title="Fiszki"
-                content="Ucz sie we własnym tempie"
-              />
-            </MuiLink>
-            <MuiLink component={RouterLink} to="/quiz">
-              <HomeMenuPosition title="Quiz" content="Sprawdź się" />
-            </MuiLink>
-          </Section>
-        </OuterGrid>
+        <Zoom in={this.state.checked}>
+          <OuterGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="stretch"
+          >
+            <Section className="home">
+              <MuiLink component={RouterLink} to="/cheat-sheet">
+                <HomeMenuPosition title="Ściągawka" content="Tablica znaków" />
+              </MuiLink>
+              <MuiLink component={RouterLink} to="/flash-cards">
+                <HomeMenuPosition
+                  title="Fiszki"
+                  content="Ucz sie we własnym tempie"
+                />
+              </MuiLink>
+              <MuiLink component={RouterLink} to="/quiz">
+                <HomeMenuPosition title="Quiz" content="Sprawdź się" />
+              </MuiLink>
+            </Section>
+          </OuterGrid>
+        </Zoom>
       </>
     );
   }

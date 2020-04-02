@@ -7,12 +7,14 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
+import Zoom from "@material-ui/core/Zoom";
 import KanaContext from "../contexts/KanaContext";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
+  marginTop: "55px",
   height: "80%",
-  marginTop: "12%",
+  width: "100%",
   borderRadius: "35px",
   padding: "30px 30px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
@@ -43,7 +45,8 @@ class CheatSheet extends Component {
 
   state = {
     isHiraganaShown: false,
-    isKatakanaShown: false
+    isKatakanaShown: false,
+    checked: true
   };
 
   handleGetHiragana = () => {
@@ -60,54 +63,62 @@ class CheatSheet extends Component {
   };
 
   render() {
-    const { isHiraganaShown, isKatakanaShown } = this.state;
+    const { isHiraganaShown, isKatakanaShown, checked } = this.state;
     const { kanaTable } = this.context;
 
     return (
       <>
         <UserNavBar />
-        <OuterGrid
-          container
-          direction="column"
-          justify="flex-start"
-          alignItems="stretch"
-          component="section"
-          onClick={this.handleFetchData}
-          className="cheat-sheet"
-        >
-          <Div className="cheat-sheet-btns">
-            <StyledButton variant="contained" onClick={this.handleGetHiragana}>
-              Hiragana
-            </StyledButton>
-            <StyledButton variant="contained" onClick={this.handleGetKatakana}>
-              Katakana
-            </StyledButton>
-          </Div>
-          <MainBox component="main">
-            <FlexBox>
-              {isHiraganaShown &&
-                kanaTable.map(kana => (
-                  <SingleSign
-                    kanaTable={kana.hiragana}
-                    kanaMeaning={kana.meaning}
-                    key={kana.id}
-                  />
-                ))}
-              {isKatakanaShown &&
-                kanaTable.map(kana => (
-                  <SingleSign
-                    kanaTable={kana.katakana}
-                    kanaMeaning={kana.meaning}
-                    key={kana.id}
-                  />
-                ))}
-            </FlexBox>
+        <Zoom in={checked}>
+          <OuterGrid
+            container
+            direction="column"
+            justify="flex-start"
+            alignItems="stretch"
+            component="section"
+            onClick={this.handleFetchData}
+            className="cheat-sheet"
+          >
+            <Div className="cheat-sheet-btns">
+              <StyledButton
+                variant="contained"
+                onClick={this.handleGetHiragana}
+              >
+                Hiragana
+              </StyledButton>
+              <StyledButton
+                variant="contained"
+                onClick={this.handleGetKatakana}
+              >
+                Katakana
+              </StyledButton>
+            </Div>
+            <MainBox component="main">
+              <FlexBox>
+                {isHiraganaShown &&
+                  kanaTable.map(kana => (
+                    <SingleSign
+                      kanaTable={kana.hiragana}
+                      kanaMeaning={kana.meaning}
+                      key={kana.id}
+                    />
+                  ))}
+                {isKatakanaShown &&
+                  kanaTable.map(kana => (
+                    <SingleSign
+                      kanaTable={kana.katakana}
+                      kanaMeaning={kana.meaning}
+                      key={kana.id}
+                    />
+                  ))}
+              </FlexBox>
 
-            <Button variant="contained" component={Link} to="/home">
-              Powrót
-            </Button>
-          </MainBox>
-        </OuterGrid>
+              <Button variant="contained" component={Link} to="/home">
+                Powrót
+              </Button>
+            </MainBox>
+          </OuterGrid>
+        </Zoom>
       </>
     );
   }

@@ -6,19 +6,20 @@ import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
+import Zoom from "@material-ui/core/Zoom";
 import UserNavBar from "./UserNavBar";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "70%",
-  marginTop: "15%",
   padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
 });
 
 const H2 = styled(Box)({
-  fontSize: "2rem"
+  fontSize: "2rem",
+  textAlign: "center"
 });
 
 const StyledButton = styled(Button)({
@@ -34,71 +35,77 @@ const InnerGrid = styled(Grid)({
 });
 
 class ChooseSyllabary extends Component {
+  state = {
+    checked: true
+  };
+
   render() {
     return (
       <>
         <UserNavBar />
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="stretch"
-        >
-          <InnerGrid
+        <Zoom in={this.state.checked}>
+          <OuterGrid
             container
             direction="column"
-            alignItems="center"
             justify="center"
-            className="syllabary-container"
+            alignItems="stretch"
           >
-            <H2 component="h2" className="syllabary-header">
-              Wybierz sylabariusz
-            </H2>
-            <div className="syllabary-inputs-box">
-              {this.props.isUserHasWrongHiraganaAnswers ? (
-                <StyledButton variant="contained">
-                  <StyledLink
-                    component={RouterLink}
-                    to={this.props.match.url + "/hiragana/choose-collection"}
-                  >
-                    Hiragana
-                  </StyledLink>
-                </StyledButton>
-              ) : (
-                <StyledButton variant="contained">
-                  <StyledLink
-                    component={RouterLink}
-                    to={this.props.match.url + "/hiragana"}
-                  >
-                    Hiragana
-                  </StyledLink>
-                </StyledButton>
-              )}
-              {this.props.isUserHasWrongKatakanaAnswers ? (
-                <StyledButton variant="contained">
-                  <StyledLink
-                    component={RouterLink}
-                    to={this.props.match.url + "/katakana/choose-collection"}
-                  >
-                    Katakana
-                  </StyledLink>
-                </StyledButton>
-              ) : (
-                <StyledButton variant="contained">
-                  <StyledLink
-                    component={RouterLink}
-                    to={this.props.match.url + "/katakana"}
-                  >
-                    Katakana
-                  </StyledLink>
-                </StyledButton>
-              )}
-            </div>
-            <Button variant="contained" component={RouterLink} to="/home">
-              Powrót
-            </Button>
-          </InnerGrid>
-        </OuterGrid>
+            <InnerGrid
+              container
+              direction="column"
+              alignItems="center"
+              justify="center"
+              className="syllabary-container"
+            >
+              <H2 component="h2" className="syllabary-header">
+                Wybierz sylabariusz
+              </H2>
+              <div className="syllabary-inputs-box">
+                {this.props.isUserHasWrongHiraganaAnswers ? (
+                  <StyledButton variant="contained">
+                    <StyledLink
+                      component={RouterLink}
+                      to={this.props.match.url + "/hiragana/choose-collection"}
+                    >
+                      Hiragana
+                    </StyledLink>
+                  </StyledButton>
+                ) : (
+                  <StyledButton variant="contained">
+                    <StyledLink
+                      component={RouterLink}
+                      to={this.props.match.url + "/hiragana"}
+                    >
+                      Hiragana
+                    </StyledLink>
+                  </StyledButton>
+                )}
+                {this.props.isUserHasWrongKatakanaAnswers ? (
+                  <StyledButton variant="contained">
+                    <StyledLink
+                      component={RouterLink}
+                      to={this.props.match.url + "/katakana/choose-collection"}
+                    >
+                      Katakana
+                    </StyledLink>
+                  </StyledButton>
+                ) : (
+                  <StyledButton variant="contained">
+                    <StyledLink
+                      component={RouterLink}
+                      to={this.props.match.url + "/katakana"}
+                    >
+                      Katakana
+                    </StyledLink>
+                  </StyledButton>
+                )}
+              </div>
+              <Button variant="contained" component={RouterLink} to="/home">
+                Powrót
+              </Button>
+            </InnerGrid>
+          </OuterGrid>
+        </Zoom>
       </>
     );
   }

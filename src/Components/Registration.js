@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
+import Zoom from "@material-ui/core/Zoom";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { registerUser } from "../Redux/actions/auth";
@@ -11,7 +12,6 @@ import { registerUser } from "../Redux/actions/auth";
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "80%",
-  marginTop: "8%",
   padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
@@ -49,7 +49,8 @@ class Registration extends Component {
     email: "",
     password: "",
     repeatPassword: "",
-    login: ""
+    login: "",
+    checked: true
   };
 
   handleChangeField = e => {
@@ -74,81 +75,83 @@ class Registration extends Component {
   };
   render() {
     const { isAuthenticated } = this.props;
-    const { login, email, password, repeatPassword } = this.state;
+    const { login, email, password, repeatPassword, checked } = this.state;
     if (isAuthenticated) {
       return <Redirect to="/home" />;
     } else {
       return (
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <Section className="registration">
-            <Form
-              component="form"
-              className="registration-form"
-              onSubmit={this.handleSubmitRegistration}
-            >
-              <H1 component="h1" className="registration-form-logo">
-                Kana App
-              </H1>
-              <StyledTextField
-                id="user-name-registration"
-                label="Nazwa użytkownika"
-                variant="outlined"
-                type="text"
-                name="login"
-                value={login}
-                onChange={this.handleChangeField}
-              />
-              <StyledTextField
-                id="user-email-registration"
-                label="Email"
-                variant="outlined"
-                type="email"
-                name="email"
-                value={email}
-                onChange={this.handleChangeField}
-              />
-              <StyledTextField
-                id="user-password-registration"
-                label="Hasło"
-                variant="outlined"
-                type="password"
-                name="password"
-                value={password}
-                onChange={this.handleChangeField}
-              />
-              <StyledTextField
-                id="user-password-repeat-registration"
-                label="Powtórz hasło"
-                variant="outlined"
-                type="password"
-                name="repeatPassword"
-                value={repeatPassword}
-                onChange={this.handleChangeField}
-              />
-
-              <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-                className="form-btns-container"
+        <Zoom in={checked}>
+          <OuterGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Section className="registration">
+              <Form
+                component="form"
+                className="registration-form"
+                onSubmit={this.handleSubmitRegistration}
               >
-                <StyledButton variant="contained" type="submit">
-                  Załóż konto
-                </StyledButton>
-                <Span component="span">lub</Span>
-                <Button variant="contained" component={Link} to="/">
-                  Zaloguj się
-                </Button>
-              </Grid>
-            </Form>
-          </Section>
-        </OuterGrid>
+                <H1 component="h1" className="registration-form-logo">
+                  Kana App
+                </H1>
+                <StyledTextField
+                  id="user-name-registration"
+                  label="Nazwa użytkownika"
+                  variant="outlined"
+                  type="text"
+                  name="login"
+                  value={login}
+                  onChange={this.handleChangeField}
+                />
+                <StyledTextField
+                  id="user-email-registration"
+                  label="Email"
+                  variant="outlined"
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={this.handleChangeField}
+                />
+                <StyledTextField
+                  id="user-password-registration"
+                  label="Hasło"
+                  variant="outlined"
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={this.handleChangeField}
+                />
+                <StyledTextField
+                  id="user-password-repeat-registration"
+                  label="Powtórz hasło"
+                  variant="outlined"
+                  type="password"
+                  name="repeatPassword"
+                  value={repeatPassword}
+                  onChange={this.handleChangeField}
+                />
+
+                <Grid
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                  className="form-btns-container"
+                >
+                  <StyledButton variant="contained" type="submit">
+                    Załóż konto
+                  </StyledButton>
+                  <Span component="span">lub</Span>
+                  <Button variant="contained" component={Link} to="/">
+                    Zaloguj się
+                  </Button>
+                </Grid>
+              </Form>
+            </Section>
+          </OuterGrid>
+        </Zoom>
       );
     }
   }

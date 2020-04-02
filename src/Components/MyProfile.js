@@ -6,14 +6,13 @@ import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
-
+import Zoom from "@material-ui/core/Zoom";
 import firebase from "firebase";
 
 const OuterGrid = styled(Grid)({
   width: "100%",
   background: "rgb(255,255,255)",
   height: "80%",
-  marginTop: "8%",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
   padding: "30px 30px"
@@ -64,7 +63,8 @@ const noop = () => {};
 class MyProfile extends Component {
   state = {
     image: null,
-    user: null
+    user: null,
+    checked: true
   };
 
   handleSelectImage = event => {
@@ -137,54 +137,56 @@ class MyProfile extends Component {
   }
 
   render() {
-    const { user } = this.state;
+    const { user, checked } = this.state;
 
     return (
-      <OuterGrid
-        container
-        direction="column"
-        justify="center"
-        alignItems="stretch"
-      >
-        <SectionGrid
+      <Zoom in={checked}>
+        <OuterGrid
           container
           direction="column"
-          justify="space-between"
-          alignItems="center"
-          className="my-profile"
-          wrap="nowrap"
+          justify="center"
+          alignItems="stretch"
         >
-          <Div className="my-profile__avatar-box">
-            <StyledAvatar src={user?.avatarUrl} />
-            <StyledInput
-              type="file"
-              accept="image/*"
-              id="upload-image"
-              multiple={false}
-              onChange={this.handleSelectImage}
-            />
-            <label htmlFor="upload-image">
-              <StyledButton variant="contained">Zmień avatar</StyledButton>
-            </label>
-          </Div>
-          <h2 className="my-profile-header">Dane użytkownika</h2>
-          <DivContainer container direction="row" alignItems="center">
-            <DivBox className="my-profile__data">
-              <PBox component="p">Nazwa użytkownika</PBox>
-              <PBox component="p">Adres email</PBox>
-            </DivBox>
-            <DivBox className="my-profile__data">
-              <PBox component="p">{user?.username}</PBox>
-              <PBox component="p">{user?.email}</PBox>
-            </DivBox>
-          </DivContainer>
-          <StyledButton variant="contained">
-            <StyledLink to="/home" component={Link}>
-              Powrót
-            </StyledLink>
-          </StyledButton>
-        </SectionGrid>
-      </OuterGrid>
+          <SectionGrid
+            container
+            direction="column"
+            justify="space-between"
+            alignItems="center"
+            className="my-profile"
+            wrap="nowrap"
+          >
+            <Div className="my-profile__avatar-box">
+              <StyledAvatar src={user?.avatarUrl} />
+              <StyledInput
+                type="file"
+                accept="image/*"
+                id="upload-image"
+                multiple={false}
+                onChange={this.handleSelectImage}
+              />
+              <label htmlFor="upload-image">
+                <StyledButton variant="contained">Zmień avatar</StyledButton>
+              </label>
+            </Div>
+            <h2 className="my-profile-header">Dane użytkownika</h2>
+            <DivContainer container direction="row" alignItems="center">
+              <DivBox className="my-profile__data">
+                <PBox component="p">Nazwa użytkownika</PBox>
+                <PBox component="p">Adres email</PBox>
+              </DivBox>
+              <DivBox className="my-profile__data">
+                <PBox component="p">{user?.username}</PBox>
+                <PBox component="p">{user?.email}</PBox>
+              </DivBox>
+            </DivContainer>
+            <StyledButton variant="contained">
+              <StyledLink to="/home" component={Link}>
+                Powrót
+              </StyledLink>
+            </StyledButton>
+          </SectionGrid>
+        </OuterGrid>
+      </Zoom>
     );
   }
 }

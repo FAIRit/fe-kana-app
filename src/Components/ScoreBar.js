@@ -27,13 +27,21 @@ class ScoreBar extends Component {
         justify="space-around"
         className="score-bar"
       >
-        <Span component="span" className="score-bar__incorrect-answers">
+        <Span
+          component="span"
+          className="score-bar__incorrect-answers"
+          style={{ color: "#FF0000" }}
+        >
           {incorrectAnswers.length}
         </Span>
         <Span component="span" className="score-bar__character-number">
           {kanaCounter + 1}
         </Span>
-        <Span component="span" className="score-bar__correct-answers">
+        <Span
+          component="span"
+          className="score-bar__correct-answers"
+          style={{ color: "rgba(24,173,54,0.6)" }}
+        >
           {correctAnswers.length}
         </Span>
       </OuterGrid>

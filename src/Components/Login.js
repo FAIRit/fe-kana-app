@@ -7,12 +7,12 @@ import Button from "@material-ui/core/Button";
 import { styled } from "@material-ui/core/styles";
 import "firebase/firestore";
 import { connect } from "react-redux";
+import Zoom from "@material-ui/core/Zoom";
 import { loginUser } from "../Redux/actions/auth";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "80%",
-  marginTop: "8%",
   padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
@@ -49,7 +49,8 @@ class Login extends Component {
   state = {
     login: "",
     email: "",
-    password: ""
+    password: "",
+    checked: true
   };
   handleChangeField = e => {
     this.setState({
@@ -70,75 +71,77 @@ class Login extends Component {
 
   render() {
     const { isAuthenticated } = this.props;
-    const { email, password, login } = this.state;
+    const { email, password, login, checked } = this.state;
     if (isAuthenticated) {
       return <Redirect to="/home" />;
     } else {
       return (
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <Section component="section" className="login">
-            <Form
-              component="form"
-              className="login-form"
-              onSubmit={this.handleSubmitLogin}
-            >
-              <H1 component="h1" className="login-form-logo">
-                Kana App
-              </H1>
-              <StyledTextField
-                id="user-name-login"
-                label="Nazwa użytkownika"
-                variant="outlined"
-                type="text"
-                name="login"
-                value={login}
-                onChange={this.handleChangeField}
-              />
-              <StyledTextField
-                id="user-email-login"
-                label="Email"
-                variant="outlined"
-                type="email"
-                name="email"
-                value={email}
-                onChange={this.handleChangeField}
-              />
-              <StyledTextField
-                id="user-password-login"
-                label="Hasło"
-                variant="outlined"
-                type="password"
-                name="password"
-                value={password}
-                onChange={this.handleChangeField}
-              />
-
-              <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-                className="form-btns-container"
+        <Zoom in={checked}>
+          <OuterGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Section component="section" className="login">
+              <Form
+                component="form"
+                className="login-form"
+                onSubmit={this.handleSubmitLogin}
               >
-                <Span component="span" className="form-forgot-password">
-                  Zapomniałeś hasła?
-                </Span>
-                <StyledButton variant="contained" type="submit">
-                  Zaloguj się
-                </StyledButton>
-                <Span component="span">lub</Span>
-                <Button variant="contained" component={Link} to="/register">
-                  Załóż konto
-                </Button>
-              </Grid>
-            </Form>
-          </Section>
-        </OuterGrid>
+                <H1 component="h1" className="login-form-logo">
+                  Kana App
+                </H1>
+                <StyledTextField
+                  id="user-name-login"
+                  label="Nazwa użytkownika"
+                  variant="outlined"
+                  type="text"
+                  name="login"
+                  value={login}
+                  onChange={this.handleChangeField}
+                />
+                <StyledTextField
+                  id="user-email-login"
+                  label="Email"
+                  variant="outlined"
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={this.handleChangeField}
+                />
+                <StyledTextField
+                  id="user-password-login"
+                  label="Hasło"
+                  variant="outlined"
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={this.handleChangeField}
+                />
+
+                <Grid
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                  className="form-btns-container"
+                >
+                  <Span component="span" className="form-forgot-password">
+                    Zapomniałeś hasła?
+                  </Span>
+                  <StyledButton variant="contained" type="submit">
+                    Zaloguj się
+                  </StyledButton>
+                  <Span component="span">lub</Span>
+                  <Button variant="contained" component={Link} to="/register">
+                    Załóż konto
+                  </Button>
+                </Grid>
+              </Form>
+            </Section>
+          </OuterGrid>
+        </Zoom>
       );
     }
   }

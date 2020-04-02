@@ -5,12 +5,12 @@ import BtnsBox from "./BtnsBox";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
+import Zoom from "@material-ui/core/Zoom";
 import KanaContext from "../contexts/KanaContext";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "70%",
-  marginTop: "15%",
   padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
@@ -41,7 +41,8 @@ class FlashCards extends Component {
   state = {
     kanaTable: [],
     kanaCounter: 0,
-    isMeaningShown: false
+    isMeaningShown: false,
+    checked: true
   };
 
   // showing characte's meaning
@@ -86,47 +87,49 @@ class FlashCards extends Component {
   };
 
   render() {
-    const { kanaCounter, isMeaningShown, kanaTable } = this.state;
+    const { kanaCounter, isMeaningShown, kanaTable, checked } = this.state;
 
     return (
       <>
         <UserNavBar />
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <Section component="section" className="flash-cards">
-            <InnerGrid
-              container
-              direction="column"
-              justify="flex-start"
-              alignItems="center"
-              className="flash-cards-container"
-              onClick={this.handleShowMeaning}
-            >
-              <Span component="span" className="flash-cards-id">
-                {kanaCounter + 1}
-              </Span>
-              {!isMeaningShown ? (
-                <P component="p" className="flash-cards-character">
-                  {kanaTable[kanaCounter] &&
-                    kanaTable[kanaCounter][this.props.match.params.syllabary]}
-                </P>
-              ) : (
-                <P component="p" className="flash-cards-meaning">
-                  {kanaTable[kanaCounter] && kanaTable[kanaCounter].meaning}
-                </P>
-              )}
-            </InnerGrid>
-            <BtnsBox
-              onPrev={this.handleShowPrevCharacter}
-              onNext={this.handleShowNextCharacter}
-              componentToUse="flashCards"
-            />
-          </Section>
-        </OuterGrid>
+        <Zoom in={checked}>
+          <OuterGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Section component="section" className="flash-cards">
+              <InnerGrid
+                container
+                direction="column"
+                justify="flex-start"
+                alignItems="center"
+                className="flash-cards-container"
+                onClick={this.handleShowMeaning}
+              >
+                <Span component="span" className="flash-cards-id">
+                  {kanaCounter + 1}
+                </Span>
+                {!isMeaningShown ? (
+                  <P component="p" className="flash-cards-character">
+                    {kanaTable[kanaCounter] &&
+                      kanaTable[kanaCounter][this.props.match.params.syllabary]}
+                  </P>
+                ) : (
+                  <P component="p" className="flash-cards-meaning">
+                    {kanaTable[kanaCounter] && kanaTable[kanaCounter].meaning}
+                  </P>
+                )}
+              </InnerGrid>
+              <BtnsBox
+                onPrev={this.handleShowPrevCharacter}
+                onNext={this.handleShowNextCharacter}
+                componentToUse="flashCards"
+              />
+            </Section>
+          </OuterGrid>
+        </Zoom>
       </>
     );
   }

@@ -9,11 +9,11 @@ import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { db } from "../Firebase/firebase";
+import Zoom from "@material-ui/core/Zoom";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "70%",
-  marginTop: "15%",
   padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
@@ -40,7 +40,8 @@ const Div = styled(Box)({
 
 class ChooseCollection extends Component {
   state = {
-    url: ""
+    url: "",
+    checked: true
   };
 
   //fetching data from database
@@ -113,63 +114,68 @@ class ChooseCollection extends Component {
 
   componentDidMount = () => {
     this.handleGetUrlPath();
+    this.setState({
+      checked: true
+    });
   };
 
   render() {
-    const { url } = this.state;
+    const { url, checked } = this.state;
     return (
       <>
         <UserNavBar />
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="stretch"
-        >
-          <InnerGrid
+        <Zoom in={checked}>
+          <OuterGrid
             container
             direction="column"
             justify="center"
-            alignItems="center"
-            className="collection-container"
+            alignItems="stretch"
           >
-            <H2 component="h2" className="collection-header">
-              Wybierz kolekcję
-            </H2>
-            <Div className="collection-inputs-box">
-              {this.props.isUserChooseIncorrectAnswers ? (
-                <StyledButton variant="contained">
-                  <StyledLink
-                    component={RouterLink}
-                    to={url + this.props.match.params.syllabary}
-                  >
-                    Zaczynamy!
-                  </StyledLink>
-                </StyledButton>
-              ) : (
-                <>
-                  <StyledButton
-                    variant="contained"
-                    onClick={this.handleChooseCollection}
-                  >
-                    Błędne opdowiedzi
-                  </StyledButton>
+            <InnerGrid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+              className="collection-container"
+            >
+              <H2 component="h2" className="collection-header">
+                Wybierz kolekcję
+              </H2>
+              <Div className="collection-inputs-box">
+                {this.props.isUserChooseIncorrectAnswers ? (
                   <StyledButton variant="contained">
                     <StyledLink
                       component={RouterLink}
                       to={url + this.props.match.params.syllabary}
                     >
-                      Nowa kolekcja
+                      Zaczynamy!
                     </StyledLink>
                   </StyledButton>
-                </>
-              )}
-            </Div>
-            <Button variant="contained" component={RouterLink} to="/home">
-              Powrót
-            </Button>
-          </InnerGrid>
-        </OuterGrid>
+                ) : (
+                  <>
+                    <StyledButton
+                      variant="contained"
+                      onClick={this.handleChooseCollection}
+                    >
+                      Błędne opdowiedzi
+                    </StyledButton>
+                    <StyledButton variant="contained">
+                      <StyledLink
+                        component={RouterLink}
+                        to={url + this.props.match.params.syllabary}
+                      >
+                        Nowa kolekcja
+                      </StyledLink>
+                    </StyledButton>
+                  </>
+                )}
+              </Div>
+              <Button variant="contained" component={RouterLink} to="/home">
+                Powrót
+              </Button>
+            </InnerGrid>
+          </OuterGrid>
+        </Zoom>
       </>
     );
   }

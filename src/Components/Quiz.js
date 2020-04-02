@@ -10,11 +10,11 @@ import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import { connect } from "react-redux";
 import KanaContext from "../contexts/KanaContext";
+import Zoom from "@material-ui/core/Zoom";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "70%",
-  marginTop: "15%",
   padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
@@ -45,7 +45,11 @@ class Quiz extends Component {
     incorrectAnswers: [],
     answer: "",
     isEventBlocked: false,
-    startDate: Date.now() / 1000
+    startDate: Date.now() / 1000,
+    checked: true,
+    style: {
+      color: "#000"
+    }
   };
 
   handleChangeInputValue = e => {
@@ -58,16 +62,23 @@ class Quiz extends Component {
   handleShowNextCharacter = () => {
     if (
       this.state.kanaCounter !== this.state.kanaTable.length - 1 &&
-      this.state.answer !== ""
+      this.state.answer !== "" &&
+      this.state.isEventBlocked
     ) {
       this.setState({
         kanaCounter: this.state.kanaCounter + 1,
         answer: "",
-        isEventBlocked: false
+        isEventBlocked: false,
+        style: {
+          color: "#000"
+        }
       });
     } else {
       this.setState({
-        kanaCounter: this.state.kanaCounter
+        kanaCounter: this.state.kanaCounter,
+        style: {
+          color: "#000"
+        }
       });
     }
   };
@@ -92,7 +103,10 @@ class Quiz extends Component {
       };
       this.setState({
         correctAnswers: [...correctAnswers, data],
-        isEventBlocked: true
+        isEventBlocked: true,
+        style: {
+          color: "#008000"
+        }
       });
     } else if (answer === "") {
       e.target = "disabled";
@@ -107,7 +121,10 @@ class Quiz extends Component {
       };
       this.setState({
         incorrectAnswers: [...incorrectAnswers, data],
-        isEventBlocked: true
+        isEventBlocked: true,
+        style: {
+          color: "#FF0000"
+        }
       });
     }
   };
@@ -132,7 +149,9 @@ class Quiz extends Component {
       kanaCounter,
       answer,
       incorrectAnswers,
-      correctAnswers
+      correctAnswers,
+      checked,
+      style
     } = this.state;
     const { syllabary } = this.props.match.params;
 
@@ -141,61 +160,65 @@ class Quiz extends Component {
       this.state.wantToQuit
     ) {
       return (
-        <QuizResult
-          correctAnswers={correctAnswers}
-          incorrectAnswers={incorrectAnswers}
-          chosenSyllabary={this.props.match.params.syllabary}
-          time={this.state.startDate}
-        />
+        <Zoom in={checked}>
+          <QuizResult
+            correctAnswers={correctAnswers}
+            incorrectAnswers={incorrectAnswers}
+            chosenSyllabary={this.props.match.params.syllabary}
+            time={this.state.startDate}
+          />
+        </Zoom>
       );
     } else {
       return (
         <>
           <UserNavBar />
-          <OuterGrid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
-              <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-              >
-                <ScoreBar counter={this.state} />
-                <Div className="quiz-character">
-                  {kanaTable[kanaCounter][syllabary]}
-                </Div>
-                <label className="quiz-answer-label" htmlFor="answer">
-                  <Input
-                    type="text"
-                    placeholder="Wpisz odpowiedź"
-                    value={answer}
-                    name="answer"
-                    onChange={this.handleChangeInputValue}
-                    id="answer"
-                  ></Input>
-                </label>
-                <CheckButton variant="contained" type="submit">
-                  Sprawdź
-                </CheckButton>
-                <Button
-                  variant="contained"
-                  onClick={() => this.setState({ wantToQuit: true })}
+          <Zoom in={checked}>
+            <OuterGrid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+            >
+              <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
+                <Grid
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
                 >
-                  Mam dość
-                </Button>
-              </Grid>
-              <BtnsBox
-                onPrev={this.handleShowPrevCharacter}
-                onNext={this.handleShowNextCharacter}
-                componentToUse="quiz"
-              />
-            </form>
-          </OuterGrid>
+                  <ScoreBar counter={this.state} />
+                  <Div className="quiz-character" style={style}>
+                    {kanaTable[kanaCounter][syllabary]}
+                  </Div>
+                  <label className="quiz-answer-label" htmlFor="answer">
+                    <Input
+                      type="text"
+                      placeholder="Wpisz odpowiedź"
+                      value={answer}
+                      name="answer"
+                      onChange={this.handleChangeInputValue}
+                      id="answer"
+                    ></Input>
+                  </label>
+                  <CheckButton variant="contained" type="submit">
+                    Sprawdź
+                  </CheckButton>
+                  <Button
+                    variant="contained"
+                    onClick={() => this.setState({ wantToQuit: true })}
+                  >
+                    Mam dość
+                  </Button>
+                </Grid>
+                <BtnsBox
+                  onPrev={this.handleShowPrevCharacter}
+                  onNext={this.handleShowNextCharacter}
+                  componentToUse="quiz"
+                />
+              </form>
+            </OuterGrid>
+          </Zoom>
         </>
       );
     }

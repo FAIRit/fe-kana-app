@@ -7,11 +7,11 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import { db } from "../Firebase/firebase";
 import { connect } from "react-redux";
+import Zoom from "@material-ui/core/Zoom";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "70%",
-  marginTop: "15%",
   padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
@@ -48,7 +48,8 @@ class QuizResult extends Component {
     correctAnswers: this.props.correctAnswers,
     incorrectAnswers: this.props.incorrectAnswers,
     isResultSubmitted: false,
-    timePerQuiz: ""
+    timePerQuiz: "",
+    checked: true
   };
 
   componentDidMount = () => {
@@ -75,8 +76,8 @@ class QuizResult extends Component {
 
     if (
       this.props.chosenSyllabary === "hiragana" &&
-      (this.state.correctAnswers.length <= 3 ||
-        this.state.incorrectAnswers.length <= 3)
+      (this.state.correctAnswers.length >= 3 ||
+        this.state.incorrectAnswers.length >= 3)
     ) {
       const correctHiraganaScore = db
         .ref("hiraganaCorrectAnswers/" + this.props.user)
@@ -93,14 +94,12 @@ class QuizResult extends Component {
         timePerQuiz: this.state.timePerQuiz
       });
       this.setState({
-        correctAnswers: [],
-        incorrectAnswers: [],
         isResultSubmitted: true
       });
     } else if (
       this.props.chosenSyllabary === "katakana" &&
-      (this.state.correctAnswers.length <= 3 ||
-        this.state.incorrectAnswers.length <= 3)
+      (this.state.correctAnswers.length >= 3 ||
+        this.state.incorrectAnswers.length >= 3)
     ) {
       const correctKatakanaScore = db
         .ref("katakanaCorrectAnswers/" + this.props.user)
@@ -119,6 +118,10 @@ class QuizResult extends Component {
       this.setState({
         isResultSubmitted: true
       });
+    } else {
+      this.setState({
+        isResultSubmitted: true
+      });
     }
   };
 
@@ -131,43 +134,50 @@ class QuizResult extends Component {
   };
 
   render() {
-    const { correctAnswers, incorrectAnswers, isResultSubmitted } = this.state;
+    const {
+      correctAnswers,
+      incorrectAnswers,
+      isResultSubmitted,
+      checked
+    } = this.state;
 
     let sum = correctAnswers.length + incorrectAnswers.length;
     return (
       <>
         <UserNavBar />
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <Form
-            component="form"
-            className="result-container"
-            onSubmit={this.handleSaveScore}
+        <Zoom in={checked}>
+          <OuterGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
           >
-            <H2 component="h2" className="result-container__title">
-              Udało Ci się ukończyć quiz!
-            </H2>
-            <h3 className="result-container__subtitle">Twój wynik to:</h3>
-            <P component="p" className="result-container__score">
-              {correctAnswers.length}/{sum}
-            </P>
-            {!isResultSubmitted ? (
-              <StyledButton variant="contained" type="submit">
-                Zapisz swój wynik!
-              </StyledButton>
-            ) : (
-              <StyledLink onClick={this.handleResetAnswersState}>
-                <Button variant="contained" component={Link} to="/home">
-                  Powrót do ekranu głównego
-                </Button>
-              </StyledLink>
-            )}
-          </Form>
-        </OuterGrid>
+            <Form
+              component="form"
+              className="result-container"
+              onSubmit={this.handleSaveScore}
+            >
+              <H2 component="h2" className="result-container__title">
+                Udało Ci się ukończyć quiz!
+              </H2>
+              <h3 className="result-container__subtitle">Twój wynik to:</h3>
+              <P component="p" className="result-container__score">
+                {correctAnswers.length}/{sum}
+              </P>
+              {!isResultSubmitted ? (
+                <StyledButton variant="contained" type="submit">
+                  Zapisz swój wynik!
+                </StyledButton>
+              ) : (
+                <StyledLink onClick={this.handleResetAnswersState}>
+                  <Button variant="contained" component={Link} to="/home">
+                    Powrót do ekranu głównego
+                  </Button>
+                </StyledLink>
+              )}
+            </Form>
+          </OuterGrid>
+        </Zoom>
       </>
     );
   }
