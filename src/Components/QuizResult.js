@@ -74,54 +74,46 @@ class QuizResult extends Component {
   handleSaveScore = e => {
     e.preventDefault();
 
-    if (
-      this.props.chosenSyllabary === "hiragana" &&
-      (this.state.correctAnswers.length >= 3 ||
-        this.state.incorrectAnswers.length >= 3)
-    ) {
-      const correctHiraganaScore = db
-        .ref("hiraganaCorrectAnswers/" + this.props.user)
-        .push();
-      correctHiraganaScore.set({
-        answers: this.state.correctAnswers,
-        timePerQuiz: this.state.timePerQuiz
-      });
-      const incorrectHiraganaScore = db
-        .ref("hiraganaIncorrectAnswers/" + this.props.user)
-        .push();
-      incorrectHiraganaScore.set({
-        answers: this.state.incorrectAnswers,
-        timePerQuiz: this.state.timePerQuiz
-      });
-      this.setState({
-        isResultSubmitted: true
-      });
-    } else if (
-      this.props.chosenSyllabary === "katakana" &&
-      (this.state.correctAnswers.length >= 3 ||
-        this.state.incorrectAnswers.length >= 3)
-    ) {
-      const correctKatakanaScore = db
-        .ref("katakanaCorrectAnswers/" + this.props.user)
-        .push();
-      correctKatakanaScore.set({
-        answers: this.state.correctAnswers,
-        timePerQuiz: this.state.timePerQuiz
-      });
-      const incorrectKatakanaScore = db
-        .ref("katakanaIncorrectAnswers/" + this.props.user)
-        .push();
-      incorrectKatakanaScore.set({
-        answers: this.state.incorrectAnswers,
-        timePerQuiz: this.state.timePerQuiz
-      });
-      this.setState({
-        isResultSubmitted: true
-      });
+    if (this.props.chosenSyllabary === "hiragana") {
+      if (
+        this.state.incorrectAnswers.length > 4 ||
+        this.state.correctAnswers.length !== 0
+      ) {
+        const incorrectHiraganaScore = db
+          .ref("hiraganaIncorrectAnswers/" + this.props.user)
+          .push();
+        incorrectHiraganaScore.set({
+          answers: this.state.incorrectAnswers,
+          timePerQuiz: this.state.timePerQuiz
+        });
+        this.setState({
+          isResultSubmitted: true
+        });
+      } else {
+        this.setState({
+          isResultSubmitted: true
+        });
+      }
     } else {
-      this.setState({
-        isResultSubmitted: true
-      });
+      if (
+        this.state.incorrectAnswers.length > 4 ||
+        this.state.correctAnswers.length !== 0
+      ) {
+        const incorrectKatakanaScore = db
+          .ref("katakanaIncorrectAnswers/" + this.props.user)
+          .push();
+        incorrectKatakanaScore.set({
+          answers: this.state.incorrectAnswers,
+          timePerQuiz: this.state.timePerQuiz
+        });
+        this.setState({
+          isResultSubmitted: true
+        });
+      } else {
+        this.setState({
+          isResultSubmitted: true
+        });
+      }
     }
   };
 

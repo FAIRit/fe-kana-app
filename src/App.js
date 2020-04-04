@@ -10,6 +10,7 @@ import ChooseSyllabary from "./Components/ChooseSyllabary";
 import ChooseCollection from "./Components/ChooseCollection";
 import MyProfile from "./Components/MyProfile";
 import Quiz from "./Components/Quiz";
+import MyScores from "./Components/MyScores";
 
 const AuthGuard = ({ children }) => {
   const user = useSelector(state => state.auth.user);
@@ -41,6 +42,7 @@ class App extends Component {
           />
           <Route exact path="/quiz/:syllabary" component={Quiz} />
           <Route path="/my-profile" component={MyProfile} />
+          <Route path="/my-score" component={MyScores} />
         </AuthGuard>
       </Switch>
     );

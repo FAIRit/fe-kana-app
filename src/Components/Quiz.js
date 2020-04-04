@@ -29,6 +29,17 @@ const CheckButton = styled(Button)({
   background: "rgba(24,173,54,0.6)",
   color: "#fff"
 });
+const Form = styled(Box)({
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "space-between",
+  flexWrap: "nowrap"
+});
+const InnerGrid = styled(Grid)({
+  height: "100%"
+});
 
 class Quiz extends Component {
   static contextType = KanaContext;
@@ -99,7 +110,8 @@ class Quiz extends Component {
       const data = {
         syllabary: syllabary,
         meaning: kanaTable[kanaCounter].meaning,
-        character: kanaTable[kanaCounter][syllabary]
+        character: kanaTable[kanaCounter][syllabary],
+        id: kanaTable[kanaCounter].id
       };
       this.setState({
         correctAnswers: [...correctAnswers, data],
@@ -180,11 +192,15 @@ class Quiz extends Component {
               justify="center"
               alignItems="center"
             >
-              <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
-                <Grid
+              <Form
+                component="form"
+                className="quiz-form"
+                onSubmit={this.handleCheckAnswer}
+              >
+                <InnerGrid
                   container
                   direction="column"
-                  justify="center"
+                  justify="space-between"
                   alignItems="center"
                 >
                   <ScoreBar counter={this.state} />
@@ -210,13 +226,13 @@ class Quiz extends Component {
                   >
                     Mam dość
                   </Button>
-                </Grid>
+                </InnerGrid>
                 <BtnsBox
                   onPrev={this.handleShowPrevCharacter}
                   onNext={this.handleShowNextCharacter}
                   componentToUse="quiz"
                 />
-              </form>
+              </Form>
             </OuterGrid>
           </Zoom>
         </>
