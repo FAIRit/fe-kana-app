@@ -81,6 +81,7 @@ export const subscribeToAuthChange = () => dispatch => {
       // hiragana
       {
         const handleHiragana = snapshot => {
+          console.log(snapshot);
           const answers = snapshot.exists();
           dispatch(hiraganaWrongAnswers(answers));
           console.log("hiragana", answers);
@@ -88,8 +89,11 @@ export const subscribeToAuthChange = () => dispatch => {
 
         const hiraganaRef = fire
           .database()
-          .ref("hiraganaIncorrectAnswers")
-          .child(user.uid);
+          .ref("users")
+          .child(user.uid)
+          .child("quizes")
+          .child("hiragana")
+          .child("mistakes");
 
         hiraganaRef.on("value", handleHiragana);
 
@@ -108,8 +112,11 @@ export const subscribeToAuthChange = () => dispatch => {
 
         const katakanaRef = fire
           .database()
-          .ref("katakanaIncorrectAnswers")
-          .child(user.uid);
+          .ref("users")
+          .child(user.uid)
+          .child("quizes")
+          .child("katakana")
+          .child("mistakes");
 
         katakanaRef.on("value", handleKatakana);
 

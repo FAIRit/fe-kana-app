@@ -48,26 +48,37 @@ class QuizResult extends Component {
     correctAnswers: this.props.correctAnswers,
     incorrectAnswers: this.props.incorrectAnswers,
     isResultSubmitted: false,
-    timePerQuiz: "",
+    timeInSeconds: 0,
+    timeFromDatabase: 0,
     checked: true
   };
 
   componentDidMount = () => {
-    this.handleChangeEndDate();
-  };
-
-  handleChangeEndDate = () => {
+    // quiz time in seconds
     const endDate = Date.now() / 1000;
-    //time in seconds
-    const timeInSeconds = endDate - this.props.time;
-    let seconds = timeInSeconds.toFixed(0);
-    //minutes
-    let minutes = Math.floor(seconds / 60);
-    seconds = seconds % 60;
-    let hours = Math.floor(minutes / 60);
-    minutes = minutes % 60;
     this.setState({
-      timePerQuiz: `${hours}:${minutes}:${seconds}`
+      timeInSeconds: parseInt((endDate - this.props.time).toFixed(0))
+    });
+
+    //check if user has saved quiz time
+    const totalTime = db
+      .ref("users")
+      .child(this.props.user)
+      .child("quizes")
+      .child(this.props.chosenSyllabary)
+      .child("totalTime");
+
+    // TODO get rid of typeof string after finishing task
+    totalTime.once("value", snapshot => {
+      if (!snapshot.exists() || typeof snapshot.val() === "string") {
+        this.setState({
+          timeFromDatabase: 0
+        });
+      } else {
+        this.setState({
+          timeFromDatabase: snapshot.val()
+        });
+      }
     });
   };
 
@@ -75,45 +86,65 @@ class QuizResult extends Component {
     e.preventDefault();
 
     if (this.props.chosenSyllabary === "hiragana") {
-      if (
-        this.state.incorrectAnswers.length > 4 ||
-        this.state.correctAnswers.length !== 0
-      ) {
-        const incorrectHiraganaScore = db
-          .ref("hiraganaIncorrectAnswers/" + this.props.user)
-          .push();
-        incorrectHiraganaScore.set({
-          answers: this.state.incorrectAnswers,
-          timePerQuiz: this.state.timePerQuiz
-        });
-        this.setState({
-          isResultSubmitted: true
-        });
-      } else {
-        this.setState({
-          isResultSubmitted: true
-        });
-      }
+      //saving last user's incorrect answers into user collection
+      const { incorrectAnswers } = this.state;
+      const savedIncorrectAnswers = db
+        .ref("users")
+        .child(this.props.user)
+        .child("quizes")
+        .child(this.props.chosenSyllabary);
+
+      const mistakes = [];
+      incorrectAnswers.forEach(element => {
+        mistakes.push({ [element["id"]]: true });
+      });
+
+      let sum = this.state.timeFromDatabase + this.state.timeInSeconds;
+      savedIncorrectAnswers.set({
+        mistakes,
+        totalTime: sum
+      });
+
+      //rest
+      const incorrectHiraganaScore = db
+        .ref("hiraganaIncorrectAnswers/" + this.props.user)
+        .push();
+      incorrectHiraganaScore.set({
+        answers: this.state.incorrectAnswers
+      });
+      this.setState({
+        isResultSubmitted: true
+      });
     } else {
-      if (
-        this.state.incorrectAnswers.length > 4 ||
-        this.state.correctAnswers.length !== 0
-      ) {
-        const incorrectKatakanaScore = db
-          .ref("katakanaIncorrectAnswers/" + this.props.user)
-          .push();
-        incorrectKatakanaScore.set({
-          answers: this.state.incorrectAnswers,
-          timePerQuiz: this.state.timePerQuiz
-        });
-        this.setState({
-          isResultSubmitted: true
-        });
-      } else {
-        this.setState({
-          isResultSubmitted: true
-        });
-      }
+      //saving to user's incorrect answers
+      const { incorrectAnswers } = this.state;
+      const savedIncorrectAnswers = db
+        .ref("users")
+        .child(this.props.user)
+        .child("quizes")
+        .child(this.props.chosenSyllabary);
+
+      const mistakes = [];
+      incorrectAnswers.forEach(element => {
+        mistakes.push({ [element["id"]]: true });
+      });
+
+      let sum = this.state.timeFromDatabase + this.state.timeInSeconds;
+      savedIncorrectAnswers.set({
+        mistakes,
+        totalTime: sum
+      });
+
+      //rest
+      const incorrectKatakanaScore = db
+        .ref("katakanaIncorrectAnswers/" + this.props.user)
+        .push();
+      incorrectKatakanaScore.set({
+        answers: this.state.incorrectAnswers
+      });
+      this.setState({
+        isResultSubmitted: true
+      });
     }
   };
 
