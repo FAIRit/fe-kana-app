@@ -94,9 +94,9 @@ class QuizResult extends Component {
         .child("quizes")
         .child(this.props.chosenSyllabary);
 
-      const mistakes = [];
+      const mistakes = {};
       incorrectAnswers.forEach(element => {
-        mistakes.push({ [element["id"]]: true });
+        mistakes[element["id"]] = true;
       });
 
       let sum = this.state.timeFromDatabase + this.state.timeInSeconds;
@@ -124,9 +124,9 @@ class QuizResult extends Component {
         .child("quizes")
         .child(this.props.chosenSyllabary);
 
-      const mistakes = [];
+      const mistakes = {};
       incorrectAnswers.forEach(element => {
-        mistakes.push({ [element["id"]]: true });
+        mistakes[element["id"]] = true;
       });
 
       let sum = this.state.timeFromDatabase + this.state.timeInSeconds;

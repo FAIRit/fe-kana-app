@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { connect } from "react-redux";
+import { fire } from "../Firebase/firebase";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
@@ -14,29 +14,91 @@ const OuterGrid = styled(Grid)({
   height: "70%",
   padding: "30px 30px",
   borderRadius: "35px",
-  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
 });
 
 const H2 = styled(Box)({
   fontSize: "2rem",
-  textAlign: "center"
+  textAlign: "center",
 });
 
 const StyledButton = styled(Button)({
   margin: "0 0.83rem 0.83rem 0.83rem",
-  background: "#3f51b5"
+  background: "#3f51b5",
 });
 const StyledLink = styled(Link)({
   color: "#fff",
-  textDecoration: "none"
+  textDecoration: "none",
 });
 const InnerGrid = styled(Grid)({
-  height: "100%"
+  height: "100%",
 });
 
 class ChooseSyllabary extends Component {
   state = {
-    checked: true
+    checked: true,
+    isUserHasHiragana: false,
+    isUserHasKatakana: false,
+  };
+
+  componentDidMount = () => {
+    const noop = () => {};
+    let unsubscribeHiragana = noop;
+    let unsubscribeKatakana = noop;
+
+    fire.auth().onAuthStateChanged((user) => {
+      if (user !== null) {
+        //hiragana
+        {
+          const handleHiragana = (snapshot) => {
+            const answers = snapshot.exists();
+            this.setState({
+              isUserHasHiragana: answers,
+            });
+            console.log("hiragana", answers);
+          };
+          const hiraganaRef = fire
+            .database()
+            .ref("users")
+            .child(user.uid)
+            .child("quizes")
+            .child("hiragana")
+            .child("mistakes");
+          hiraganaRef.on("value", handleHiragana);
+
+          unsubscribeHiragana = () => {
+            hiraganaRef.off("value", handleHiragana);
+          };
+        }
+
+        // katakana
+        {
+          const handleKatakana = (snapshot) => {
+            const answers = snapshot.exists();
+            this.setState({
+              isUserHasKatakana: answers,
+            });
+            console.log("katakana", answers);
+          };
+
+          const katakanaRef = fire
+            .database()
+            .ref("users")
+            .child(user.uid)
+            .child("quizes")
+            .child("katakana")
+            .child("mistakes");
+
+          katakanaRef.on("value", handleKatakana);
+          unsubscribeKatakana = () => {
+            katakanaRef.off("value", handleKatakana);
+          };
+        }
+      } else {
+        unsubscribeHiragana();
+        unsubscribeKatakana();
+      }
+    });
   };
 
   render() {
@@ -61,7 +123,7 @@ class ChooseSyllabary extends Component {
                 Wybierz sylabariusz
               </H2>
               <div className="syllabary-inputs-box">
-                {this.props.isUserHasWrongHiraganaAnswers ? (
+                {this.state.isUserHasHiragana ? (
                   <StyledButton variant="contained">
                     <StyledLink
                       component={RouterLink}
@@ -80,7 +142,7 @@ class ChooseSyllabary extends Component {
                     </StyledLink>
                   </StyledButton>
                 )}
-                {this.props.isUserHasWrongKatakanaAnswers ? (
+                {this.state.isUserHasKatakana ? (
                   <StyledButton variant="contained">
                     <StyledLink
                       component={RouterLink}
@@ -111,11 +173,4 @@ class ChooseSyllabary extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
-    isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers
-  };
-};
-
-export default connect(mapStateToProps)(ChooseSyllabary);
+export default ChooseSyllabary;

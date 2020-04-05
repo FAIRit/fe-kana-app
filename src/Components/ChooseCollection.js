@@ -16,36 +16,36 @@ const OuterGrid = styled(Grid)({
   height: "70%",
   padding: "30px 30px",
   borderRadius: "35px",
-  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
 });
 
 const H2 = styled(Box)({
-  fontSize: "2rem"
+  fontSize: "2rem",
 });
 const InnerGrid = styled(Grid)({
-  height: "100%"
+  height: "100%",
 });
 const StyledButton = styled(Button)({
   margin: "0 0.83rem 0.83rem 0.83rem",
   color: "#fff",
-  background: "#3f51b5"
+  background: "#3f51b5",
 });
 const StyledLink = styled(Link)({
   color: "#fff",
-  textDecoration: "none"
+  textDecoration: "none",
 });
 const Div = styled(Box)({
-  textAlign: "center"
+  textAlign: "center",
 });
 
 class ChooseCollection extends Component {
   state = {
     url: "",
-    checked: true
+    checked: true,
   };
 
   //fetching data from database
-  handleFetchAnswers = data => {
+  handleFetchAnswers = (data) => {
     if (this.props.match.params.syllabary === "hiragana") {
       db.ref(
         "hiraganaIncorrectAnswers/" +
@@ -56,7 +56,7 @@ class ChooseCollection extends Component {
       )
         .orderByValue()
         .limitToLast(46)
-        .on("value", snapshot => {
+        .on("value", (snapshot) => {
           this.props.getSyllabaryFromDatabase(snapshot.val());
         });
     } else {
@@ -69,7 +69,7 @@ class ChooseCollection extends Component {
       )
         .orderByValue()
         .limitToLast(46)
-        .on("value", snapshot => {
+        .on("value", (snapshot) => {
           this.props.getSyllabaryFromDatabase(snapshot.val());
         });
     }
@@ -80,11 +80,11 @@ class ChooseCollection extends Component {
     const actualUrl = this.props.match.url;
     if (actualUrl.includes("quiz")) {
       this.setState({
-        url: "/quiz/"
+        url: "/quiz/",
       });
     } else {
       this.setState({
-        url: "/flash-cards/"
+        url: "/flash-cards/",
       });
     }
     const chosenSyllabary = this.props.match.params.syllabary;
@@ -93,21 +93,22 @@ class ChooseCollection extends Component {
         .orderByKey()
         .limitToLast(1)
         .once("child_added")
-        .then(snapshot => {
+        .then((snapshot) => {
+          console.log(snapshot);
           this.handleFetchAnswers(snapshot);
         });
     } else if (chosenSyllabary === "katakana") {
       db.ref("katakanaIncorrectAnswers/" + this.props.user)
         .limitToLast(1)
         .once("child_added")
-        .then(snapshot => {
+        .then((snapshot) => {
           this.handleFetchAnswers(snapshot);
         });
     }
   };
 
   //check if user choose answers from database
-  handleChooseCollection = e => {
+  handleChooseCollection = (e) => {
     e.preventDefault();
     this.props.isUserChooseIncorrect();
   };
@@ -115,7 +116,7 @@ class ChooseCollection extends Component {
   componentDidMount = () => {
     this.handleGetUrlPath();
     this.setState({
-      checked: true
+      checked: true,
     });
   };
 
@@ -181,22 +182,22 @@ class ChooseCollection extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.auth.user.uid,
     isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
-    syllabaryFromDatabase: state.auth.syllabaryFromDatabase
+    syllabaryFromDatabase: state.auth.syllabaryFromDatabase,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     isUserChooseIncorrect: () => {
       dispatch(chooseWrongAnswers());
     },
-    getSyllabaryFromDatabase: syllabary => {
+    getSyllabaryFromDatabase: (syllabary) => {
       dispatch(getSyllabary(syllabary));
-    }
+    },
   };
 };
 
