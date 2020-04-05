@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
     case CHOOSE_WRONG_ANSWERS:
       return {
         ...state,
-        isUserChooseIncorrectAnswers: true,
+        isUserChooseIncorrectAnswers: action.isUserChooseIncorrectAnswers,
       };
     case GET_SYLLABARY:
       return {

@@ -8,9 +8,10 @@ export const RESTART_CHOICE = "RESTART_CHOICE";
 export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 export const SET_USER = "SET_USER";
 
-export const chooseWrongAnswers = () => {
+export const chooseWrongAnswers = (isUserChooseIncorrectAnswers) => {
   return {
     type: CHOOSE_WRONG_ANSWERS,
+    isUserChooseIncorrectAnswers,
   };
 };
 

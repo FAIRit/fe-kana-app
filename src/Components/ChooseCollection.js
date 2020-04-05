@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { chooseWrongAnswers, getSyllabary } from "../Redux/actions/auth";
+import KanaContext from "../contexts/KanaContext";
 import UserNavBar from "./UserNavBar";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
@@ -39,43 +40,31 @@ const Div = styled(Box)({
 });
 
 class ChooseCollection extends Component {
+  static contextType = KanaContext;
+
   state = {
     url: "",
     checked: true,
+    kanaTable: this.context.kanaTable,
   };
 
-  //fetching data from database
+  componentDidMount = () => {
+    this.handleGetUrlPath();
+    this.setState({
+      checked: true,
+    });
+  };
+
+  //preparing table with incorrect answers
   handleFetchAnswers = (data) => {
-    if (this.props.match.params.syllabary === "hiragana") {
-      db.ref(
-        "hiraganaIncorrectAnswers/" +
-          this.props.user +
-          "/" +
-          data.key +
-          "/answers"
-      )
-        .orderByValue()
-        .limitToLast(46)
-        .on("value", (snapshot) => {
-          this.props.getSyllabaryFromDatabase(snapshot.val());
-        });
-    } else {
-      db.ref(
-        "katakanaIncorrectAnswers/" +
-          this.props.user +
-          "/" +
-          data.key +
-          "/answers"
-      )
-        .orderByValue()
-        .limitToLast(46)
-        .on("value", (snapshot) => {
-          this.props.getSyllabaryFromDatabase(snapshot.val());
-        });
-    }
+    const { kanaTable } = this.state;
+    const incorrectAnswers = kanaTable.filter((element) => {
+      return data[element.id] === true;
+    });
+    this.props.getSyllabaryFromDatabase(incorrectAnswers);
   };
 
-  //getting proper url patch and data key
+  //getting proper url patch and data from database
   handleGetUrlPath = () => {
     const actualUrl = this.props.match.url;
     if (actualUrl.includes("quiz")) {
@@ -87,37 +76,39 @@ class ChooseCollection extends Component {
         url: "/flash-cards/",
       });
     }
+
+    //fetching properly answers
     const chosenSyllabary = this.props.match.params.syllabary;
     if (chosenSyllabary === "hiragana") {
-      db.ref("hiraganaIncorrectAnswers/" + this.props.user)
-        .orderByKey()
-        .limitToLast(1)
-        .once("child_added")
-        .then((snapshot) => {
-          console.log(snapshot);
-          this.handleFetchAnswers(snapshot);
+      db.ref("users")
+        .child(this.props.user)
+        .child("quizes")
+        .child("hiragana")
+        .child("mistakes")
+        .on("value", (snapshot) => {
+          this.handleFetchAnswers(snapshot.val());
         });
     } else if (chosenSyllabary === "katakana") {
-      db.ref("katakanaIncorrectAnswers/" + this.props.user)
-        .limitToLast(1)
-        .once("child_added")
-        .then((snapshot) => {
-          this.handleFetchAnswers(snapshot);
+      db.ref("users")
+        .child(this.props.user)
+        .child("quizes")
+        .child("katakana")
+        .child("mistakes")
+        .on("value", (snapshot) => {
+          this.handleFetchAnswers(snapshot.val());
         });
     }
   };
 
-  //check if user choose answers from database
+  //check if user choose session with incorrect answers
   handleChooseCollection = (e) => {
     e.preventDefault();
-    this.props.isUserChooseIncorrect();
+    this.props.isUserChooseIncorrect(true);
   };
 
-  componentDidMount = () => {
-    this.handleGetUrlPath();
-    this.setState({
-      checked: true,
-    });
+  componentWillUnmount = () => {
+    this.props.getSyllabaryFromDatabase([]);
+    this.props.isUserChooseIncorrect(false);
   };
 
   render() {
@@ -192,8 +183,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    isUserChooseIncorrect: () => {
-      dispatch(chooseWrongAnswers());
+    isUserChooseIncorrect: (answer) => {
+      dispatch(chooseWrongAnswers(answer));
     },
     getSyllabaryFromDatabase: (syllabary) => {
       dispatch(getSyllabary(syllabary));
