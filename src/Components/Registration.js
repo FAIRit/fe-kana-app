@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
+import Zoom from "@material-ui/core/Zoom";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { registerUser } from "../Redux/actions/auth";
@@ -10,17 +12,45 @@ import { registerUser } from "../Redux/actions/auth";
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "80%",
-  marginTop: "8%",
+  padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
 });
+const Section = styled(Box)({
+  height: "100%"
+});
+const Form = styled(Box)({
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center"
+});
+const H1 = styled(Box)({
+  marginTop: "0px",
+  fontSize: "2.5rem",
+  alignContent: "flex-start"
+});
+const StyledTextField = styled(TextField)({
+  marginBottom: "0.3rem"
+});
 
+const Span = styled(Box)({
+  fontSize: "0.93rem",
+  padding: "0.83rem"
+});
+const StyledButton = styled(Button)({
+  marginTop: "0.83rem",
+  background: "#3f51b5",
+  color: "#fff"
+});
 class Registration extends Component {
   state = {
     email: "",
     password: "",
     repeatPassword: "",
-    login: ""
+    login: "",
+    checked: true
   };
 
   handleChangeField = e => {
@@ -45,30 +75,28 @@ class Registration extends Component {
   };
   render() {
     const { isAuthenticated } = this.props;
-    const { login, email, password, repeatPassword } = this.state;
+    const { login, email, password, repeatPassword, checked } = this.state;
     if (isAuthenticated) {
       return <Redirect to="/home" />;
     } else {
       return (
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <section className="registration">
-            <form
-              className="registration-form"
-              onSubmit={this.handleSubmitRegistration}
-            >
-              <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
+        <Zoom in={checked}>
+          <OuterGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Section className="registration">
+              <Form
+                component="form"
+                className="registration-form"
+                onSubmit={this.handleSubmitRegistration}
               >
-                <h1 className="registration-form-logo">Kana App</h1>
-                <TextField
+                <H1 component="h1" className="registration-form-logo">
+                  Kana App
+                </H1>
+                <StyledTextField
                   id="user-name-registration"
                   label="Nazwa użytkownika"
                   variant="outlined"
@@ -77,7 +105,7 @@ class Registration extends Component {
                   value={login}
                   onChange={this.handleChangeField}
                 />
-                <TextField
+                <StyledTextField
                   id="user-email-registration"
                   label="Email"
                   variant="outlined"
@@ -86,7 +114,7 @@ class Registration extends Component {
                   value={email}
                   onChange={this.handleChangeField}
                 />
-                <TextField
+                <StyledTextField
                   id="user-password-registration"
                   label="Hasło"
                   variant="outlined"
@@ -95,7 +123,7 @@ class Registration extends Component {
                   value={password}
                   onChange={this.handleChangeField}
                 />
-                <TextField
+                <StyledTextField
                   id="user-password-repeat-registration"
                   label="Powtórz hasło"
                   variant="outlined"
@@ -105,26 +133,25 @@ class Registration extends Component {
                   onChange={this.handleChangeField}
                 />
 
-                <div className="form-btns-container">
-                  <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <Button variant="contained" type="submit">
-                      Załóż konto
-                    </Button>
-                    lub
-                    <Button variant="contained" component={Link} to="/">
-                      Zaloguj się
-                    </Button>
-                  </Grid>
-                </div>
-              </Grid>
-            </form>
-          </section>
-        </OuterGrid>
+                <Grid
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                  className="form-btns-container"
+                >
+                  <StyledButton variant="contained" type="submit">
+                    Załóż konto
+                  </StyledButton>
+                  <Span component="span">lub</Span>
+                  <Button variant="contained" component={Link} to="/">
+                    Zaloguj się
+                  </Button>
+                </Grid>
+              </Form>
+            </Section>
+          </OuterGrid>
+        </Zoom>
       );
     }
   }
@@ -138,7 +165,7 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.user !== null
   };
 };
 

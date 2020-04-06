@@ -1,104 +1,176 @@
 import React, { Component } from "react";
-import { Link as RouterLink, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
+import { fire } from "../Firebase/firebase";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
+import Zoom from "@material-ui/core/Zoom";
 import UserNavBar from "./UserNavBar";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "70%",
-  marginTop: "15%",
+  padding: "30px 30px",
   borderRadius: "35px",
-  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
+});
+
+const H2 = styled(Box)({
+  fontSize: "2rem",
+  textAlign: "center",
+});
+
+const StyledButton = styled(Button)({
+  margin: "0 0.83rem 0.83rem 0.83rem",
+  background: "#3f51b5",
+});
+const StyledLink = styled(Link)({
+  color: "#fff",
+  textDecoration: "none",
+});
+const InnerGrid = styled(Grid)({
+  height: "100%",
 });
 
 class ChooseSyllabary extends Component {
+  state = {
+    checked: true,
+    isUserHasHiragana: false,
+    isUserHasKatakana: false,
+  };
+
+  componentDidMount = () => {
+    const noop = () => {};
+    let unsubscribeHiragana = noop;
+    let unsubscribeKatakana = noop;
+
+    fire.auth().onAuthStateChanged((user) => {
+      if (user !== null) {
+        //hiragana
+        {
+          const handleHiragana = (snapshot) => {
+            const answers = snapshot.exists();
+            this.setState({
+              isUserHasHiragana: answers,
+            });
+            console.log("hiragana", answers);
+          };
+          const hiraganaRef = fire
+            .database()
+            .ref("users")
+            .child(user.uid)
+            .child("quizes")
+            .child("hiragana")
+            .child("mistakes");
+          hiraganaRef.once("value", handleHiragana);
+
+          unsubscribeHiragana = () => {
+            hiraganaRef.off("value", handleHiragana);
+          };
+        }
+
+        // katakana
+        {
+          const handleKatakana = (snapshot) => {
+            const answers = snapshot.exists();
+            this.setState({
+              isUserHasKatakana: answers,
+            });
+            console.log("katakana", answers);
+          };
+
+          const katakanaRef = fire
+            .database()
+            .ref("users")
+            .child(user.uid)
+            .child("quizes")
+            .child("katakana")
+            .child("mistakes");
+
+          katakanaRef.once("value", handleKatakana);
+          unsubscribeKatakana = () => {
+            katakanaRef.off("value", handleKatakana);
+          };
+        }
+      } else {
+        unsubscribeHiragana();
+        unsubscribeKatakana();
+      }
+    });
+  };
+
   render() {
-    const { isAuthenticated } = this.props;
-    if (!isAuthenticated) {
-      return <Redirect to="/" />;
-    } else {
-      return (
-        <>
-          <UserNavBar />
+    return (
+      <>
+        <UserNavBar />
+        <Zoom in={this.state.checked}>
           <OuterGrid
             container
             direction="column"
             justify="center"
             alignItems="stretch"
           >
-            <section className="syllabary">
-              <div className="syllabary-container">
-                <Grid
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                >
-                  <h2 className="syllabary-header">Wybierz sylabariusz</h2>
-                  <div className="syllabary-inputs-box">
-                    {this.props.isUserHasWrongHiraganaAnswers ? (
-                      <Button
-                        variant="contained"
-                        component={RouterLink}
-                        to={
-                          this.props.match.url + "/hiragana/choose-collection"
-                        }
-                      >
-                        Hiragana
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        component={RouterLink}
-                        to={this.props.match.url + "/hiragana"}
-                      >
-                        Hiragana
-                      </Button>
-                    )}
-                    {this.props.isUserHasWrongKatakanaAnswers ? (
-                      <Button
-                        variant="contained"
-                        component={RouterLink}
-                        to={
-                          this.props.match.url + "/katakana/choose-collection"
-                        }
-                      >
-                        Katakana
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        component={RouterLink}
-                        to={this.props.match.url + "/katakana"}
-                      >
-                        Katakana
-                      </Button>
-                    )}
-
-                    <Link component={RouterLink} to="/home">
-                      Powrót
-                    </Link>
-                  </div>
-                </Grid>
+            <InnerGrid
+              container
+              direction="column"
+              alignItems="center"
+              justify="center"
+              className="syllabary-container"
+            >
+              <H2 component="h2" className="syllabary-header">
+                Wybierz sylabariusz
+              </H2>
+              <div className="syllabary-inputs-box">
+                {this.state.isUserHasHiragana ? (
+                  <StyledButton variant="contained">
+                    <StyledLink
+                      component={RouterLink}
+                      to={this.props.match.url + "/hiragana/choose-collection"}
+                    >
+                      Hiragana
+                    </StyledLink>
+                  </StyledButton>
+                ) : (
+                  <StyledButton variant="contained">
+                    <StyledLink
+                      component={RouterLink}
+                      to={this.props.match.url + "/hiragana"}
+                    >
+                      Hiragana
+                    </StyledLink>
+                  </StyledButton>
+                )}
+                {this.state.isUserHasKatakana ? (
+                  <StyledButton variant="contained">
+                    <StyledLink
+                      component={RouterLink}
+                      to={this.props.match.url + "/katakana/choose-collection"}
+                    >
+                      Katakana
+                    </StyledLink>
+                  </StyledButton>
+                ) : (
+                  <StyledButton variant="contained">
+                    <StyledLink
+                      component={RouterLink}
+                      to={this.props.match.url + "/katakana"}
+                    >
+                      Katakana
+                    </StyledLink>
+                  </StyledButton>
+                )}
               </div>
-            </section>
+              <Button variant="contained" component={RouterLink} to="/home">
+                Powrót
+              </Button>
+            </InnerGrid>
           </OuterGrid>
-        </>
-      );
-    }
+        </Zoom>
+      </>
+    );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    isUserHasWrongHiraganaAnswers: state.auth.isUserHasWrongHiraganaAnswers,
-    isUserHasWrongKatakanaAnswers: state.auth.isUserHasWrongKatakanaAnswers
-  };
-};
-
-export default connect(mapStateToProps)(ChooseSyllabary);
+export default ChooseSyllabary;

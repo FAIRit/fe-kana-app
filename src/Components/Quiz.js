@@ -1,28 +1,54 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import UserNavBar from "./UserNavBar";
 import ScoreBar from "./ScoreBar";
 import BtnsBox from "./BtnsBox";
 import QuizResult from "./QuizResult";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import { connect } from "react-redux";
+import KanaContext from "../contexts/KanaContext";
+import Zoom from "@material-ui/core/Zoom";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "70%",
-  marginTop: "15%",
+  padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
 });
 
+const Div = styled(Box)({
+  fontSize: "10rem",
+  margin: "0 0 "
+});
+const CheckButton = styled(Button)({
+  margin: "0.83rem 0",
+  background: "rgba(24,173,54,0.6)",
+  color: "#fff"
+});
+const Form = styled(Box)({
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "space-between",
+  flexWrap: "nowrap"
+});
+const InnerGrid = styled(Grid)({
+  height: "100%"
+});
+
 class Quiz extends Component {
+  static contextType = KanaContext;
+
   state = {
+    wantToQuit: false,
     kanaTable: this.props.isUserChooseIncorrectAnswers
       ? this.props.syllabaryFromDatabase
-      : this.props.kanaTable.sort(() => {
+      : this.context.kanaTable.sort(() => {
           return 0.5 - Math.random();
         }),
     kanaCounter: 0,
@@ -30,7 +56,11 @@ class Quiz extends Component {
     incorrectAnswers: [],
     answer: "",
     isEventBlocked: false,
-    startDate: Date.now() / 1000
+    startDate: Date.now() / 1000,
+    checked: true,
+    style: {
+      color: "#000"
+    }
   };
 
   handleChangeInputValue = e => {
@@ -43,16 +73,23 @@ class Quiz extends Component {
   handleShowNextCharacter = () => {
     if (
       this.state.kanaCounter !== this.state.kanaTable.length - 1 &&
-      this.state.answer !== ""
+      this.state.answer !== "" &&
+      this.state.isEventBlocked
     ) {
       this.setState({
         kanaCounter: this.state.kanaCounter + 1,
         answer: "",
-        isEventBlocked: false
+        isEventBlocked: false,
+        style: {
+          color: "#000"
+        }
       });
     } else {
       this.setState({
-        kanaCounter: this.state.kanaCounter
+        kanaCounter: this.state.kanaCounter,
+        style: {
+          color: "#000"
+        }
       });
     }
   };
@@ -73,11 +110,15 @@ class Quiz extends Component {
       const data = {
         syllabary: syllabary,
         meaning: kanaTable[kanaCounter].meaning,
-        character: kanaTable[kanaCounter][syllabary]
+        character: kanaTable[kanaCounter][syllabary],
+        id: kanaTable[kanaCounter].id
       };
       this.setState({
         correctAnswers: [...correctAnswers, data],
-        isEventBlocked: true
+        isEventBlocked: true,
+        style: {
+          color: "#008000"
+        }
       });
     } else if (answer === "") {
       e.target = "disabled";
@@ -92,7 +133,10 @@ class Quiz extends Component {
       };
       this.setState({
         incorrectAnswers: [...incorrectAnswers, data],
-        isEventBlocked: true
+        isEventBlocked: true,
+        style: {
+          color: "#FF0000"
+        }
       });
     }
   };
@@ -104,7 +148,7 @@ class Quiz extends Component {
       });
     } else {
       this.setState({
-        kanaTable: this.props.kanaTable.sort(() => {
+        kanaTable: this.context.kanaTable.slice().sort(() => {
           return 0.5 - Math.random();
         })
       });
@@ -117,71 +161,80 @@ class Quiz extends Component {
       kanaCounter,
       answer,
       incorrectAnswers,
-      correctAnswers
+      correctAnswers,
+      checked,
+      style
     } = this.state;
     const { syllabary } = this.props.match.params;
-    const { isAuthenticated } = this.props;
 
-    if (!isAuthenticated) {
-      return <Redirect to="/" />;
-    } else if (
-      incorrectAnswers.length + correctAnswers.length ===
-      kanaTable.length
+    if (
+      incorrectAnswers.length + correctAnswers.length === kanaTable.length ||
+      this.state.wantToQuit
     ) {
       return (
-        <QuizResult
-          correctAnswers={correctAnswers}
-          incorrectAnswers={incorrectAnswers}
-          chosenSyllabary={this.props.match.params.syllabary}
-          time={this.state.startDate}
-        />
+        <Zoom in={checked}>
+          <QuizResult
+            correctAnswers={correctAnswers}
+            incorrectAnswers={incorrectAnswers}
+            chosenSyllabary={this.props.match.params.syllabary}
+            time={this.state.startDate}
+          />
+        </Zoom>
       );
     } else {
       return (
         <>
           <UserNavBar />
-          <OuterGrid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
-            <section className="quiz">
-              <main className="quiz-container">
-                <form className="quiz-form" onSubmit={this.handleCheckAnswer}>
-                  <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
+          <Zoom in={checked}>
+            <OuterGrid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+            >
+              <Form
+                component="form"
+                className="quiz-form"
+                onSubmit={this.handleCheckAnswer}
+              >
+                <InnerGrid
+                  container
+                  direction="column"
+                  justify="space-between"
+                  alignItems="center"
+                >
+                  <ScoreBar counter={this.state} />
+                  <Div className="quiz-character" style={style}>
+                    {kanaTable[kanaCounter][syllabary]}
+                  </Div>
+                  <label className="quiz-answer-label" htmlFor="answer">
+                    <Input
+                      type="text"
+                      placeholder="Wpisz odpowiedź"
+                      value={answer}
+                      name="answer"
+                      onChange={this.handleChangeInputValue}
+                      id="answer"
+                    ></Input>
+                  </label>
+                  <CheckButton variant="contained" type="submit">
+                    Sprawdź
+                  </CheckButton>
+                  <Button
+                    variant="contained"
+                    onClick={() => this.setState({ wantToQuit: true })}
                   >
-                    <ScoreBar counter={this.state} />
-                    <div className="quiz-character">
-                      {kanaTable[kanaCounter][syllabary]}
-                    </div>
-                    <label className="quiz-answer-label" htmlFor="answer">
-                      <Input
-                        type="text"
-                        placeholder="Wpisz odpowiedź"
-                        value={answer}
-                        name="answer"
-                        onChange={this.handleChangeInputValue}
-                        id="answer"
-                      ></Input>
-                    </label>
-                    <Button variant="contained" type="submit">
-                      Sprawdź
-                    </Button>
-                  </Grid>
-                </form>
-              </main>
-              <BtnsBox
-                onPrev={this.handleShowPrevCharacter}
-                onNext={this.handleShowNextCharacter}
-                componentToUse="quiz"
-              />
-            </section>
-          </OuterGrid>
+                    Mam dość
+                  </Button>
+                </InnerGrid>
+                <BtnsBox
+                  onPrev={this.handleShowPrevCharacter}
+                  onNext={this.handleShowNextCharacter}
+                  componentToUse="quiz"
+                />
+              </Form>
+            </OuterGrid>
+          </Zoom>
         </>
       );
     }
@@ -190,7 +243,6 @@ class Quiz extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated,
     isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
     syllabaryFromDatabase: state.auth.syllabaryFromDatabase
   };

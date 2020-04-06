@@ -2,25 +2,55 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import { styled } from "@material-ui/core/styles";
 import "firebase/firestore";
 import { connect } from "react-redux";
+import Zoom from "@material-ui/core/Zoom";
 import { loginUser } from "../Redux/actions/auth";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "80%",
-  marginTop: "8%",
+  padding: "30px 30px",
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+});
+const Section = styled(Box)({
+  height: "100%"
+});
+const Form = styled(Box)({
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center"
+});
+const H1 = styled(Box)({
+  marginTop: "0px",
+  fontSize: "2.5rem",
+  alignContent: "flex-start"
+});
+const StyledTextField = styled(TextField)({
+  marginBottom: "0.3rem"
+});
+
+const Span = styled(Box)({
+  fontSize: "0.93rem",
+  padding: "0.83rem"
+});
+const StyledButton = styled(Button)({
+  background: "#3f51b5",
+  color: "#fff"
 });
 
 class Login extends Component {
   state = {
     login: "",
     email: "",
-    password: ""
+    password: "",
+    checked: true
   };
   handleChangeField = e => {
     this.setState({
@@ -41,27 +71,28 @@ class Login extends Component {
 
   render() {
     const { isAuthenticated } = this.props;
-    const { email, password, login } = this.state;
+    const { email, password, login, checked } = this.state;
     if (isAuthenticated) {
       return <Redirect to="/home" />;
     } else {
       return (
-        <OuterGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <section className="login">
-            <form className="login-form" onSubmit={this.handleSubmitLogin}>
-              <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
+        <Zoom in={checked}>
+          <OuterGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Section component="section" className="login">
+              <Form
+                component="form"
+                className="login-form"
+                onSubmit={this.handleSubmitLogin}
               >
-                <h1 className="login-form-logo">Kana App</h1>
-                <TextField
+                <H1 component="h1" className="login-form-logo">
+                  Kana App
+                </H1>
+                <StyledTextField
                   id="user-name-login"
                   label="Nazwa użytkownika"
                   variant="outlined"
@@ -70,7 +101,7 @@ class Login extends Component {
                   value={login}
                   onChange={this.handleChangeField}
                 />
-                <TextField
+                <StyledTextField
                   id="user-email-login"
                   label="Email"
                   variant="outlined"
@@ -79,7 +110,7 @@ class Login extends Component {
                   value={email}
                   onChange={this.handleChangeField}
                 />
-                <TextField
+                <StyledTextField
                   id="user-password-login"
                   label="Hasło"
                   variant="outlined"
@@ -88,29 +119,29 @@ class Login extends Component {
                   value={password}
                   onChange={this.handleChangeField}
                 />
-                <div className="form-btns-container">
-                  <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <span className="form-forgot-password">
-                      Zapomniałeś hasła?
-                    </span>
-                    <Button variant="contained" type="submit">
-                      Zaloguj się
-                    </Button>
-                    lub
-                    <Button variant="contained" component={Link} to="/register">
-                      Załóż konto
-                    </Button>
-                  </Grid>
-                </div>
-              </Grid>
-            </form>
-          </section>
-        </OuterGrid>
+
+                <Grid
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                  className="form-btns-container"
+                >
+                  <Span component="span" className="form-forgot-password">
+                    Zapomniałeś hasła?
+                  </Span>
+                  <StyledButton variant="contained" type="submit">
+                    Zaloguj się
+                  </StyledButton>
+                  <Span component="span">lub</Span>
+                  <Button variant="contained" component={Link} to="/register">
+                    Załóż konto
+                  </Button>
+                </Grid>
+              </Form>
+            </Section>
+          </OuterGrid>
+        </Zoom>
       );
     }
   }
