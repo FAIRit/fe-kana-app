@@ -14,7 +14,7 @@ const OuterGrid = styled(Grid)({
   height: "70%",
   padding: "30px 30px",
   borderRadius: "35px",
-  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
 });
 
 const Form = styled(Box)({
@@ -23,24 +23,24 @@ const Form = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center"
+  alignItems: "center",
 });
 const H2 = styled(Box)({
   fontSize: "2rem",
-  textAlign: "center"
+  textAlign: "center",
 });
 const StyledButton = styled(Button)({
   margin: "0 0.83rem 0.83rem 0.83rem",
   color: "#fff",
-  background: "#3f51b5"
+  background: "#3f51b5",
 });
 const StyledLink = styled(Box)({
-  margin: "0 0.83rem 0.83rem 0.83rem"
+  margin: "0 0.83rem 0.83rem 0.83rem",
 });
 
 const P = styled(Box)({
   fontSize: "4rem",
-  margin: "0.83rem 0"
+  margin: "0.83rem 0",
 });
 
 class QuizResult extends Component {
@@ -50,14 +50,14 @@ class QuizResult extends Component {
     isResultSubmitted: false,
     timeInSeconds: 0,
     timeFromDatabase: 0,
-    checked: true
+    checked: true,
   };
 
   componentDidMount = () => {
     // quiz time in seconds
     const endDate = Date.now() / 1000;
     this.setState({
-      timeInSeconds: parseInt((endDate - this.props.time).toFixed(0))
+      timeInSeconds: parseInt((endDate - this.props.time).toFixed(0)),
     });
 
     //check if user has saved quiz time
@@ -69,90 +69,65 @@ class QuizResult extends Component {
       .child("totalTime");
 
     // TODO get rid of typeof string after finishing task
-    totalTime.once("value", snapshot => {
+    totalTime.once("value", (snapshot) => {
       if (!snapshot.exists() || typeof snapshot.val() === "string") {
         this.setState({
-          timeFromDatabase: 0
+          timeFromDatabase: 0,
         });
       } else {
         this.setState({
-          timeFromDatabase: snapshot.val()
+          timeFromDatabase: snapshot.val(),
         });
       }
     });
   };
 
-  handleSaveScore = e => {
+  handleSaveScore = (e) => {
     e.preventDefault();
 
-    if (this.props.chosenSyllabary === "hiragana") {
-      //saving last user's incorrect answers into user collection
-      const { incorrectAnswers } = this.state;
-      const savedIncorrectAnswers = db
-        .ref("users")
-        .child(this.props.user)
-        .child("quizes")
-        .child(this.props.chosenSyllabary);
+    //saving last user's incorrect answers into user collection
+    const { incorrectAnswers } = this.state;
+    const savedIncorrectAnswers = db
+      .ref("users")
+      .child(this.props.user)
+      .child("quizes")
+      .child(this.props.chosenSyllabary);
 
-      const mistakes = {};
-      incorrectAnswers.forEach(element => {
-        mistakes[element["id"]] = true;
-      });
+    const mistakes = {};
+    incorrectAnswers.forEach((element) => {
+      mistakes[element["id"]] = true;
+    });
 
-      let sum = this.state.timeFromDatabase + this.state.timeInSeconds;
-      savedIncorrectAnswers.set({
-        mistakes,
-        totalTime: sum
-      });
+    let sum = this.state.timeFromDatabase + this.state.timeInSeconds;
+    savedIncorrectAnswers.set({
+      mistakes,
+      totalTime: sum,
+    });
 
-      //rest
-      const incorrectHiraganaScore = db
-        .ref("hiraganaIncorrectAnswers/" + this.props.user)
-        .push();
-      incorrectHiraganaScore.set({
-        answers: this.state.incorrectAnswers
-      });
-      this.setState({
-        isResultSubmitted: true
-      });
-    } else {
-      //saving to user's incorrect answers
-      const { incorrectAnswers } = this.state;
-      const savedIncorrectAnswers = db
-        .ref("users")
-        .child(this.props.user)
-        .child("quizes")
-        .child(this.props.chosenSyllabary);
+    //saving data to new collection historicalQuizes
+    const historicalQuizesRef = db
+      .ref("historicalQuizes")
+      .child(this.props.user)
+      .child(this.props.chosenSyllabary);
 
-      const mistakes = {};
-      incorrectAnswers.forEach(element => {
-        mistakes[element["id"]] = true;
-      });
-
-      let sum = this.state.timeFromDatabase + this.state.timeInSeconds;
-      savedIncorrectAnswers.set({
-        mistakes,
-        totalTime: sum
-      });
-
-      //rest
-      const incorrectKatakanaScore = db
-        .ref("katakanaIncorrectAnswers/" + this.props.user)
-        .push();
-      incorrectKatakanaScore.set({
-        answers: this.state.incorrectAnswers
-      });
-      this.setState({
-        isResultSubmitted: true
-      });
-    }
+    const totalAnswers = this.state.correctAnswers.concat(
+      this.state.incorrectAnswers
+    );
+    const answers = {};
+    totalAnswers.forEach((element) => {
+      answers[element["id"]] = element.isCorrect;
+    });
+    historicalQuizesRef.push(answers);
+    this.setState({
+      isResultSubmitted: true,
+    });
   };
 
-  handleResetAnswersState = e => {
+  handleResetAnswersState = (e) => {
     e.preventDefault();
     this.setState({
       correctAnswers: [],
-      incorrectAnswers: []
+      incorrectAnswers: [],
     });
   };
 
@@ -161,7 +136,7 @@ class QuizResult extends Component {
       correctAnswers,
       incorrectAnswers,
       isResultSubmitted,
-      checked
+      checked,
     } = this.state;
 
     let sum = correctAnswers.length + incorrectAnswers.length;
@@ -206,9 +181,9 @@ class QuizResult extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.auth.user.uid
+    user: state.auth.user.uid,
   };
 };
 

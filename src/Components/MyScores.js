@@ -12,37 +12,42 @@ const OuterGrid = styled(Grid)({
   width: "100%",
   padding: "30px 30px",
   borderRadius: "35px",
-  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
 });
 
 class MyScores extends Component {
   static contextType = KanaContext;
   state = {
     checked: true,
-    kanaTable: this.context.kanaTable
+    kanaTable: this.context.kanaTable,
   };
 
   componentDidMount = () => {
-    const handleGetData = user => {
+    const handleGetData = (user) => {
       const { uid } = user;
       firebase
         .database()
-        .ref("hiraganaIncorrectAnswers")
+        .ref("historicalQuizes")
         .child(uid)
-        .on("value", snapshot => {
+        .child("hiragana")
+        .on("value", (snapshot) => {
+          // console.log(snapshot.val());
           this.handleGetDataFromSnapshot(snapshot.val());
         });
     };
     firebase.auth().onAuthStateChanged(handleGetData);
   };
 
-  handleGetDataFromSnapshot = data => {
-    console.log(data);
-    console.log(Object.keys(data));
-    const arrayElements = Object.keys(data);
-    arrayElements.forEach(element => {
+  handleGetDataFromSnapshot = (data) => {
+    const kana = this.state.kanaTable;
+    const array = Object.entries(data).map((element) => {
+      //wyświetlanie obiektów z odpowiedziami
       console.log(element);
-      console.log(data[`${element}`].answers);
+      return element[1];
+    });
+    console.log(array);
+    array.forEach((element, i) => {
+      console.log(element);
     });
   };
 
