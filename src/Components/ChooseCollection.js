@@ -85,7 +85,7 @@ class ChooseCollection extends Component {
         .child("quizes")
         .child("hiragana")
         .child("mistakes")
-        .on("value", (snapshot) => {
+        .once("value", (snapshot) => {
           this.handleFetchAnswers(snapshot.val());
         });
     } else if (chosenSyllabary === "katakana") {
@@ -94,7 +94,7 @@ class ChooseCollection extends Component {
         .child("quizes")
         .child("katakana")
         .child("mistakes")
-        .on("value", (snapshot) => {
+        .once("value", (snapshot) => {
           this.handleFetchAnswers(snapshot.val());
         });
     }

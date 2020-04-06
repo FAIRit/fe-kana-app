@@ -64,7 +64,7 @@ class ChooseSyllabary extends Component {
             .child("quizes")
             .child("hiragana")
             .child("mistakes");
-          hiraganaRef.on("value", handleHiragana);
+          hiraganaRef.once("value", handleHiragana);
 
           unsubscribeHiragana = () => {
             hiraganaRef.off("value", handleHiragana);
@@ -89,7 +89,7 @@ class ChooseSyllabary extends Component {
             .child("katakana")
             .child("mistakes");
 
-          katakanaRef.on("value", handleKatakana);
+          katakanaRef.once("value", handleKatakana);
           unsubscribeKatakana = () => {
             katakanaRef.off("value", handleKatakana);
           };

@@ -113,7 +113,6 @@ class MyProfile extends Component {
           .ref("users")
           .child(uid)
           .on("value", (snapshot) => {
-            console.log(snapshot.val());
             this.setState({
               user: snapshot.val(),
             });
