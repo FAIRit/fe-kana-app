@@ -17,7 +17,7 @@ const OuterGrid = styled(Grid)({
   width: "100%",
   borderRadius: "35px",
   padding: "30px 30px",
-  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
 });
 const FlexBox = styled(Box)({
   display: "flex",
@@ -25,19 +25,19 @@ const FlexBox = styled(Box)({
   flexWrap: "wrap",
   fontSize: "1.9rem",
   margin: "0 auto",
-  height: "87%"
+  height: "87%",
 });
 const Div = styled(Box)({
-  marginBottom: "0.83rem"
+  marginBottom: "0.83rem",
 });
 
 const MainBox = styled(Box)({
-  height: "97%"
+  height: "97%",
 });
 const StyledButton = styled(Button)({
   marginRight: "0.83rem",
   background: "#3f51b5",
-  color: "#fff"
+  color: "#fff",
 });
 
 class CheatSheet extends Component {
@@ -46,25 +46,27 @@ class CheatSheet extends Component {
   state = {
     isHiraganaShown: false,
     isKatakanaShown: false,
-    checked: true
+    checked: true,
+    kanaTable: this.context.kanaTable.slice().sort(() => {
+      return 0.5 - Math.random();
+    }),
   };
 
   handleGetHiragana = () => {
     this.setState({
       isHiraganaShown: true,
-      isKatakanaShown: false
+      isKatakanaShown: false,
     });
   };
   handleGetKatakana = () => {
     this.setState({
       isHiraganaShown: false,
-      isKatakanaShown: true
+      isKatakanaShown: true,
     });
   };
 
   render() {
-    const { isHiraganaShown, isKatakanaShown, checked } = this.state;
-    const { kanaTable } = this.context;
+    const { isHiraganaShown, isKatakanaShown, checked, kanaTable } = this.state;
 
     return (
       <>
@@ -96,7 +98,7 @@ class CheatSheet extends Component {
             <MainBox component="main">
               <FlexBox>
                 {isHiraganaShown &&
-                  kanaTable.map(kana => (
+                  kanaTable.map((kana) => (
                     <SingleSign
                       kanaTable={kana.hiragana}
                       kanaMeaning={kana.meaning}
@@ -104,7 +106,7 @@ class CheatSheet extends Component {
                     />
                   ))}
                 {isKatakanaShown &&
-                  kanaTable.map(kana => (
+                  kanaTable.map((kana) => (
                     <SingleSign
                       kanaTable={kana.katakana}
                       kanaMeaning={kana.meaning}
@@ -124,7 +126,7 @@ class CheatSheet extends Component {
   }
 }
 
-const mapStatetoProps = state => {
+const mapStatetoProps = (state) => {
   return {};
 };
 
