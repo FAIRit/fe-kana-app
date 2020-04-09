@@ -15,34 +15,36 @@ const OuterGrid = styled(Grid)({
   height: "80%",
   padding: "30px 30px",
   borderRadius: "35px",
-  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
 });
 const Section = styled(Box)({
-  height: "100%"
+  height: "100%",
 });
 const Form = styled(Box)({
   height: "100%",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center"
+  alignItems: "center",
 });
 const H1 = styled(Box)({
   marginTop: "0px",
   fontSize: "2.5rem",
-  alignContent: "flex-start"
+  alignContent: "flex-start",
 });
 const StyledTextField = styled(TextField)({
-  marginBottom: "0.3rem"
+  marginBottom: "0.3rem",
 });
 
 const Span = styled(Box)({
   fontSize: "0.93rem",
-  padding: "0.83rem"
+  padding: "0.83rem",
+  textDecoration: "none",
+  color: "#000",
 });
 const StyledButton = styled(Button)({
   background: "#3f51b5",
-  color: "#fff"
+  color: "#fff",
 });
 
 class Login extends Component {
@@ -50,21 +52,21 @@ class Login extends Component {
     login: "",
     email: "",
     password: "",
-    checked: true
+    checked: true,
   };
-  handleChangeField = e => {
+  handleChangeField = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  handleSubmitLogin = e => {
+  handleSubmitLogin = (e) => {
     e.preventDefault();
     const { email, password, login } = this.state;
     this.setState({
       login: "",
       email: "",
-      password: ""
+      password: "",
     });
     this.props.login(email, password, login);
   };
@@ -127,7 +129,11 @@ class Login extends Component {
                   alignItems="center"
                   className="form-btns-container"
                 >
-                  <Span component="span" className="form-forgot-password">
+                  <Span
+                    component={Link}
+                    to="/change-password"
+                    className="form-forgot-password"
+                  >
                     Zapomniałeś hasła?
                   </Span>
                   <StyledButton variant="contained" type="submit">
@@ -147,17 +153,17 @@ class Login extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     login: (email, password, login) => {
       dispatch(loginUser(email, password, login));
-    }
+    },
   };
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
   };
 };
 

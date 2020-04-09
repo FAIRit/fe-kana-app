@@ -221,12 +221,12 @@ class Quiz extends Component {
                   <CheckButton variant="contained" type="submit">
                     Sprawdź
                   </CheckButton>
-                  <Button
+                  {/* <Button
                     variant="contained"
                     onClick={() => this.setState({ wantToQuit: true })}
                   >
                     Mam dość
-                  </Button>
+                  </Button> */}
                 </InnerGrid>
                 <BtnsBox
                   onPrev={this.handleShowPrevCharacter}
