@@ -42,61 +42,43 @@ class ChooseSyllabary extends Component {
   };
 
   componentDidMount = () => {
-    const noop = () => {};
-    let unsubscribeHiragana = noop;
-    let unsubscribeKatakana = noop;
-
     fire.auth().onAuthStateChanged((user) => {
-      if (user !== null) {
-        //hiragana
-        {
-          const handleHiragana = (snapshot) => {
-            const answers = snapshot.exists();
-            this.setState({
-              isUserHasHiragana: answers,
-            });
-            console.log("hiragana", answers);
-          };
-          const hiraganaRef = fire
-            .database()
-            .ref("users")
-            .child(user.uid)
-            .child("quizes")
-            .child("hiragana")
-            .child("mistakes");
-          hiraganaRef.once("value", handleHiragana);
+      //hiragana
+      {
+        const handleHiragana = (snapshot) => {
+          const answers = snapshot.exists();
+          this.setState({
+            isUserHasHiragana: answers,
+          });
+        };
+        const hiraganaRef = fire
+          .database()
+          .ref("users")
+          .child(user.uid)
+          .child("quizes")
+          .child("hiragana")
+          .child("mistakes");
+        hiraganaRef.once("value", handleHiragana);
+      }
 
-          unsubscribeHiragana = () => {
-            hiraganaRef.off("value", handleHiragana);
-          };
-        }
+      // katakana
+      {
+        const handleKatakana = (snapshot) => {
+          const answers = snapshot.exists();
+          this.setState({
+            isUserHasKatakana: answers,
+          });
+        };
 
-        // katakana
-        {
-          const handleKatakana = (snapshot) => {
-            const answers = snapshot.exists();
-            this.setState({
-              isUserHasKatakana: answers,
-            });
-            console.log("katakana", answers);
-          };
+        const katakanaRef = fire
+          .database()
+          .ref("users")
+          .child(user.uid)
+          .child("quizes")
+          .child("katakana")
+          .child("mistakes");
 
-          const katakanaRef = fire
-            .database()
-            .ref("users")
-            .child(user.uid)
-            .child("quizes")
-            .child("katakana")
-            .child("mistakes");
-
-          katakanaRef.once("value", handleKatakana);
-          unsubscribeKatakana = () => {
-            katakanaRef.off("value", handleKatakana);
-          };
-        }
-      } else {
-        unsubscribeHiragana();
-        unsubscribeKatakana();
+        katakanaRef.once("value", handleKatakana);
       }
     });
   };

@@ -47,9 +47,7 @@ class CheatSheet extends Component {
     isHiraganaShown: false,
     isKatakanaShown: false,
     checked: true,
-    kanaTable: this.context.kanaTable.slice().sort(() => {
-      return 0.5 - Math.random();
-    }),
+    kanaTable: this.context.kanaTable,
   };
 
   handleGetHiragana = () => {

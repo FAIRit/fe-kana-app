@@ -12,30 +12,31 @@ const DBox = styled(Box)({
 class SingleSign extends Component {
   render() {
     const { kanaTable, kanaMeaning, percentage, character, style } = this.props;
+    if (kanaTable) {
+      return (
+        <DBox component="div" className="sign-box">
+          <PBox component="p" className="sign-box__character">
+            {kanaTable}
+          </PBox>
 
-    return (
-      <DBox component="div" className="sign-box">
-        <PBox component="p" className="sign-box__character">
-          {kanaTable ? kanaTable : character}
-        </PBox>
-        {kanaMeaning && (
           <Box component="span" className="sign-box__meaning">
             {kanaMeaning}
           </Box>
-        )}
-        {percentage && (
-          <>
-            <Box
-              component="span"
-              className="sign-box__percentage"
-              style={style}
-            >
-              {percentage + "%"}
-            </Box>
-          </>
-        )}
-      </DBox>
-    );
+        </DBox>
+      );
+    } else {
+      return (
+        <DBox component="div" className="sign-box">
+          <PBox component="p" className="sign-box__character">
+            {character}
+          </PBox>
+
+          <Box component="span" className="sign-box__percentage" style={style}>
+            {percentage + "%"}
+          </Box>
+        </DBox>
+      );
+    }
   }
 }
 

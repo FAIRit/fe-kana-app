@@ -153,8 +153,8 @@ class MyScores extends Component {
           id: element.id,
           [this.state.chosenSyllabary]: element[this.state.chosenSyllabary],
           answersPercentage: idElement
-            ? (idElement.correct / totalQuizes) * 100
-            : "0",
+            ? ((idElement.correct / totalQuizes) * 100).toFixed(0)
+            : null,
         };
         characters.push(data);
       });

@@ -50,9 +50,6 @@ class ChooseCollection extends Component {
 
   componentDidMount = () => {
     this.handleGetUrlPath();
-    this.setState({
-      checked: true,
-    });
   };
 
   //preparing table with incorrect answers
@@ -77,7 +74,7 @@ class ChooseCollection extends Component {
       });
     }
 
-    //fetching properly answers
+    //fetching proper answers
     const chosenSyllabary = this.props.match.params.syllabary;
     if (chosenSyllabary === "hiragana") {
       db.ref("users")
