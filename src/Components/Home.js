@@ -15,24 +15,24 @@ const OuterGrid = styled(Grid)({
   borderRadius: "35px",
   boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
   padding: "30px 30px",
-  color: "rgba(0, 0, 0, 0.87)"
+  color: "rgba(0, 0, 0, 0.87)",
 });
 
 const MuiLink = styled(Link)({
   textDecoration: "none",
-  height: "28%"
+  height: "28%",
 });
 const Section = styled(Box)({
   height: "100%",
   width: "100%",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-evenly"
+  justifyContent: "space-evenly",
 });
 
 class Home extends Component {
   state = {
-    checked: true
+    checked: true,
   };
 
   render() {
@@ -45,6 +45,7 @@ class Home extends Component {
             direction="column"
             justify="center"
             alignItems="stretch"
+            className="home"
           >
             <Section className="home">
               <MuiLink component={RouterLink} to="/cheat-sheet">
@@ -67,7 +68,7 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {};
 };
 

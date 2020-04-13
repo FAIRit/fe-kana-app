@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import configureStore from "./Redux/configureStore";
 import { KanaProvider } from "./contexts/KanaContext";
 import { subscribeToAuthChange } from "./Redux/actions/auth";
+import "./scss/media.scss";
 
 const store = configureStore();
 

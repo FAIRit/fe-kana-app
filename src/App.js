@@ -12,6 +12,7 @@ import MyProfile from "./Components/MyProfile";
 import Quiz from "./Components/Quiz";
 import MyScores from "./Components/MyScores";
 import ChangePassword from "./Components/ChangePassword";
+import Settings from "./Components/Settings";
 
 const AuthGuard = ({ children }) => {
   const user = useSelector((state) => state.auth.user);
@@ -44,6 +45,7 @@ class App extends Component {
           <Route exact path="/quiz/:syllabary" component={Quiz} />
           <Route path="/my-profile" component={MyProfile} />
           <Route path="/my-score" component={MyScores} />
+          <Route path="/settings" component={Settings} />
         </AuthGuard>
       </Switch>
     );

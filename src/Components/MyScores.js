@@ -25,7 +25,7 @@ const Div = styled(Box)({});
 
 const StyledButton = styled(Button)({
   margin: "0 0.83rem 0.83rem 0",
-  background: "#3f51b5",
+  background: "rgb(0, 43, 78)",
   color: "#fff",
 });
 const CharContainer = styled(Grid)({
@@ -179,13 +179,13 @@ class MyScores extends Component {
           direction="column"
           justify="center"
           alignItems="stretch"
+          className="my-scores"
         >
           <SectionGrid
             container
             direction="column"
             justify="flex-start"
             alignItems="center"
-            className="my-scores"
           >
             <Div className="my-scores-btns-box">
               <StyledButton

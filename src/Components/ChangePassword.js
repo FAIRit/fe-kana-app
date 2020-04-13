@@ -28,7 +28,7 @@ const StyledTextField = styled(TextField)({
 });
 const StyledButton = styled(Button)({
   margin: "1.63rem 0",
-  background: "#3f51b5",
+  background: "rgb(0, 43, 78)",
   color: "#fff",
 });
 const P = styled(Box)({

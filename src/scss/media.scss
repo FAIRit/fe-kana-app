@@ -1,0 +1,179 @@
+//portrait
+@media screen and (orientation: "portrait") and (max-width: 768px) {
+  .WithStyles\(ForwardRef\(Grid\)\)-root-9.login {
+    height: 80%;
+    .Styled\(MuiBox\)-root-113.login-form {
+      height: 88%;
+    }
+    .Styled\(MuiBox\)-root-178 {
+      padding: 1.3rem;
+    }
+  }
+  .Styled\(MuiBox\)-root-113.registration-form {
+    height: 88%;
+    justify-content: space-between;
+  }
+  .cheat-sheet {
+    .Styled\(MuiBox\)-root-436 {
+      height: 64%;
+      margin: auto 0;
+    }
+  }
+}
+
+@media screen and (orientation: "portrait") and (max-width: 414px) {
+  .WithStyles\(ForwardRef\(Grid\)\)-root-9.login {
+    height: 92%;
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-9.registration {
+    height: 96%;
+    .Styled\(MuiBox\)-root-113 {
+      justify-content: space-between;
+    }
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-9 {
+    height: 88%;
+  }
+
+  .cheat-sheet.WithStyles\(ForwardRef\(Grid\)\)-root-400 {
+    height: 160vh;
+    margin: 100vh 0 7vh 0;
+    .Styled\(MuiBox\)-root-436 {
+      margin: 0;
+      height: 85%;
+      .Styled\(MuiBox\)-root-437 {
+        flex-direction: row;
+        font-size: 2.2rem;
+        .Styled\(MuiBox\)-root-451 {
+          width: 20%;
+        }
+      }
+    }
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-447.quiz,
+  .WithStyles\(ForwardRef\(Grid\)\)-root-447.flash-cards {
+    height: 75vh;
+    margin-top: 10vh;
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-400.choose-syllabary,
+  .WithStyles\(ForwardRef\(Grid\)\)-root-782.choose-syllabary {
+    height: 40vh;
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-284.home {
+    height: 75vh;
+    margin-top: 10vh;
+  }
+
+  .menu-position-container {
+    .Styled\(MuiBox\)-root-393 {
+      height: 80%;
+    }
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-467.my-profile {
+    height: 90vh;
+  }
+
+  .WithStyles\(ForwardRef\(Grid\)\)-root-515.my-profile-box {
+    width: 90%;
+  }
+
+  .WithStyles\(ForwardRef\(Grid\)\)-root-467.my-scores {
+    height: 140vh;
+    margin: 60vh 0 7vh 0;
+    .WithStyles\(ForwardRef\(Grid\)\)-root-473 {
+      justify-content: flex-start;
+      height: 75%;
+      font-size: 1.9rem;
+    }
+  }
+}
+
+@media screen and (orientation: "portrait") and (max-width: 375px) {
+  .cheat-sheet.WithStyles\(ForwardRef\(Grid\)\)-root-400 {
+    height: 177vh;
+    margin-top: 120vh;
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-400.choose-syllabary,
+  .WithStyles\(ForwardRef\(Grid\)\)-root-782.choose-syllabary {
+    height: 55vh;
+    margin-top: 8vh;
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-580.my-profile {
+    height: 80vh;
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-467.my-scores {
+    height: 150vh;
+    margin: 70vh 0 7vh 0;
+  }
+
+  .WithStyles\(ForwardRef\(Grid\)\)-root-284 {
+    margin-top: 5rem;
+  }
+  .menu-position-container {
+    .Styled\(MuiBox\)-root-393 {
+      height: 70%;
+      margin-right: 1rem;
+    }
+    .Styled\(MuiBox\)-root-396 {
+      font-size: 1.7rem;
+    }
+    .Styled\(MuiBox\)-root-397 {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media screen and (orientation: "portrait") and (max-width: 360px) {
+  .WithStyles\(ForwardRef\(Grid\)\)-root-9.login {
+    .Styled\(MuiBox\)-root-113.login-form {
+      height: 100%;
+      .Styled\(MuiBox\)-root-178 {
+        padding: 0.83rem;
+      }
+    }
+  }
+  .Styled\(MuiBox\)-root-113.registration-form {
+    height: 100%;
+  }
+  .cheat-sheet.WithStyles\(ForwardRef\(Grid\)\)-root-400 {
+    height: 190vh;
+    margin-top: 135vh;
+  }
+
+  .WithStyles\(ForwardRef\(Grid\)\)-root-447.quiz {
+    height: 80vh;
+    margin-top: 10vh;
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-467.my-scores {
+    height: 160vh;
+    margin: 80vh 0 7vh 0;
+  }
+}
+
+@media screen and (orientation: "portrait") and (max-width: 320px) {
+  .cheat-sheet.WithStyles\(ForwardRef\(Grid\)\)-root-400 {
+    height: 210vh;
+    margin-top: 155vh;
+    .Styled\(MuiBox\)-root-436 .Styled\(MuiBox\)-root-437 {
+      font-size: 1.8rem;
+    }
+    .WithStyles\(ForwardRef\(Button\)\)-root-403 {
+      margin: 0 0 0.43rem 0.4rem;
+    }
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-400.choose-syllabary {
+    height: 60vh;
+    margin-top: 12vh;
+    padding: 20px;
+    .WithStyles\(ForwardRef\(Button\)\)-root-403 {
+      margin: 0 0.43rem 0.83rem 0.43rem;
+    }
+  }
+  .WithStyles\(ForwardRef\(Grid\)\)-root-447.quiz {
+    margin-top: 13vh;
+    padding: 15px;
+    .Styled\(MuiBox\)-root-452 {
+      font-size: 7rem;
+    }
+  }
+}

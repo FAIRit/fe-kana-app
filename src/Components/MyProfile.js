@@ -45,7 +45,7 @@ const PBox = styled(Box)({
   fontWeight: "600",
 });
 const StyledButton = styled(Button)({
-  background: "#3f51b5",
+  background: "rgb(0, 43, 78)",
   color: "#fff",
 });
 const StyledLink = styled(Link)({
@@ -144,13 +144,13 @@ class MyProfile extends Component {
           direction="column"
           justify="center"
           alignItems="stretch"
+          className="my-profile"
         >
           <SectionGrid
             container
             direction="column"
             justify="space-between"
             alignItems="center"
-            className="my-profile"
             wrap="nowrap"
           >
             <Div className="my-profile__avatar-box">
@@ -167,7 +167,12 @@ class MyProfile extends Component {
               </label>
             </Div>
             <h2 className="my-profile-header">Dane użytkownika</h2>
-            <DivContainer container direction="row" alignItems="center">
+            <DivContainer
+              container
+              direction="row"
+              alignItems="center"
+              className="my-profile-box"
+            >
               <DivBox className="my-profile__data">
                 <PBox component="p">Nazwa użytkownika</PBox>
                 <PBox component="p">Adres email</PBox>

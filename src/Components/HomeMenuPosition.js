@@ -8,18 +8,23 @@ import picture3 from "../assets/295076-japan/png/ninja.png";
 
 const H2 = styled(Box)({
   fontSize: "2rem",
-  marginBottom: "0.5rem"
+  marginBottom: "0.5rem",
 });
 const Img = styled(Box)({ height: "100%", marginRight: "1.8rem" });
 const Div = styled(Grid)({
   height: "100%",
   width: "100%",
-  color: "rgba(0,0,0,0.87)"
+
+  color: "rgba(0,0,0,0.87)",
 });
 const P = styled(Box)({
   marginTop: "0.5rem",
+  overflow: "wrap",
   fontSize: "1.087rem",
-  fontStyle: "italic"
+  fontStyle: "italic",
+});
+const DivBox = styled(Box)({
+  width: "50%",
 });
 
 class HomeMenuPosition extends Component {
@@ -40,14 +45,14 @@ class HomeMenuPosition extends Component {
         className="menu-position-container"
       >
         <Img component="img" src={picture} alt="decoration_picture" />
-        <div className="menu-position-box">
+        <DivBox className="menu-position-box">
           <H2 className="menu-position-title" component="h2">
             {this.props.title}
           </H2>
           <P component="p" className="menu-position-content">
             {this.props.content}
           </P>
-        </div>
+        </DivBox>
       </Div>
     );
   }

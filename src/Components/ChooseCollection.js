@@ -29,7 +29,7 @@ const InnerGrid = styled(Grid)({
 const StyledButton = styled(Button)({
   margin: "0 0.83rem 0.83rem 0.83rem",
   color: "#fff",
-  background: "#3f51b5",
+  background: "rgb(0, 43, 78)",
 });
 const StyledLink = styled(Link)({
   color: "#fff",
@@ -119,6 +119,7 @@ class ChooseCollection extends Component {
             direction="column"
             justify="center"
             alignItems="stretch"
+            className="choose-collection"
           >
             <InnerGrid
               container

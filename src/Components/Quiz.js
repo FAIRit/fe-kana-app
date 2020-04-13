@@ -192,6 +192,7 @@ class Quiz extends Component {
               direction="column"
               justify="center"
               alignItems="center"
+              className="quiz"
             >
               <Form
                 component="form"
@@ -221,13 +222,13 @@ class Quiz extends Component {
                   <CheckButton variant="contained" type="submit">
                     Sprawdź
                   </CheckButton>
-                  {/* <Button
-                    variant="contained"
-                    onClick={() => this.setState({ wantToQuit: true })}
-                  >
-                    Mam dość
-                  </Button> */}
                 </InnerGrid>
+                <Button
+                  variant="contained"
+                  onClick={() => this.setState({ wantToQuit: true })}
+                >
+                  Mam dość
+                </Button>
                 <BtnsBox
                   onPrev={this.handleShowPrevCharacter}
                   onNext={this.handleShowNextCharacter}

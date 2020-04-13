@@ -24,7 +24,7 @@ const H2 = styled(Box)({
 
 const StyledButton = styled(Button)({
   margin: "0 0.83rem 0.83rem 0.83rem",
-  background: "#3f51b5",
+  background: "rgb(0, 43, 78)",
 });
 const StyledLink = styled(Link)({
   color: "#fff",
@@ -93,6 +93,7 @@ class ChooseSyllabary extends Component {
             direction="column"
             justify="center"
             alignItems="stretch"
+            className="choose-syllabary"
           >
             <InnerGrid
               container

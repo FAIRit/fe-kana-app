@@ -23,20 +23,28 @@ const FlexBox = styled(Box)({
   display: "flex",
   flexDirection: "column",
   flexWrap: "wrap",
-  fontSize: "1.9rem",
+  fontSize: "1.8rem",
   margin: "0 auto",
-  height: "87%",
+  height: "100%",
 });
 const Div = styled(Box)({
   marginBottom: "0.83rem",
 });
 
 const MainBox = styled(Box)({
-  height: "97%",
+  height: "80%",
+});
+const BackButton = styled(Button)({
+  marginTop: "auto",
+  width: "15%",
+});
+const StyledLink = styled(Link)({
+  color: "#000",
+  textDecoration: "none",
 });
 const StyledButton = styled(Button)({
-  marginRight: "0.83rem",
-  background: "#3f51b5",
+  margin: "0 0.83rem 0.83rem 0",
+  background: "rgb(0, 43, 78)",
   color: "#fff",
 });
 
@@ -73,9 +81,8 @@ class CheatSheet extends Component {
           <OuterGrid
             container
             direction="column"
-            justify="flex-start"
+            justify="center"
             alignItems="stretch"
-            component="section"
             onClick={this.handleFetchData}
             className="cheat-sheet"
           >
@@ -112,11 +119,12 @@ class CheatSheet extends Component {
                     />
                   ))}
               </FlexBox>
-
-              <Button variant="contained" component={Link} to="/home">
-                Powrót
-              </Button>
             </MainBox>
+            <BackButton variant="contained">
+              <StyledLink to="/home" component={Link}>
+                Powrót
+              </StyledLink>
+            </BackButton>
           </OuterGrid>
         </Zoom>
       </>

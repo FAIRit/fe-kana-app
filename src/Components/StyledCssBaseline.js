@@ -1,4 +1,5 @@
 import { createMuiTheme } from "@material-ui/core/styles";
+import picture from "../assets/4484.jpg";
 
 const theme = createMuiTheme({
   overrides: {
@@ -6,23 +7,23 @@ const theme = createMuiTheme({
       "@global": {
         body: {
           backgroundColor: "rgba(24,173,54,0.28)",
+          backgroundImage: `url(${picture})`,
+          backgroundSize: "100%",
           height: "100vh",
-          // overflow: "hidden",
-          color: "rgba(0,0,0, 0.87)"
-        }
-      }
+          color: "rgba(0,0,0, 0.87)",
+        },
+      },
     },
     MuiContainer: {
       root: {
-        // paddingTop: "10vh",
         height: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
-      }
-    }
-  }
+        alignItems: "center",
+      },
+    },
+  },
 });
 
 export default theme;
