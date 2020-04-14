@@ -44,7 +44,12 @@ class HomeMenuPosition extends Component {
         alignItems="center"
         className="menu-position-container"
       >
-        <Img component="img" src={picture} alt="decoration_picture" />
+        <Img
+          component="img"
+          src={picture}
+          alt="decoration_picture"
+          className="menu-picture"
+        />
         <DivBox className="menu-position-box">
           <H2 className="menu-position-title" component="h2">
             {this.props.title}

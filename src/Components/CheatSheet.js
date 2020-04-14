@@ -90,18 +90,20 @@ class CheatSheet extends Component {
               <StyledButton
                 variant="contained"
                 onClick={this.handleGetHiragana}
+                className="btn"
               >
                 Hiragana
               </StyledButton>
               <StyledButton
                 variant="contained"
                 onClick={this.handleGetKatakana}
+                className="btn"
               >
                 Katakana
               </StyledButton>
             </Div>
-            <MainBox component="main">
-              <FlexBox>
+            <MainBox component="main" className="cheat-sheet-container">
+              <FlexBox className="cheat-sheet-box">
                 {isHiraganaShown &&
                   kanaTable.map((kana) => (
                     <SingleSign
@@ -120,7 +122,7 @@ class CheatSheet extends Component {
                   ))}
               </FlexBox>
             </MainBox>
-            <BackButton variant="contained">
+            <BackButton variant="contained" className="back-btn">
               <StyledLink to="/home" component={Link}>
                 Powrót
               </StyledLink>

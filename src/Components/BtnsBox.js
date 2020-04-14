@@ -56,6 +56,7 @@ class BtnsBox extends Component {
           component={Link}
           to="/home"
           onClick={this.handleRestartUsersChoice}
+          className="back-btn"
         >
           Powrót
         </Button>

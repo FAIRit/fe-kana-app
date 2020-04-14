@@ -145,7 +145,12 @@ class ChooseSyllabary extends Component {
                   </StyledButton>
                 )}
               </div>
-              <Button variant="contained" component={RouterLink} to="/home">
+              <Button
+                variant="contained"
+                className="back-btn"
+                component={RouterLink}
+                to="/home"
+              >
                 Powrót
               </Button>
             </InnerGrid>

@@ -160,7 +160,12 @@ class ChooseCollection extends Component {
                   </>
                 )}
               </Div>
-              <Button variant="contained" component={RouterLink} to="/home">
+              <Button
+                variant="contained"
+                className="back-btn"
+                component={RouterLink}
+                to="/home"
+              >
                 Powrót
               </Button>
             </InnerGrid>

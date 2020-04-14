@@ -161,6 +161,7 @@ class MyProfile extends Component {
                 id="upload-image"
                 multiple={false}
                 onChange={this.handleSelectImage}
+                className="input-btn"
               />
               <label htmlFor="upload-image">
                 <StyledButton variant="contained">Zmień avatar</StyledButton>

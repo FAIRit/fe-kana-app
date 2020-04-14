@@ -47,7 +47,7 @@ class Home extends Component {
             alignItems="stretch"
             className="home"
           >
-            <Section className="home">
+            <Section className="home-container">
               <MuiLink component={RouterLink} to="/cheat-sheet">
                 <HomeMenuPosition title="Ściągawka" content="Tablica znaków" />
               </MuiLink>

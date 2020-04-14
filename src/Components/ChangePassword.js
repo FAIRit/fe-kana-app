@@ -31,6 +31,9 @@ const StyledButton = styled(Button)({
   background: "rgb(0, 43, 78)",
   color: "#fff",
 });
+const H2 = styled(Box)({
+  textAlign: "center",
+});
 const P = styled(Box)({
   margin: "0",
   position: "absolute",
@@ -89,13 +92,16 @@ class ChangePassword extends Component {
           direction="column"
           justify="center"
           alignItems="center"
+          className="change-password"
         >
           <Form
             component="form"
             className="change-password-form"
             onSubmit={this.handleSetUsersPassword}
           >
-            <h2 className="change-password-header">Wpisz swój adres email</h2>
+            <H2 component="h2" className="change-password-header">
+              Wpisz swój adres email
+            </H2>
             <InputBox className="input-box">
               <StyledTextField
                 id="user-email"

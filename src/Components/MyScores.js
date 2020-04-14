@@ -186,6 +186,7 @@ class MyScores extends Component {
             direction="column"
             justify="flex-start"
             alignItems="center"
+            className="my-scores-section"
           >
             <Div className="my-scores-btns-box">
               <StyledButton
@@ -203,15 +204,19 @@ class MyScores extends Component {
                 Katakana
               </StyledButton>
             </Div>
-            <H2 component="h2">Poświęcony czas: {totalQuizTime + "s"}</H2>
-            <H2 component="h2">Celność odpowiedzi</H2>
+            <H2 component="h2" className="my-scores-title">
+              Poświęcony czas: {totalQuizTime + "s"}
+            </H2>
+            <H2 component="h2" className="my-scores-title">
+              Celność odpowiedzi
+            </H2>
             <CharContainer
               container
               direction="column"
               wrap="wrap"
               justify="center"
               alignItems="center"
-              className="my-scores-stats-container"
+              className="my-scores-container"
             >
               {dataExists &&
                 stats.map((statElement) => (
