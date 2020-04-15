@@ -63,18 +63,18 @@ class BurgerMenu extends Component {
         <StyledBox className="avatar-container">
           <StyledAvatar src={user.avatarUrl} />
         </StyledBox>
-        <StyledList className="burger-menu__list">
-          <StyledListItem className="burger-menu__list-element">
+        <StyledList className="burger-menu-list">
+          <StyledListItem className="burger-menu-list-element">
             <StyledLink component={Link} to="/my-profile">
               Mój profil
             </StyledLink>
           </StyledListItem>
-          <StyledListItem className="burger-menu__list-element">
+          <StyledListItem className="burger-menu-list-element">
             <StyledLink component={Link} to="/my-score">
               Moje wyniki
             </StyledLink>
           </StyledListItem>
-          <StyledListItem className="burger-menu__list-element">
+          <StyledListItem className="burger-menu-list-element">
             <StyledLink component={Link} to="/about">
               O aplikacji
             </StyledLink>

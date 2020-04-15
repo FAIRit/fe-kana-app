@@ -150,7 +150,7 @@ class MyProfile extends Component {
             alignItems="center"
             wrap="nowrap"
           >
-            <Div className="my-profile__avatar-box">
+            <Div className="my-profile-avatar-box">
               <StyledAvatar src={user?.avatarUrl} />
 
               <input
@@ -179,11 +179,11 @@ class MyProfile extends Component {
               alignItems="center"
               className="my-profile-box"
             >
-              <DivBox className="my-profile__data">
+              <DivBox className="my-profile-data">
                 <PBox component="p">Nazwa użytkownika</PBox>
                 <PBox component="p">Adres email</PBox>
               </DivBox>
-              <DivBox className="my-profile__data">
+              <DivBox className="my-profile-data">
                 <PBox component="p">{user?.username}</PBox>
                 <PBox component="p">{user?.email}</PBox>
               </DivBox>

@@ -15,11 +15,11 @@ class SingleSign extends Component {
     if (kanaTable) {
       return (
         <DBox component="div" className="sign-box">
-          <PBox component="p" className="sign-box__character">
+          <PBox component="p" className="sign-box-character">
             {kanaTable}
           </PBox>
 
-          <Box component="span" className="sign-box__meaning">
+          <Box component="span" className="sign-box-meaning">
             {kanaMeaning}
           </Box>
         </DBox>
@@ -27,11 +27,11 @@ class SingleSign extends Component {
     } else {
       return (
         <DBox component="div" className="sign-box">
-          <PBox component="p" className="sign-box__character">
+          <PBox component="p" className="sign-box-character">
             {character}
           </PBox>
 
-          <Box component="span" className="sign-box__percentage" style={style}>
+          <Box component="span" className="sign-box-percentage" style={style}>
             {percentage + "%"}
           </Box>
         </DBox>
