@@ -5,11 +5,11 @@ import UserNavBar from "./UserNavBar";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
-import { connect } from "react-redux";
 import Zoom from "@material-ui/core/Zoom";
 import Link from "@material-ui/core/Link";
 
 const OuterGrid = styled(Grid)({
+  marginTop: "8vh",
   background: "rgb(255,255,255)",
   height: "70%",
   borderRadius: "35px",
@@ -68,8 +68,4 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {};
-};
-
-export default connect(mapStateToProps)(Home);
+export default Home;

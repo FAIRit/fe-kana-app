@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 import UserNavBar from "./UserNavBar";
 import SingleSign from "./SingleSign";
 import Grid from "@material-ui/core/Grid";
@@ -58,13 +57,13 @@ class CheatSheet extends Component {
     kanaTable: this.context.kanaTable,
   };
 
-  handleGetHiragana = () => {
+  handleShowHiragana = () => {
     this.setState({
       isHiraganaShown: true,
       isKatakanaShown: false,
     });
   };
-  handleGetKatakana = () => {
+  handleShowKatakana = () => {
     this.setState({
       isHiraganaShown: false,
       isKatakanaShown: true,
@@ -83,20 +82,19 @@ class CheatSheet extends Component {
             direction="column"
             justify="center"
             alignItems="stretch"
-            onClick={this.handleFetchData}
             className="cheat-sheet"
           >
             <Div className="cheat-sheet-btns">
               <StyledButton
                 variant="contained"
-                onClick={this.handleGetHiragana}
+                onClick={this.handleShowHiragana}
                 className="btn"
               >
                 Hiragana
               </StyledButton>
               <StyledButton
                 variant="contained"
-                onClick={this.handleGetKatakana}
+                onClick={this.handleShowKatakana}
                 className="btn"
               >
                 Katakana
@@ -134,8 +132,4 @@ class CheatSheet extends Component {
   }
 }
 
-const mapStatetoProps = (state) => {
-  return {};
-};
-
-export default connect(mapStatetoProps)(CheatSheet);
+export default CheatSheet;

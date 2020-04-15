@@ -5,7 +5,6 @@ import { styled } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import Input from "@material-ui/core/Input";
 import Zoom from "@material-ui/core/Zoom";
 import firebase from "firebase";
 
@@ -21,10 +20,6 @@ const StyledAvatar = styled(Avatar)({
   width: "13rem",
   height: "13rem",
   margin: "15px 0",
-});
-
-const StyledInput = styled(Input)({
-  display: "none",
 });
 
 const Div = styled(Box)({
@@ -67,10 +62,12 @@ class MyProfile extends Component {
     checked: true,
   };
 
+  //choosing avatar image
   handleSelectImage = (event) => {
     const image = event.target.files[0];
     const uid = this.state.user.uid;
 
+    //if user doesn't choose image
     if (!image) {
       return;
     }
@@ -155,17 +152,25 @@ class MyProfile extends Component {
           >
             <Div className="my-profile__avatar-box">
               <StyledAvatar src={user?.avatarUrl} />
-              <StyledInput
-                type="file"
+
+              <input
                 accept="image/*"
                 id="upload-image"
                 multiple={false}
                 onChange={this.handleSelectImage}
                 className="input-btn"
+                type="file"
+                style={{ display: "none" }}
               />
-              <label htmlFor="upload-image">
-                <StyledButton variant="contained">Zmień avatar</StyledButton>
-              </label>
+
+              <Button
+                variant="contained"
+                component="label"
+                htmlFor="upload-image"
+                style={{ background: "rgb(0, 43, 78)", color: "#fff" }}
+              >
+                Zmień avatar
+              </Button>
             </Div>
             <h2 className="my-profile-header">Dane użytkownika</h2>
             <DivContainer

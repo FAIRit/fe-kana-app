@@ -87,6 +87,7 @@ class MyScores extends Component {
     this.handleShowData();
   };
 
+  //fetching quiz data from database
   handleShowData = () => {
     const handleGetData = (user) => {
       const { uid } = user;
@@ -130,7 +131,7 @@ class MyScores extends Component {
         Object.entries(charmap).map(([charId, value]) => ({ charId, value }))
       );
 
-      //collect the sum of answers per character
+      //collecting the sum of answers per character
       const distribution = chars.reduce((result, next) => {
         if (result[next.charId] === undefined) {
           result[next.charId] = { correct: 0, incorrect: 0 };
@@ -143,6 +144,7 @@ class MyScores extends Component {
         return result;
       }, {});
 
+      //creating character's table with calculated accurancies
       const characters = [];
       this.state.kanaTable.forEach((element) => {
         const idElement = distribution[element.id];

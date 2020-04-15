@@ -52,12 +52,12 @@ class Login extends Component {
     password: "",
     checked: true,
   };
-  handleChangeField = (e) => {
+
+  handleChangeInputField = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
-
   handleSubmitLogin = (e) => {
     e.preventDefault();
     const { email, password, login } = this.state;
@@ -99,7 +99,7 @@ class Login extends Component {
                 type="text"
                 name="login"
                 value={login}
-                onChange={this.handleChangeField}
+                onChange={this.handleChangeInputField}
               />
               <StyledTextField
                 id="user-email-login"
@@ -108,7 +108,7 @@ class Login extends Component {
                 type="email"
                 name="email"
                 value={email}
-                onChange={this.handleChangeField}
+                onChange={this.handleChangeInputField}
               />
               <StyledTextField
                 id="user-password-login"
@@ -117,7 +117,7 @@ class Login extends Component {
                 type="password"
                 name="password"
                 value={password}
-                onChange={this.handleChangeField}
+                onChange={this.handleChangeInputField}
               />
 
               <Grid

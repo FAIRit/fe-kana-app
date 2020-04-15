@@ -13,6 +13,7 @@ import KanaContext from "../contexts/KanaContext";
 import Zoom from "@material-ui/core/Zoom";
 
 const OuterGrid = styled(Grid)({
+  marginTop: "8vh",
   background: "rgb(255,255,255)",
   height: "70%",
   padding: "30px 30px",
@@ -223,12 +224,7 @@ class Quiz extends Component {
                     Sprawdź
                   </CheckButton>
                 </InnerGrid>
-                <Button
-                  variant="contained"
-                  onClick={() => this.setState({ wantToQuit: true })}
-                >
-                  Mam dość
-                </Button>
+
                 <BtnsBox
                   onPrev={this.handleShowPrevCharacter}
                   onNext={this.handleShowNextCharacter}

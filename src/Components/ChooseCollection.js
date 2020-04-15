@@ -13,6 +13,7 @@ import { db } from "../Firebase/firebase";
 import Zoom from "@material-ui/core/Zoom";
 
 const OuterGrid = styled(Grid)({
+  marginTop: "8vh",
   background: "rgb(255,255,255)",
   height: "70%",
   padding: "30px 30px",

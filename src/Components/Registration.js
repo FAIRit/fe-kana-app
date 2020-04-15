@@ -51,7 +51,7 @@ class Registration extends Component {
     checked: true,
   };
 
-  handleChangeField = (e) => {
+  handleChangeInputField = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
@@ -101,7 +101,7 @@ class Registration extends Component {
                 type="text"
                 name="login"
                 value={login}
-                onChange={this.handleChangeField}
+                onChange={this.handleChangeInputField}
               />
               <StyledTextField
                 id="user-email-registration"
@@ -110,7 +110,7 @@ class Registration extends Component {
                 type="email"
                 name="email"
                 value={email}
-                onChange={this.handleChangeField}
+                onChange={this.handleChangeInputField}
               />
               <StyledTextField
                 id="user-password-registration"
@@ -119,7 +119,7 @@ class Registration extends Component {
                 type="password"
                 name="password"
                 value={password}
-                onChange={this.handleChangeField}
+                onChange={this.handleChangeInputField}
               />
               <StyledTextField
                 id="user-password-repeat-registration"
@@ -128,7 +128,7 @@ class Registration extends Component {
                 type="password"
                 name="repeatPassword"
                 value={repeatPassword}
-                onChange={this.handleChangeField}
+                onChange={this.handleChangeInputField}
               />
 
               <Grid

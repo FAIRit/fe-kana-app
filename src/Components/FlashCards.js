@@ -9,6 +9,7 @@ import Zoom from "@material-ui/core/Zoom";
 import KanaContext from "../contexts/KanaContext";
 
 const OuterGrid = styled(Grid)({
+  marginTop: "8vh",
   background: "rgb(255,255,255)",
   height: "70%",
   padding: "30px 30px",
@@ -45,7 +46,7 @@ class FlashCards extends Component {
     checked: true,
   };
 
-  // showing characte's meaning
+  // showing character's meaning
   handleShowMeaning = () => {
     this.setState({
       isMeaningShown: !this.state.isMeaningShown,

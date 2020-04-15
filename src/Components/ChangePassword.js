@@ -56,11 +56,13 @@ class ChangePassword extends Component {
     validateMessage: "",
   };
 
-  handleChangeField = (e) => {
+  handleChangeInputField = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
+
+  //sending change password email
   handleSetUsersPassword = (e) => {
     e.preventDefault();
     const auth = firebase.auth();
@@ -69,7 +71,6 @@ class ChangePassword extends Component {
     auth
       .sendPasswordResetEmail(emailAddress)
       .then(() => {
-        console.log("Email wysłany");
         this.setState({
           isFormSend: true,
           validateMessage: "Email został wysłany!",
@@ -110,7 +111,7 @@ class ChangePassword extends Component {
                 type="text"
                 name="email"
                 value={email}
-                onChange={this.handleChangeField}
+                onChange={this.handleChangeInputField}
               />
               <P
                 component="p"

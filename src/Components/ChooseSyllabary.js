@@ -10,6 +10,7 @@ import Zoom from "@material-ui/core/Zoom";
 import UserNavBar from "./UserNavBar";
 
 const OuterGrid = styled(Grid)({
+  marginTop: "8vh",
   background: "rgb(255,255,255)",
   height: "70%",
   padding: "30px 30px",
@@ -42,6 +43,7 @@ class ChooseSyllabary extends Component {
   };
 
   componentDidMount = () => {
+    //checking if user has incorrect answers
     fire.auth().onAuthStateChanged((user) => {
       //hiragana
       {

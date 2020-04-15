@@ -34,6 +34,7 @@ class BtnsBox extends Component {
     this.props.onPrev();
   };
 
+  //restarting user's state's choice
   handleRestartUsersChoice = () => {
     this.props.changeToFalse();
   };

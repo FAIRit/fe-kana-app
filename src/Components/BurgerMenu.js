@@ -75,8 +75,8 @@ class BurgerMenu extends Component {
             </StyledLink>
           </StyledListItem>
           <StyledListItem className="burger-menu__list-element">
-            <StyledLink component={Link} to="/settings">
-              Ustawienia konta
+            <StyledLink component={Link} to="/about">
+              O aplikacji
             </StyledLink>
           </StyledListItem>
         </StyledList>
