@@ -105,7 +105,6 @@ class MyProfile extends Component {
 
   componentDidMount() {
     const handleAuthChange = (user) => {
-      console.log(user);
       if (user) {
         const { uid } = user;
         this.unsubscribeFromUserProfile = firebase

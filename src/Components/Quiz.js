@@ -17,17 +17,17 @@ const OuterGrid = styled(Grid)({
   height: "70%",
   padding: "30px 30px",
   borderRadius: "35px",
-  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
 });
 
 const Div = styled(Box)({
   fontSize: "10rem",
-  margin: "0 0 "
+  margin: "0 0 ",
 });
 const CheckButton = styled(Button)({
   margin: "0.83rem 0",
   background: "rgba(24,173,54,0.6)",
-  color: "#fff"
+  color: "#fff",
 });
 const Form = styled(Box)({
   height: "100%",
@@ -35,10 +35,10 @@ const Form = styled(Box)({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "space-between",
-  flexWrap: "nowrap"
+  flexWrap: "nowrap",
 });
 const InnerGrid = styled(Grid)({
-  height: "100%"
+  height: "100%",
 });
 
 class Quiz extends Component {
@@ -59,13 +59,13 @@ class Quiz extends Component {
     startDate: Date.now() / 1000,
     checked: true,
     style: {
-      color: "#000"
-    }
+      color: "#000",
+    },
   };
 
-  handleChangeInputValue = e => {
+  handleChangeInputValue = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -81,44 +81,44 @@ class Quiz extends Component {
         answer: "",
         isEventBlocked: false,
         style: {
-          color: "#000"
-        }
+          color: "#000",
+        },
       });
     } else {
       this.setState({
         kanaCounter: this.state.kanaCounter,
         style: {
-          color: "#000"
-        }
+          color: "#000",
+        },
       });
     }
   };
 
   //checking answers
-  handleCheckAnswer = e => {
+  handleCheckAnswer = (e) => {
     const {
       kanaTable,
       kanaCounter,
       correctAnswers,
       incorrectAnswers,
       answer,
-      isEventBlocked
+      isEventBlocked,
     } = this.state;
     const { syllabary } = this.props.match.params;
     e.preventDefault();
     if (answer === kanaTable[kanaCounter].meaning && isEventBlocked === false) {
       const data = {
-        syllabary: syllabary,
+        id: kanaTable[kanaCounter].id,
         meaning: kanaTable[kanaCounter].meaning,
-        character: kanaTable[kanaCounter][syllabary],
-        id: kanaTable[kanaCounter].id
+        [this.props.match.params.syllabary]: kanaTable[kanaCounter][syllabary],
+        isCorrect: true,
       };
       this.setState({
         correctAnswers: [...correctAnswers, data],
         isEventBlocked: true,
         style: {
-          color: "#008000"
-        }
+          color: "#008000",
+        },
       });
     } else if (answer === "") {
       e.target = "disabled";
@@ -129,14 +129,15 @@ class Quiz extends Component {
       const data = {
         id: kanaTable[kanaCounter].id,
         meaning: kanaTable[kanaCounter].meaning,
-        [this.props.match.params.syllabary]: kanaTable[kanaCounter][syllabary]
+        [this.props.match.params.syllabary]: kanaTable[kanaCounter][syllabary],
+        isCorrect: false,
       };
       this.setState({
         incorrectAnswers: [...incorrectAnswers, data],
         isEventBlocked: true,
         style: {
-          color: "#FF0000"
-        }
+          color: "#FF0000",
+        },
       });
     }
   };
@@ -144,13 +145,13 @@ class Quiz extends Component {
   componentDidMount = () => {
     if (this.props.isUserChooseIncorrectAnswers) {
       this.setState({
-        kanaTable: this.props.syllabaryFromDatabase
+        kanaTable: this.props.syllabaryFromDatabase,
       });
     } else {
       this.setState({
         kanaTable: this.context.kanaTable.slice().sort(() => {
           return 0.5 - Math.random();
-        })
+        }),
       });
     }
   };
@@ -163,7 +164,7 @@ class Quiz extends Component {
       incorrectAnswers,
       correctAnswers,
       checked,
-      style
+      style,
     } = this.state;
     const { syllabary } = this.props.match.params;
 
@@ -241,10 +242,10 @@ class Quiz extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
-    syllabaryFromDatabase: state.auth.syllabaryFromDatabase
+    syllabaryFromDatabase: state.auth.syllabaryFromDatabase,
   };
 };
 
