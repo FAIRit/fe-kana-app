@@ -2,7 +2,7 @@
   "name": "kana-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://localhost:3000",
+  "homepage": "https://kana-app-bf7bf.web.app/",
   "dependencies": {
     "@material-ui/core": "^4.9.5",
     "@material-ui/styles": "^4.9.0",

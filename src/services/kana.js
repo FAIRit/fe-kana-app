@@ -1,10 +1,10 @@
 export const restGetKana = () =>
-  fetch("http://localhost:3000/kana.json", {
+  fetch(process.env.PUBLIC_URL + "/kana.json", {
     headers: {
-      "content-type": "application/json"
-    }
+      "content-type": "application/json",
+    },
   })
-    .then(resp => {
+    .then((resp) => {
       return resp.json();
     })
-    .then(data => data.kana);
+    .then((data) => data.kana);

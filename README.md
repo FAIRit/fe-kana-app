@@ -1,7 +1,5 @@
 # Kana-App - black belt your skill!
 
-=====
-
 ## General
 
 Application help users to learning japanese syllabaries : hiragana and katakana. Tools for learning includes cheat sheet, flash cards and quiz.
@@ -23,3 +21,23 @@ Application help users to learning japanese syllabaries : hiragana and katakana.
 - Firebase - realtime database
 - React UI Framework - Material UI
 - SCSS
+
+## Screenshots
+
+![home](./src/assets/screenshots/home.png "Home")
+![quiz](./src/assets/screenshots/quiz.png "Quiz")
+![flash-card](./src/assets/screenshots/flash-cards1.png "Flash Card")
+
+## To see results locally
+
+You need to install:
+
+- `node.js` >=8.x
+- `npm` >=5.x
+- `react-dom` >= 16.3.x
+- `firebase` >= 7.x
+- `node-sass` >= 4.x
+  Install depedencies by running `npm install`
+  Run `npm start`
+
+AND ENJOY!
