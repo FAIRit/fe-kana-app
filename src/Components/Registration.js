@@ -14,35 +14,33 @@ const OuterGrid = styled(Grid)({
   height: "80%",
   padding: "30px 30px",
   borderRadius: "35px",
-  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
 });
-const Section = styled(Box)({
-  height: "100%"
-});
+
 const Form = styled(Box)({
   height: "100%",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center"
+  alignItems: "center",
 });
 const H1 = styled(Box)({
   marginTop: "0px",
   fontSize: "2.5rem",
-  alignContent: "flex-start"
+  alignContent: "flex-start",
 });
 const StyledTextField = styled(TextField)({
-  marginBottom: "0.3rem"
+  marginBottom: "0.3rem",
 });
 
 const Span = styled(Box)({
   fontSize: "0.93rem",
-  padding: "0.83rem"
+  padding: "0.83rem",
 });
 const StyledButton = styled(Button)({
   marginTop: "0.83rem",
-  background: "#3f51b5",
-  color: "#fff"
+  background: "rgb(0, 43, 78)",
+  color: "#fff",
 });
 class Registration extends Component {
   state = {
@@ -50,16 +48,16 @@ class Registration extends Component {
     password: "",
     repeatPassword: "",
     login: "",
-    checked: true
+    checked: true,
   };
 
-  handleChangeField = e => {
+  handleChangeInputField = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  handleSubmitRegistration = e => {
+  handleSubmitRegistration = (e) => {
     e.preventDefault();
     const { email, password, repeatPassword, login } = this.state;
     if (email.length !== 0 && password === repeatPassword && login.length > 2) {
@@ -67,7 +65,7 @@ class Registration extends Component {
         email: "",
         password: "",
         repeatPassword: "",
-        login: ""
+        login: "",
       });
 
       this.props.register(email, password, login);
@@ -86,86 +84,85 @@ class Registration extends Component {
             direction="column"
             justify="center"
             alignItems="center"
+            className="registration"
           >
-            <Section className="registration">
-              <Form
-                component="form"
-                className="registration-form"
-                onSubmit={this.handleSubmitRegistration}
-              >
-                <H1 component="h1" className="registration-form-logo">
-                  Kana App
-                </H1>
-                <StyledTextField
-                  id="user-name-registration"
-                  label="Nazwa użytkownika"
-                  variant="outlined"
-                  type="text"
-                  name="login"
-                  value={login}
-                  onChange={this.handleChangeField}
-                />
-                <StyledTextField
-                  id="user-email-registration"
-                  label="Email"
-                  variant="outlined"
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={this.handleChangeField}
-                />
-                <StyledTextField
-                  id="user-password-registration"
-                  label="Hasło"
-                  variant="outlined"
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={this.handleChangeField}
-                />
-                <StyledTextField
-                  id="user-password-repeat-registration"
-                  label="Powtórz hasło"
-                  variant="outlined"
-                  type="password"
-                  name="repeatPassword"
-                  value={repeatPassword}
-                  onChange={this.handleChangeField}
-                />
+            <Form
+              component="form"
+              className="registration-form"
+              onSubmit={this.handleSubmitRegistration}
+            >
+              <H1 component="h1" className="registration-form-logo">
+                Kana App
+              </H1>
+              <StyledTextField
+                id="user-name-registration"
+                label="Nazwa użytkownika"
+                variant="outlined"
+                type="text"
+                name="login"
+                value={login}
+                onChange={this.handleChangeInputField}
+              />
+              <StyledTextField
+                id="user-email-registration"
+                label="Email"
+                variant="outlined"
+                type="email"
+                name="email"
+                value={email}
+                onChange={this.handleChangeInputField}
+              />
+              <StyledTextField
+                id="user-password-registration"
+                label="Hasło"
+                variant="outlined"
+                type="password"
+                name="password"
+                value={password}
+                onChange={this.handleChangeInputField}
+              />
+              <StyledTextField
+                id="user-password-repeat-registration"
+                label="Powtórz hasło"
+                variant="outlined"
+                type="password"
+                name="repeatPassword"
+                value={repeatPassword}
+                onChange={this.handleChangeInputField}
+              />
 
-                <Grid
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                  className="form-btns-container"
-                >
-                  <StyledButton variant="contained" type="submit">
-                    Załóż konto
-                  </StyledButton>
-                  <Span component="span">lub</Span>
-                  <Button variant="contained" component={Link} to="/">
-                    Zaloguj się
-                  </Button>
-                </Grid>
-              </Form>
-            </Section>
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+                className="form-btns-container"
+              >
+                <StyledButton variant="contained" type="submit">
+                  Załóż konto
+                </StyledButton>
+                <Span component="span">lub</Span>
+                <Button variant="contained" component={Link} to="/">
+                  Zaloguj się
+                </Button>
+              </Grid>
+            </Form>
           </OuterGrid>
         </Zoom>
       );
     }
   }
 }
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     register: (email, password, login) => {
       dispatch(registerUser(email, password, login));
-    }
+    },
   };
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.user !== null
+    isAuthenticated: state.auth.user !== null,
   };
 };
 

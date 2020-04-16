@@ -9,25 +9,32 @@ import { restartUserChoice } from "../Redux/actions/auth";
 const StyledButton = styled(Button)({
   margin: "0 0.83rem 0.83rem 0.83rem",
   color: "#fff",
-  background: "#3f51b5"
+  background: "rgb(0, 43, 78)",
 });
 
 const Div = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center"
+  alignItems: "center",
+});
+const DivBox = styled(Box)({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
 });
 class BtnsBox extends Component {
-  handleNext = e => {
+  handleNext = (e) => {
     e.preventDefault();
     this.props.onNext();
   };
-  handlePrev = e => {
+  handlePrev = (e) => {
     e.preventDefault();
     this.props.onPrev();
   };
 
+  //restarting user's state's choice
   handleRestartUsersChoice = () => {
     this.props.changeToFalse();
   };
@@ -35,7 +42,7 @@ class BtnsBox extends Component {
   render() {
     return (
       <Div className="btns-box">
-        <div>
+        <DivBox>
           {this.props.componentToUse === "flashCards" && (
             <StyledButton variant="contained" onClick={this.handlePrev}>
               Poprzedni
@@ -44,12 +51,13 @@ class BtnsBox extends Component {
           <StyledButton variant="contained" onClick={this.handleNext}>
             Nastepny
           </StyledButton>
-        </div>
+        </DivBox>
         <Button
           variant="contained"
           component={Link}
           to="/home"
           onClick={this.handleRestartUsersChoice}
+          className="back-btn"
         >
           Powrót
         </Button>
@@ -58,11 +66,11 @@ class BtnsBox extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     changeToFalse: () => {
       dispatch(restartUserChoice());
-    }
+    },
   };
 };
 

@@ -5,7 +5,6 @@ import { styled } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import Input from "@material-ui/core/Input";
 import Zoom from "@material-ui/core/Zoom";
 import firebase from "firebase";
 
@@ -21,10 +20,6 @@ const StyledAvatar = styled(Avatar)({
   width: "13rem",
   height: "13rem",
   margin: "15px 0",
-});
-
-const StyledInput = styled(Input)({
-  display: "none",
 });
 
 const Div = styled(Box)({
@@ -45,7 +40,7 @@ const PBox = styled(Box)({
   fontWeight: "600",
 });
 const StyledButton = styled(Button)({
-  background: "#3f51b5",
+  background: "rgb(0, 43, 78)",
   color: "#fff",
 });
 const StyledLink = styled(Link)({
@@ -67,10 +62,12 @@ class MyProfile extends Component {
     checked: true,
   };
 
+  //choosing avatar image
   handleSelectImage = (event) => {
     const image = event.target.files[0];
     const uid = this.state.user.uid;
 
+    //if user doesn't choose image
     if (!image) {
       return;
     }
@@ -144,35 +141,49 @@ class MyProfile extends Component {
           direction="column"
           justify="center"
           alignItems="stretch"
+          className="my-profile"
         >
           <SectionGrid
             container
             direction="column"
             justify="space-between"
             alignItems="center"
-            className="my-profile"
             wrap="nowrap"
           >
-            <Div className="my-profile__avatar-box">
+            <Div className="my-profile-avatar-box">
               <StyledAvatar src={user?.avatarUrl} />
-              <StyledInput
-                type="file"
+
+              <input
                 accept="image/*"
                 id="upload-image"
                 multiple={false}
                 onChange={this.handleSelectImage}
+                className="input-btn"
+                type="file"
+                style={{ display: "none" }}
               />
-              <label htmlFor="upload-image">
-                <StyledButton variant="contained">Zmień avatar</StyledButton>
-              </label>
+
+              <Button
+                variant="contained"
+                component="label"
+                htmlFor="upload-image"
+                style={{ background: "rgb(0, 43, 78)", color: "#fff" }}
+              >
+                Zmień avatar
+              </Button>
             </Div>
             <h2 className="my-profile-header">Dane użytkownika</h2>
-            <DivContainer container direction="row" alignItems="center">
-              <DivBox className="my-profile__data">
+            <DivContainer
+              container
+              direction="row"
+              alignItems="center"
+              className="my-profile-box"
+            >
+              <DivBox className="my-profile-data">
                 <PBox component="p">Nazwa użytkownika</PBox>
                 <PBox component="p">Adres email</PBox>
               </DivBox>
-              <DivBox className="my-profile__data">
+              <DivBox className="my-profile-data">
                 <PBox component="p">{user?.username}</PBox>
                 <PBox component="p">{user?.email}</PBox>
               </DivBox>

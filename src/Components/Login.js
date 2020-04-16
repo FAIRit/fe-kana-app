@@ -15,34 +15,34 @@ const OuterGrid = styled(Grid)({
   height: "80%",
   padding: "30px 30px",
   borderRadius: "35px",
-  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
 });
-const Section = styled(Box)({
-  height: "100%"
-});
+
 const Form = styled(Box)({
   height: "100%",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center"
+  justifyContent: "space-between",
+  alignItems: "center",
 });
 const H1 = styled(Box)({
   marginTop: "0px",
   fontSize: "2.5rem",
-  alignContent: "flex-start"
+  alignContent: "flex-start",
 });
 const StyledTextField = styled(TextField)({
-  marginBottom: "0.3rem"
+  marginBottom: "0.3rem",
 });
 
 const Span = styled(Box)({
   fontSize: "0.93rem",
-  padding: "0.83rem"
+  padding: "0.83rem",
+  textDecoration: "none",
+  color: "#000",
 });
 const StyledButton = styled(Button)({
-  background: "#3f51b5",
-  color: "#fff"
+  background: "rgb(0, 43, 78)",
+  color: "#fff",
 });
 
 class Login extends Component {
@@ -50,21 +50,21 @@ class Login extends Component {
     login: "",
     email: "",
     password: "",
-    checked: true
-  };
-  handleChangeField = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+    checked: true,
   };
 
-  handleSubmitLogin = e => {
+  handleChangeInputField = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+  handleSubmitLogin = (e) => {
     e.preventDefault();
     const { email, password, login } = this.state;
     this.setState({
       login: "",
       email: "",
-      password: ""
+      password: "",
     });
     this.props.login(email, password, login);
   };
@@ -82,64 +82,67 @@ class Login extends Component {
             direction="column"
             justify="center"
             alignItems="center"
+            className="login"
           >
-            <Section component="section" className="login">
-              <Form
-                component="form"
-                className="login-form"
-                onSubmit={this.handleSubmitLogin}
-              >
-                <H1 component="h1" className="login-form-logo">
-                  Kana App
-                </H1>
-                <StyledTextField
-                  id="user-name-login"
-                  label="Nazwa użytkownika"
-                  variant="outlined"
-                  type="text"
-                  name="login"
-                  value={login}
-                  onChange={this.handleChangeField}
-                />
-                <StyledTextField
-                  id="user-email-login"
-                  label="Email"
-                  variant="outlined"
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={this.handleChangeField}
-                />
-                <StyledTextField
-                  id="user-password-login"
-                  label="Hasło"
-                  variant="outlined"
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={this.handleChangeField}
-                />
+            <Form
+              component="form"
+              className="login-form"
+              onSubmit={this.handleSubmitLogin}
+            >
+              <H1 component="h1" className="login-form-logo">
+                Kana App
+              </H1>
+              <StyledTextField
+                id="user-name-login"
+                label="Nazwa użytkownika"
+                variant="outlined"
+                type="text"
+                name="login"
+                value={login}
+                onChange={this.handleChangeInputField}
+              />
+              <StyledTextField
+                id="user-email-login"
+                label="Email"
+                variant="outlined"
+                type="email"
+                name="email"
+                value={email}
+                onChange={this.handleChangeInputField}
+              />
+              <StyledTextField
+                id="user-password-login"
+                label="Hasło"
+                variant="outlined"
+                type="password"
+                name="password"
+                value={password}
+                onChange={this.handleChangeInputField}
+              />
 
-                <Grid
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                  className="form-btns-container"
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+                className="form-btns-container"
+              >
+                <Span
+                  component={Link}
+                  to="/change-password"
+                  className="form-forgot-password"
                 >
-                  <Span component="span" className="form-forgot-password">
-                    Zapomniałeś hasła?
-                  </Span>
-                  <StyledButton variant="contained" type="submit">
-                    Zaloguj się
-                  </StyledButton>
-                  <Span component="span">lub</Span>
-                  <Button variant="contained" component={Link} to="/register">
-                    Załóż konto
-                  </Button>
-                </Grid>
-              </Form>
-            </Section>
+                  Zapomniałeś hasła?
+                </Span>
+                <StyledButton variant="contained" type="submit">
+                  Zaloguj się
+                </StyledButton>
+                <Span component="span">lub</Span>
+                <Button variant="contained" component={Link} to="/register">
+                  Załóż konto
+                </Button>
+              </Grid>
+            </Form>
           </OuterGrid>
         </Zoom>
       );
@@ -147,17 +150,17 @@ class Login extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     login: (email, password, login) => {
       dispatch(loginUser(email, password, login));
-    }
+    },
   };
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
   };
 };
 

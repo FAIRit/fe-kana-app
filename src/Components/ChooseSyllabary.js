@@ -10,6 +10,7 @@ import Zoom from "@material-ui/core/Zoom";
 import UserNavBar from "./UserNavBar";
 
 const OuterGrid = styled(Grid)({
+  marginTop: "8vh",
   background: "rgb(255,255,255)",
   height: "70%",
   padding: "30px 30px",
@@ -24,7 +25,7 @@ const H2 = styled(Box)({
 
 const StyledButton = styled(Button)({
   margin: "0 0.83rem 0.83rem 0.83rem",
-  background: "#3f51b5",
+  background: "rgb(0, 43, 78)",
 });
 const StyledLink = styled(Link)({
   color: "#fff",
@@ -42,6 +43,7 @@ class ChooseSyllabary extends Component {
   };
 
   componentDidMount = () => {
+    //checking if user has incorrect answers
     fire.auth().onAuthStateChanged((user) => {
       //hiragana
       {
@@ -93,6 +95,7 @@ class ChooseSyllabary extends Component {
             direction="column"
             justify="center"
             alignItems="stretch"
+            className="choose-syllabary"
           >
             <InnerGrid
               container
@@ -144,7 +147,12 @@ class ChooseSyllabary extends Component {
                   </StyledButton>
                 )}
               </div>
-              <Button variant="contained" component={RouterLink} to="/home">
+              <Button
+                variant="contained"
+                className="back-btn"
+                component={RouterLink}
+                to="/home"
+              >
                 Powrót
               </Button>
             </InnerGrid>

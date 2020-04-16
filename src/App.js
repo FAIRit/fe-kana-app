@@ -11,9 +11,11 @@ import ChooseCollection from "./Components/ChooseCollection";
 import MyProfile from "./Components/MyProfile";
 import Quiz from "./Components/Quiz";
 import MyScores from "./Components/MyScores";
+import ChangePassword from "./Components/ChangePassword";
+import About from "./Components/About";
 
 const AuthGuard = ({ children }) => {
-  const user = useSelector(state => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
   return user === null ? <Redirect to="/" /> : children;
 };
 
@@ -23,7 +25,7 @@ class App extends Component {
       <Switch>
         <Route exact path="/" component={Login} />
         <Route path="/register" component={Registration} />
-
+        <Route path="/change-password" component={ChangePassword} />
         <AuthGuard>
           <Route path="/home" component={Home} />
           <Route path="/cheat-sheet" component={CheatSheet} />
@@ -43,6 +45,7 @@ class App extends Component {
           <Route exact path="/quiz/:syllabary" component={Quiz} />
           <Route path="/my-profile" component={MyProfile} />
           <Route path="/my-score" component={MyScores} />
+          <Route path="/about" component={About} />
         </AuthGuard>
       </Switch>
     );

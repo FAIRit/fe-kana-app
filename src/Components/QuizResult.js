@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import Zoom from "@material-ui/core/Zoom";
 
 const OuterGrid = styled(Grid)({
+  marginTop: "8vh",
   background: "rgb(255,255,255)",
   height: "70%",
   padding: "30px 30px",
@@ -32,7 +33,7 @@ const H2 = styled(Box)({
 const StyledButton = styled(Button)({
   margin: "0 0.83rem 0.83rem 0.83rem",
   color: "#fff",
-  background: "#3f51b5",
+  background: "rgb(0, 43, 78)",
 });
 const StyledLink = styled(Box)({
   margin: "0 0.83rem 0.83rem 0.83rem",
@@ -149,17 +150,18 @@ class QuizResult extends Component {
             direction="column"
             justify="center"
             alignItems="center"
+            className="quiz-result"
           >
             <Form
               component="form"
-              className="result-container"
+              className="quiz-result-form"
               onSubmit={this.handleSaveScore}
             >
-              <H2 component="h2" className="result-container__title">
+              <H2 component="h2" className="quiz-result__title">
                 Udało Ci się ukończyć quiz!
               </H2>
-              <h3 className="result-container__subtitle">Twój wynik to:</h3>
-              <P component="p" className="result-container__score">
+              <h3 className="quiz-result__subtitle">Twój wynik to:</h3>
+              <P component="p" className="quiz-result__score">
                 {correctAnswers.length}/{sum}
               </P>
               {!isResultSubmitted ? (

@@ -9,11 +9,12 @@ import Zoom from "@material-ui/core/Zoom";
 import KanaContext from "../contexts/KanaContext";
 
 const OuterGrid = styled(Grid)({
+  marginTop: "8vh",
   background: "rgb(255,255,255)",
   height: "70%",
   padding: "30px 30px",
   borderRadius: "35px",
-  boxShadow: "0 8px 12px rgba(0,0,0,0.18)"
+  boxShadow: "0 8px 12px rgba(0,0,0,0.18)",
 });
 const Section = styled(Box)({
   height: "100%",
@@ -21,18 +22,18 @@ const Section = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center"
+  alignItems: "center",
 });
 const InnerGrid = styled(Grid)({
   width: "100%",
-  height: "100%"
+  height: "100%",
 });
 const Span = styled(Box)({
-  fontSize: "2rem"
+  fontSize: "2rem",
 });
 const P = styled(Box)({
   fontSize: "10rem",
-  margin: "2.5rem 0 0 0 "
+  margin: "auto 0",
 });
 
 class FlashCards extends Component {
@@ -42,13 +43,13 @@ class FlashCards extends Component {
     kanaTable: [],
     kanaCounter: 0,
     isMeaningShown: false,
-    checked: true
+    checked: true,
   };
 
-  // showing characte's meaning
+  // showing character's meaning
   handleShowMeaning = () => {
     this.setState({
-      isMeaningShown: !this.state.isMeaningShown
+      isMeaningShown: !this.state.isMeaningShown,
     });
   };
 
@@ -57,7 +58,7 @@ class FlashCards extends Component {
     if (this.state.kanaCounter !== this.state.kanaTable.length - 1) {
       this.setState({
         kanaCounter: this.state.kanaCounter + 1,
-        isMeaningShown: false
+        isMeaningShown: false,
       });
     }
   };
@@ -67,7 +68,7 @@ class FlashCards extends Component {
     if (this.state.kanaCounter !== 0) {
       this.setState({
         kanaCounter: this.state.kanaCounter - 1,
-        isMeaningShown: false
+        isMeaningShown: false,
       });
     }
   };
@@ -75,13 +76,13 @@ class FlashCards extends Component {
   componentDidMount = () => {
     if (this.props.isUserChooseIncorrectAnswers) {
       this.setState({
-        kanaTable: this.props.syllabaryFromDatabase
+        kanaTable: this.props.syllabaryFromDatabase,
       });
     } else {
       this.setState({
         kanaTable: this.context.kanaTable.slice().sort(() => {
           return 0.5 - Math.random();
-        })
+        }),
       });
     }
   };
@@ -98,8 +99,9 @@ class FlashCards extends Component {
             direction="column"
             justify="center"
             alignItems="center"
+            className="flash-cards"
           >
-            <Section component="section" className="flash-cards">
+            <Section component="section">
               <InnerGrid
                 container
                 direction="column"
@@ -135,10 +137,10 @@ class FlashCards extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isUserChooseIncorrectAnswers: state.auth.isUserChooseIncorrectAnswers,
-    syllabaryFromDatabase: state.auth.syllabaryFromDatabase
+    syllabaryFromDatabase: state.auth.syllabaryFromDatabase,
   };
 };
 

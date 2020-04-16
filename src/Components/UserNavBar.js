@@ -10,29 +10,30 @@ import { styled } from "@material-ui/core/styles";
 const StyledAvatar = styled(Avatar)({
   width: "60px",
   height: "60px",
-  cursor: "pointer"
+  cursor: "pointer",
 });
 
 const StyledAppBar = styled(AppBar)({
   padding: "10px 10px",
+  background: "rgb(0, 43, 78)",
   flexDirection: "row",
-  alignItems: "center"
+  alignItems: "center",
 });
 
 const StyledSpan = styled(Box)({
   fontSize: "1.575rem",
-  marginLeft: "20px"
+  marginLeft: "20px",
 });
 
 class UserNavBar extends Component {
   state = {
     left: false,
-    side: "left"
+    side: "left",
   };
 
-  handleToggleDrawer = left => event => {
+  handleToggleDrawer = (left) => (event) => {
     this.setState({
-      left: left
+      left: left,
     });
   };
 
@@ -58,9 +59,9 @@ class UserNavBar extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
   };
 };
 

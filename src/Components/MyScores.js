@@ -25,7 +25,7 @@ const Div = styled(Box)({});
 
 const StyledButton = styled(Button)({
   margin: "0 0.83rem 0.83rem 0",
-  background: "#3f51b5",
+  background: "rgb(0, 43, 78)",
   color: "#fff",
 });
 const CharContainer = styled(Grid)({
@@ -87,6 +87,7 @@ class MyScores extends Component {
     this.handleShowData();
   };
 
+  //fetching quiz data from database
   handleShowData = () => {
     const handleGetData = (user) => {
       const { uid } = user;
@@ -130,7 +131,7 @@ class MyScores extends Component {
         Object.entries(charmap).map(([charId, value]) => ({ charId, value }))
       );
 
-      //collect the sum of answers per character
+      //collecting the sum of answers per character
       const distribution = chars.reduce((result, next) => {
         if (result[next.charId] === undefined) {
           result[next.charId] = { correct: 0, incorrect: 0 };
@@ -143,6 +144,7 @@ class MyScores extends Component {
         return result;
       }, {});
 
+      //creating character's table with calculated accurancies
       const characters = [];
       this.state.kanaTable.forEach((element) => {
         const idElement = distribution[element.id];
@@ -179,13 +181,14 @@ class MyScores extends Component {
           direction="column"
           justify="center"
           alignItems="stretch"
+          className="my-scores"
         >
           <SectionGrid
             container
             direction="column"
             justify="flex-start"
             alignItems="center"
-            className="my-scores"
+            className="my-scores-section"
           >
             <Div className="my-scores-btns-box">
               <StyledButton
@@ -203,15 +206,19 @@ class MyScores extends Component {
                 Katakana
               </StyledButton>
             </Div>
-            <H2 component="h2">Poświęcony czas: {totalQuizTime + "s"}</H2>
-            <H2 component="h2">Celność odpowiedzi</H2>
+            <H2 component="h2" className="my-scores-title">
+              Poświęcony czas: {totalQuizTime + "s"}
+            </H2>
+            <H2 component="h2" className="my-scores-title">
+              Celność odpowiedzi
+            </H2>
             <CharContainer
               container
               direction="column"
               wrap="wrap"
               justify="center"
               alignItems="center"
-              className="my-scores-stats-container"
+              className="my-scores-container"
             >
               {dataExists &&
                 stats.map((statElement) => (

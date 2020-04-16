@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 import UserNavBar from "./UserNavBar";
 import SingleSign from "./SingleSign";
 import Grid from "@material-ui/core/Grid";
@@ -23,20 +22,28 @@ const FlexBox = styled(Box)({
   display: "flex",
   flexDirection: "column",
   flexWrap: "wrap",
-  fontSize: "1.9rem",
+  fontSize: "1.8rem",
   margin: "0 auto",
-  height: "87%",
+  height: "100%",
 });
 const Div = styled(Box)({
   marginBottom: "0.83rem",
 });
 
 const MainBox = styled(Box)({
-  height: "97%",
+  height: "80%",
+});
+const BackButton = styled(Button)({
+  marginTop: "auto",
+  width: "15%",
+});
+const StyledLink = styled(Link)({
+  color: "#000",
+  textDecoration: "none",
 });
 const StyledButton = styled(Button)({
-  marginRight: "0.83rem",
-  background: "#3f51b5",
+  margin: "0 0.83rem 0.83rem 0",
+  background: "rgb(0, 43, 78)",
   color: "#fff",
 });
 
@@ -50,13 +57,13 @@ class CheatSheet extends Component {
     kanaTable: this.context.kanaTable,
   };
 
-  handleGetHiragana = () => {
+  handleShowHiragana = () => {
     this.setState({
       isHiraganaShown: true,
       isKatakanaShown: false,
     });
   };
-  handleGetKatakana = () => {
+  handleShowKatakana = () => {
     this.setState({
       isHiraganaShown: false,
       isKatakanaShown: true,
@@ -73,28 +80,28 @@ class CheatSheet extends Component {
           <OuterGrid
             container
             direction="column"
-            justify="flex-start"
+            justify="center"
             alignItems="stretch"
-            component="section"
-            onClick={this.handleFetchData}
             className="cheat-sheet"
           >
             <Div className="cheat-sheet-btns">
               <StyledButton
                 variant="contained"
-                onClick={this.handleGetHiragana}
+                onClick={this.handleShowHiragana}
+                className="btn"
               >
                 Hiragana
               </StyledButton>
               <StyledButton
                 variant="contained"
-                onClick={this.handleGetKatakana}
+                onClick={this.handleShowKatakana}
+                className="btn"
               >
                 Katakana
               </StyledButton>
             </Div>
-            <MainBox component="main">
-              <FlexBox>
+            <MainBox component="main" className="cheat-sheet-container">
+              <FlexBox className="cheat-sheet-box">
                 {isHiraganaShown &&
                   kanaTable.map((kana) => (
                     <SingleSign
@@ -112,11 +119,12 @@ class CheatSheet extends Component {
                     />
                   ))}
               </FlexBox>
-
-              <Button variant="contained" component={Link} to="/home">
-                Powrót
-              </Button>
             </MainBox>
+            <BackButton variant="contained" className="back-btn">
+              <StyledLink to="/home" component={Link}>
+                Powrót
+              </StyledLink>
+            </BackButton>
           </OuterGrid>
         </Zoom>
       </>
@@ -124,8 +132,4 @@ class CheatSheet extends Component {
   }
 }
 
-const mapStatetoProps = (state) => {
-  return {};
-};
-
-export default connect(mapStatetoProps)(CheatSheet);
+export default CheatSheet;

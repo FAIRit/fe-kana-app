@@ -1,0 +1,602 @@
+//portrait
+@media screen and (orientation: "portrait") and (max-width: 768px) {
+  .MuiContainer-root {
+    .login {
+      height: 80%;
+      width: 80%;
+      .login-form {
+        height: 88%;
+        .form-forgot-password {
+          padding: 1.3rem;
+        }
+      }
+    }
+    .registration {
+      width: 80%;
+      .registration-form {
+        height: 88%;
+        justify-content: space-between;
+      }
+    }
+    .home {
+      width: 80%;
+      margin-top: 7vh;
+    }
+    .cheat-sheet {
+      width: 80%;
+      .cheat-sheet-container {
+        height: 60%;
+        margin: auto 0;
+        .cheat-sheet-box {
+          height: 100%;
+        }
+      }
+      .back-btn {
+        margin: 0;
+      }
+    }
+    .choose-syllabary,
+    .choose-collection,
+    .change-password {
+      width: 80%;
+      height: 50%;
+      margin-top: 8vh;
+    }
+    .flash-cards,
+    .quiz,
+    .quiz-result {
+      width: 80%;
+      margin-top: 8vh;
+    }
+    .my-profile,
+    .my-scores,
+    .about {
+      width: 80%;
+    }
+  }
+}
+
+@media screen and (orientation: "portrait") and (max-width: 414px) {
+  .MuiContainer-root {
+    .login {
+      height: 92%;
+      width: 90%;
+    }
+    .registration {
+      height: 96%;
+      width: 90%;
+      .registration-form {
+        justify-content: space-between;
+      }
+    }
+    .change-password {
+      width: 90%;
+      height: 50%;
+      margin-top: 0;
+    }
+    .home,
+    .flash-cards,
+    .quiz,
+    .quiz-result {
+      width: 90%;
+      height: 75vh;
+      margin-top: 10vh;
+    }
+    .cheat-sheet {
+      width: 90%;
+      height: 165vh;
+      margin: 105vh 0 7vh 0;
+      justify-content: space-between;
+      .cheat-sheet-btns {
+        text-align: center;
+        .btn {
+          margin: 0 0.4rem 0 0.4rem;
+        }
+      }
+      .cheat-sheet-container {
+        height: 90%;
+        margin: 0;
+
+        .cheat-sheet-box {
+          flex-direction: row;
+          font-size: 2.2rem;
+          .sign-box {
+            width: 20%;
+          }
+        }
+      }
+    }
+    .choose-syllabary,
+    .choose-collection {
+      width: 90%;
+      height: 50%;
+    }
+    .menu-position-container {
+      .menu-picture {
+        height: 80%;
+        margin-right: 1rem;
+      }
+    }
+    .my-profile {
+      width: 90%;
+      height: 90%;
+      .my-profile-box {
+        width: 90%;
+      }
+    }
+    .my-scores {
+      width: 90%;
+      height: 160vh;
+      margin: 80vh 0 7vh 0;
+      .my-scores-container {
+        flex-direction: row;
+        height: 75%;
+        font-size: 1.9rem;
+        .sign-box {
+          width: 20%;
+        }
+      }
+    }
+    .about {
+      width: 90%;
+      height: 120vh;
+      margin: 40vh 0 7vh 0;
+      .about-container {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (orientation: "portrait") and (max-width: 375px) {
+  .MuiContainer-root {
+    .login {
+      width: 95%;
+      height: 94%;
+    }
+    .registration,
+    .change-password {
+      width: 95%;
+    }
+
+    .home {
+      width: 95%;
+      padding: 25px;
+      .menu-position-container {
+        .menu-position-title {
+          margin-top: 0.5rem;
+        }
+        .menu-position-content {
+          font-size: 1rem;
+        }
+      }
+    }
+    .cheat-sheet {
+      width: 95%;
+      align-items: center;
+      height: 200vh;
+      margin: 140vh 0 7vh 0;
+    }
+    .choose-syllabary,
+    .choose-collection {
+      height: 55%;
+      width: 95%;
+      margin-top: 8vh;
+    }
+    .quiz {
+      width: 95%;
+      height: 80%;
+    }
+    .flash-cards,
+    .quiz-result {
+      width: 95%;
+    }
+    .my-profile {
+      width: 95%;
+      height: 88%;
+    }
+    .my-scores {
+      height: 180vh;
+      width: 95%;
+      margin: 100vh 0 7vh 0;
+      .my-scores-container {
+        height: 80%;
+      }
+    }
+    .about {
+      width: 95%;
+      height: 140vh;
+      margin: 60vh 0 7vh 0;
+    }
+  }
+}
+
+@media screen and (orientation: "portrait") and (min-height: 812px) and (max-width: 375px) {
+  .MuiContainer-root {
+    .login,
+    .registration {
+      height: 90%;
+    }
+    .home {
+      .menu-position-container {
+        .menu-picture {
+          height: 62%;
+        }
+      }
+    }
+    .about {
+      height: 105vh;
+      margin: 25vh 0 7vh 0;
+    }
+  }
+}
+
+@media screen and (orientation: "portrait") and (max-width: 360px) {
+  .MuiContainer-root {
+    .login {
+      .login-form {
+        height: 98%;
+      }
+    }
+    .registration {
+      .registration-form {
+        height: 100%;
+      }
+    }
+    .home {
+      .menu-position-container {
+        .menu-picture {
+          height: 80%;
+        }
+        .menu-position-title {
+          font-size: 1.8rem;
+        }
+      }
+    }
+    .cheat-sheet {
+      height: 220vh;
+      margin-top: 160vh;
+    }
+    .choose-syllabary,
+    .choose-collection {
+      text-align: center;
+    }
+    .my-scores {
+      height: 210vh;
+      margin-top: 130vh;
+      .my-scores-title {
+        font-size: 1.3rem;
+      }
+    }
+    .quiz-result {
+      text-align: center;
+      letter-spacing: 0;
+    }
+  }
+}
+
+@media screen and (orientation: "portrait") and (max-width: 320px) {
+  .MuiContainer-root {
+    .home {
+      padding: 15px;
+      .menu-position-container {
+        .menu-position-title {
+          font-size: 1.6rem;
+        }
+      }
+    }
+    .cheat-sheet {
+      padding: 15px;
+      .cheat-sheet-container {
+        .cheat-sheet-box {
+          font-size: 1.9rem;
+        }
+      }
+    }
+    .choose-syllabary,
+    .choose-collection {
+      height: 70%;
+      padding: 15px;
+      .syllabary-inputs-box {
+        button {
+          margin: 0 0.43rem 0.83rem 0.43rem;
+        }
+      }
+    }
+    .flash-cards {
+      width: 100%;
+      padding: 15px;
+    }
+    .quiz {
+      padding: 15px;
+      width: 100%;
+      margin-top: 14vh;
+      .quiz-character {
+        font-size: 8rem;
+      }
+    }
+    .my-profile {
+      width: 100%;
+      height: 95%;
+      padding: 15px;
+    }
+    .my-scores {
+      padding: 15px;
+      .my-scores-btns-box {
+        button {
+          margin: 0 0.4rem 0 0.4rem;
+        }
+      }
+    }
+    .about {
+      height: 180vh;
+      margin-top: 100vh;
+    }
+  }
+}
+
+//landscape
+// @media screen and (orientation: "landscape") and (min-width: 1360px) and (max-height: 1024px) {
+//   .MuiContainer-root {
+//     .login {
+//       height: 70%;
+//       width: 76%;
+//       .login-form-logo {
+//         justify-content: space-around;
+//       }
+//       .login-form-logo {
+//         font-size: 3rem;
+//       }
+//       .form-btns-container {
+//         button,
+//         a,
+//         span {
+//           font-size: 1.3rem;
+//         }
+//       }
+//     }
+//     .registration {
+//       height: 70%;
+//       width: 76%;
+//       .registration-form {
+//         justify-content: space-around;
+//       }
+//       .registration-form-logo {
+//         font-size: 3rem;
+//       }
+//       .form-btns-container {
+//         button,
+//         a,
+//         span {
+//           font-size: 1.3rem;
+//         }
+//       }
+//     }
+//     .change-password {
+//       height: 70%;
+//       width: 76%;
+//       .change-password-header {
+//         font-size: 2.5rem;
+//       }
+//       button {
+//         font-size: 1.3rem;
+//       }
+//     }
+//     .home {
+//       .menu-position-container {
+//         .menu-position-title {
+//           font-size: 3rem;
+//         }
+//         .menu-position-content {
+//           font-size: 1.6rem;
+//         }
+//       }
+//     }
+//     .cheat-sheet {
+//       justify-content: space-between;
+//       .cheat-sheet-btns {
+//         .btn {
+//           font-size: 1.3rem;
+//         }
+//       }
+//       .cheat-sheet-container {
+//         height: 60%;
+//       }
+//       .back-btn {
+//         margin: 0;
+//         font-size: 1.3rem;
+//       }
+//     }
+//     .choose-collection {
+//       height: 60%;
+//       width: 70%;
+//       .collection-header {
+//         font-size: 3rem;
+//       }
+//       .collection-inputs-box {
+//         button {
+//           font-size: 1.3rem;
+//         }
+//       }
+//     }
+//     .choose-syllabary {
+//       height: 60%;
+//       width: 70%;
+//       .syllabary-header {
+//         font-size: 3rem;
+//       }
+//       .syllabary-inputs-box {
+//         button {
+//           font-size: 1.3rem;
+//         }
+//       }
+//       .back-btn {
+//         font-size: 1.3rem;
+//       }
+//     }
+//     .flash-cards {
+//       margin-top: 8vh;
+//       height: 70%;
+//       width: 76%;
+//       .flash-cards-id {
+//         font-size: 3rem;
+//       }
+//       .flash-cards-character {
+//         font-size: 17rem;
+//       }
+//       .btns-box {
+//         button,
+//         .back-btn {
+//           font-size: 1.3rem;
+//         }
+//       }
+//     }
+//     .quiz {
+//       margin-top: 8vh;
+//       height: 80%;
+//       width: 76%;
+//       .score-bar {
+//         font-size: 2.5rem;
+//       }
+//       .quiz-character {
+//         font-size: 15rem;
+//       }
+//       button,
+//       .back-btn {
+//         font-size: 1.3rem;
+//       }
+//     }
+//     .quiz-result {
+//       margin-top: 6vh;
+//       height: 70%;
+//       width: 80%;
+//       .quiz-result__title {
+//         font-size: 3rem;
+//       }
+//       .quiz-result__subtitle {
+//         font-size: 1.6rem;
+//       }
+//       .quiz-result__score {
+//         font-size: 7rem;
+//       }
+//       button {
+//         font-size: 1.3rem;
+//       }
+//     }
+//     .my-profile {
+//       height: 80%;
+//       width: 76%;
+//       .input-btn,
+//       button {
+//         font-size: 1.3rem;
+//       }
+//       .my-profile-header {
+//         font-size: 3rem;
+//       }
+//       .my-profile__data {
+//         font-size: 1.3rem;
+//       }
+//     }
+//     .my-scores {
+//       .my-scores-btns-box,
+//       button {
+//         font-size: 1.3rem;
+//       }
+//       .my-scores-title {
+//         font-size: 2rem;
+//       }
+//       .my-scores-container {
+//         font-size: 2rem;
+//       }
+//     }
+//     .about {
+//       .about-container {
+//         .about-header {
+//           font-size: 3rem;
+//         }
+//         .about-content {
+//           font-size: 1.3rem;
+//         }
+//       }
+//       .back-btn {
+//         font-size: 1.3rem;
+//       }
+//     }
+//   }
+// }
+@media screen and (orientation: "landscape") and (max-width: 823px) {
+  .MuiContainer-root {
+    .login {
+      margin: 100vh 0 10vh 0;
+      height: 170vh;
+      width: 90%;
+      .login-form {
+        justify-content: space-evenly;
+      }
+    }
+    .registration {
+      margin: 100vh 0 10vh 0;
+      height: 170vh;
+      width: 90%;
+      .registration-form {
+        justify-content: space-evenly;
+      }
+    }
+    .change-password {
+      width: 80%;
+    }
+    .home {
+      margin: 170vh 0 10vh 0;
+      height: 200vh;
+      width: 90%;
+    }
+    .cheat-sheet {
+      margin: 145vh 0 10vh 0;
+      height: 170vh;
+    }
+    .choose-syllabary,
+    .choose-collection {
+      margin: 55vh 0 10vh 0;
+      height: 80vh;
+      width: 90%;
+    }
+    .flash-cards {
+      height: 110vh;
+      width: 70%;
+      margin: 80vh 0 10vh 0;
+    }
+    .quiz {
+      width: 70%;
+      height: 150vh;
+      margin: 120vh 0 10vh 0;
+    }
+    .quiz-result {
+      margin: 75vh 0 10vh 0;
+      height: 100vh;
+      width: 90%;
+    }
+    .my-profile {
+      margin: 90vh 0 10vh 0;
+      height: 160vh;
+      width: 90%;
+    }
+    .my-scores {
+      margin: 100vh 0 10vh 0;
+      height: 170vh;
+      width: 90%;
+    }
+    .about {
+      margin: 100vh 0 10vh 0;
+      height: 170vh;
+      width: 95%;
+    }
+  }
+  @media screen and (orientation: "landscape") and (max-width: 568px) {
+    .MuiContainer-root {
+      .about {
+        height: 210vh;
+        margin: 130vh 0 7vh 0;
+      }
+    }
+  }
+}
