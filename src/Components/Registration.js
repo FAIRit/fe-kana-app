@@ -7,7 +7,9 @@ import { styled } from "@material-ui/core/styles";
 import Zoom from "@material-ui/core/Zoom";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import { registerUser } from "../Redux/actions/auth";
+import { db, fire } from "../Firebase/firebase";
+
+// import { registerUser } from "../Redux/actions/auth";
 
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
@@ -49,31 +51,131 @@ class Registration extends Component {
     repeatPassword: "",
     login: "",
     checked: true,
+    nameMessage: null,
+    isName: false,
+    isPassword: false,
+    isEmail: false,
+    isRepeatPassword: false,
+    repeatPasswordMessage: null,
+    emailMessage: null,
+    passwordMessage: null,
   };
 
   handleChangeInputField = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
+    if (e.target.name === "login") {
+      this.setState({
+        isName: false,
+        nameMessage: null,
+      });
+    }
+    if (e.target.name === "password") {
+      this.setState({
+        isPassword: false,
+        passwordMessage: null,
+      });
+    }
+    if (e.target.name === "email") {
+      this.setState({
+        isEmail: false,
+        emailMessage: null,
+      });
+    }
+    if (e.target.name === "repeatPassword") {
+      this.setState({
+        isRepeatPassword: false,
+        repeatPasswordMessage: null,
+      });
+    }
   };
 
   handleSubmitRegistration = (e) => {
     e.preventDefault();
     const { email, password, repeatPassword, login } = this.state;
-    if (email.length !== 0 && password === repeatPassword && login.length > 2) {
+    if (login.length === 0) {
       this.setState({
-        email: "",
-        password: "",
-        repeatPassword: "",
-        login: "",
+        isName: true,
+        nameMessage: "Pole jest obowiązkowe",
       });
+    }
+    if (password.length === 0) {
+      this.setState({
+        isPassword: true,
+        passwordMessage: "Pole jest obowiązkowe",
+      });
+    }
+    if (password.length > 0 && password.length <= 5) {
+      this.setState({
+        isPassword: true,
+        passwordMessage: "Hasło powinno mieć conajmniej 6 znaków",
+      });
+    }
+    if (email.length === 0) {
+      this.setState({
+        isEmail: true,
+        emailMessage: "Pole jest obowiązkowe",
+      });
+    }
+    if (repeatPassword.length !== password.length) {
+      this.setState({
+        isRepeatPassword: true,
+        repeatPasswordMessage: "Hasła muszą być identyczne",
+      });
+    }
+    if (repeatPassword.length === 0) {
+      this.setState({
+        isRepeatPassword: true,
+        repeatPasswordMessage: "Pole jest obowiązkowe",
+      });
+    }
 
-      this.props.register(email, password, login);
+    if (
+      email.length !== 0 &&
+      password === repeatPassword &&
+      password.length !== 0 &&
+      login.length > 2
+    ) {
+      fire
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(({ user }) => {
+          db.ref("users").child(user.uid).set({
+            login,
+            uid: user.uid,
+            email: user.email,
+          });
+          console.log(user);
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.code === "auth/email-already-in-use") {
+            this.setState({
+              isEmail: true,
+              emailMessage: "Adres istnieje w bazie",
+            });
+          }
+        });
     }
   };
   render() {
     const { isAuthenticated } = this.props;
-    const { login, email, password, repeatPassword, checked } = this.state;
+    const {
+      login,
+      email,
+      password,
+      repeatPassword,
+      checked,
+      nameMessage,
+      isName,
+      isPassword,
+      isEmail,
+      isRepeatPassword,
+      repeatPasswordMessage,
+      emailMessage,
+      passwordMessage,
+    } = this.state;
     if (isAuthenticated) {
       return <Redirect to="/home" />;
     } else {
@@ -95,6 +197,8 @@ class Registration extends Component {
                 Kana App
               </H1>
               <StyledTextField
+                error={isName}
+                helperText={nameMessage}
                 id="user-name-registration"
                 label="Nazwa użytkownika"
                 variant="outlined"
@@ -104,6 +208,8 @@ class Registration extends Component {
                 onChange={this.handleChangeInputField}
               />
               <StyledTextField
+                error={isEmail}
+                helperText={emailMessage}
                 id="user-email-registration"
                 label="Email"
                 variant="outlined"
@@ -113,6 +219,8 @@ class Registration extends Component {
                 onChange={this.handleChangeInputField}
               />
               <StyledTextField
+                error={isPassword}
+                helperText={passwordMessage}
                 id="user-password-registration"
                 label="Hasło"
                 variant="outlined"
@@ -122,6 +230,8 @@ class Registration extends Component {
                 onChange={this.handleChangeInputField}
               />
               <StyledTextField
+                error={isRepeatPassword}
+                helperText={repeatPasswordMessage}
                 id="user-password-repeat-registration"
                 label="Powtórz hasło"
                 variant="outlined"
@@ -153,17 +263,11 @@ class Registration extends Component {
     }
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    register: (email, password, login) => {
-      dispatch(registerUser(email, password, login));
-    },
-  };
-};
+
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.user !== null,
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Registration);
+export default connect(mapStateToProps)(Registration);

@@ -1,12 +1,19 @@
 import { db, fire } from "../../Firebase/firebase";
 export const LOGIN_SUCCESS = "LOGIN_SUCCES";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCES";
-export const REGISTER = "REGISTER";
+// export const REGISTER = "REGISTER";
 export const CHOOSE_WRONG_ANSWERS = "CHOOSE_WRONG_ANSWERS";
 export const GET_SYLLABARY = "GET_SYLLABARY";
 export const RESTART_CHOICE = "RESTART_CHOICE";
 export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 export const SET_USER = "SET_USER";
+export const EMAIL_VALIDATION = "EMAIL_VALIDATION";
+
+export const emailValidation = () => {
+  return {
+    type: EMAIL_VALIDATION,
+  };
+};
 
 export const chooseWrongAnswers = (isUserChooseIncorrectAnswers) => {
   return {
@@ -26,19 +33,6 @@ export const restartUserChoice = () => {
   return {
     type: RESTART_CHOICE,
   };
-};
-
-export const registerUser = (email, password, username) => () => {
-  fire
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(({ user }) => {
-      db.ref("users").child(user.uid).set({
-        username,
-        uid: user.uid,
-        email: user.email,
-      });
-    });
 };
 
 export const loginUser = (email, password) => () =>

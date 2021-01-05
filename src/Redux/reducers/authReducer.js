@@ -3,12 +3,14 @@ import {
   GET_SYLLABARY,
   RESTART_CHOICE,
   SET_USER,
+  // EMAIL_VALIDATION,
 } from "../actions/auth";
 
 const initialState = {
   isUserChooseIncorrectAnswers: false,
   syllabaryFromDatabase: [],
   user: null,
+  isEmailInDatabase: false,
 };
 
 export default (state = initialState, action) => {
@@ -25,6 +27,11 @@ export default (state = initialState, action) => {
         ...state,
         isUserChooseIncorrectAnswers: action.isUserChooseIncorrectAnswers,
       };
+    // case EMAIL_VALIDATION:
+    //   return {
+    //     ...state,
+    //     isEmailInDatabase: true,
+    //   };
     case GET_SYLLABARY:
       return {
         ...state,
