@@ -1,4 +1,4 @@
-import { db, fire } from "../../Firebase/firebase";
+import { fire } from "../../Firebase/firebase";
 export const LOGIN_SUCCESS = "LOGIN_SUCCES";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCES";
 // export const REGISTER = "REGISTER";

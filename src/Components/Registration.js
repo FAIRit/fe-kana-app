@@ -9,8 +9,6 @@ import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { db, fire } from "../Firebase/firebase";
 
-// import { registerUser } from "../Redux/actions/auth";
-
 const OuterGrid = styled(Grid)({
   background: "rgb(255,255,255)",
   height: "80%",

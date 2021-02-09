@@ -2,7 +2,7 @@ import React, { Component, createContext } from "react";
 import { restGetKana } from "../services/kana";
 
 const initialContextValue = {
-  kanaTable: []
+  kanaTable: [],
 };
 
 const KanaContext = createContext(initialContextValue);
@@ -13,9 +13,9 @@ export class KanaProvider extends Component {
   state = initialContextValue;
 
   componentDidMount = () => {
-    restGetKana().then(kanaTable => {
+    restGetKana().then((kanaTable) => {
       this.setState({
-        kanaTable
+        kanaTable,
       });
     });
   };

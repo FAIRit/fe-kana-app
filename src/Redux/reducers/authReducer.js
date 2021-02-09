@@ -27,11 +27,6 @@ export default (state = initialState, action) => {
         ...state,
         isUserChooseIncorrectAnswers: action.isUserChooseIncorrectAnswers,
       };
-    // case EMAIL_VALIDATION:
-    //   return {
-    //     ...state,
-    //     isEmailInDatabase: true,
-    //   };
     case GET_SYLLABARY:
       return {
         ...state,
