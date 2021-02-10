@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import HomeMenuPosition from "./HomeMenuPosition";
 import UserNavBar from "./UserNavBar";
@@ -7,6 +7,7 @@ import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 import Zoom from "@material-ui/core/Zoom";
 import Link from "@material-ui/core/Link";
+import { useSelector } from "react-redux";
 
 const OuterGrid = styled(Grid)({
   marginTop: "8vh",
@@ -30,42 +31,76 @@ const Section = styled(Box)({
   justifyContent: "space-evenly",
 });
 
-class Home extends Component {
-  state = {
-    checked: true,
-  };
+const Home = () => {
+  const subscribeToAuthChange = useSelector((state) => state.auth.user);
+  console.log(subscribeToAuthChange);
+  return (
+    <>
+      <UserNavBar user={subscribeToAuthChange.login} />
+      <Zoom in={true}>
+        <OuterGrid
+          container
+          direction="column"
+          justify="center"
+          alignItems="stretch"
+          className="home"
+        >
+          <Section className="home-container">
+            <MuiLink component={RouterLink} to="/cheat-sheet">
+              <HomeMenuPosition title="Ściągawka" content="Tablica znaków" />
+            </MuiLink>
+            <MuiLink component={RouterLink} to="/flash-cards">
+              <HomeMenuPosition
+                title="Fiszki"
+                content="Ucz sie we własnym tempie"
+              />
+            </MuiLink>
+            <MuiLink component={RouterLink} to="/quiz">
+              <HomeMenuPosition title="Quiz" content="Sprawdź się" />
+            </MuiLink>
+          </Section>
+        </OuterGrid>
+      </Zoom>
+    </>
+  );
+};
 
-  render() {
-    return (
-      <>
-        <UserNavBar />
-        <Zoom in={this.state.checked}>
-          <OuterGrid
-            container
-            direction="column"
-            justify="center"
-            alignItems="stretch"
-            className="home"
-          >
-            <Section className="home-container">
-              <MuiLink component={RouterLink} to="/cheat-sheet">
-                <HomeMenuPosition title="Ściągawka" content="Tablica znaków" />
-              </MuiLink>
-              <MuiLink component={RouterLink} to="/flash-cards">
-                <HomeMenuPosition
-                  title="Fiszki"
-                  content="Ucz sie we własnym tempie"
-                />
-              </MuiLink>
-              <MuiLink component={RouterLink} to="/quiz">
-                <HomeMenuPosition title="Quiz" content="Sprawdź się" />
-              </MuiLink>
-            </Section>
-          </OuterGrid>
-        </Zoom>
-      </>
-    );
-  }
-}
+// class Home extends Component {
+//   state = {
+//     checked: true,
+//   };
+
+//   render() {
+//     return (
+//       <>
+//         <UserNavBar />
+//         <Zoom in={this.state.checked}>
+//           <OuterGrid
+//             container
+//             direction="column"
+//             justify="center"
+//             alignItems="stretch"
+//             className="home"
+//           >
+//             <Section className="home-container">
+//               <MuiLink component={RouterLink} to="/cheat-sheet">
+//                 <HomeMenuPosition title="Ściągawka" content="Tablica znaków" />
+//               </MuiLink>
+//               <MuiLink component={RouterLink} to="/flash-cards">
+//                 <HomeMenuPosition
+//                   title="Fiszki"
+//                   content="Ucz sie we własnym tempie"
+//                 />
+//               </MuiLink>
+//               <MuiLink component={RouterLink} to="/quiz">
+//                 <HomeMenuPosition title="Quiz" content="Sprawdź się" />
+//               </MuiLink>
+//             </Section>
+//           </OuterGrid>
+//         </Zoom>
+//       </>
+//     );
+//   }
+// }
 
 export default Home;

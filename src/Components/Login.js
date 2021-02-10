@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -55,10 +55,10 @@ const Login = () => {
 
   const handleSubmitLogin = (e) => {
     e.preventDefault();
-    dispatch(loginUser(email, password));
     setLogin("");
     setEmail("");
     setPassword("");
+    dispatch(loginUser(email, password));
   };
 
   if (isAuthenticated) {

@@ -60,6 +60,7 @@ export const subscribeToAuthChange = () => (dispatch) => {
 
       const userRef = fire.database().ref("users").child(user.uid);
       userRef.on("value", handleUser);
+
       unsubscribeUser = () => {
         userRef.off("value", handleUser);
       };
